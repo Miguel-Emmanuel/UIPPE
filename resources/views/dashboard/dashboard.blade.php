@@ -10,7 +10,7 @@
                     {{ auth()->user()->name ?? auth()->user()->username }}, estas autenticado a la página.
                 @endauth 
                 @guest 
-                    Para ver el contenido <a href="/login">Iniciar Sesión</a> 
+                    Para ver el contenido <a href="/login">Iniciar Sesión</a>.
                 @endguest
             </p>
         </div>
