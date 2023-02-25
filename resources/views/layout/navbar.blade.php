@@ -12,7 +12,16 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <div class="header_text"> @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth </div>
+        <div class="header_text">
+            <a href="" class="a_img" >
+            <?php
+            $session_id = session('session_id');
+            $session_name = session('session_name');
+      echo '<b>    ' . $session_name . '</b>';
+      ?>
+      <img src="logo/userman.png" width="50" alt="">
+    </a>
+            @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
