@@ -10,24 +10,16 @@
 </head>
 <body>
 	<div class="container w-50 pb-3 rounded shadow"> 
-        <div class="row m-2 align-items-strech"><!-Fila Contenedora>
+        <div class="log row m-2 align-items-strech"><!-Fila Contenedora>
             <!-Columnas>
             <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded"><!-Imagen></div>
 
-            <div class="col bg-white pd-5"><!-Register>
+            <div class="col bg-white pd-5"><!-Sesion>
                 <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
-                <h2 class="fw-bold text-center pb-3">Registro</h2>
-                <!-Registro>
+                <h2 class="fw-bold text-center pb-3">LogIn</h2>
+                <!-Form de Inicio de Sesion>
                 <form action="#">
                     <div class="mb-4">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" name="apellidos" placeholder="Apellido Paterno, Materno">
-                    </div>
 
                     <div class="mb-4">
                         <label for="email" class="form-label">E-mail</label>
@@ -39,10 +31,10 @@
                         <input type="password" class="form-control" name="pass" placeholder="Contraseña">
                     </div>
 
-                    <div class="my-3"><span>Ya tienes una cuenta?</span><a href="">Inicia Sesión</a></div>
+                    <div class="my-3"><span>Te hace falta una cuenta?</span><a href="">Registrate</a></div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Registrame</button>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
                     </div>
                 </form>
             </div>
