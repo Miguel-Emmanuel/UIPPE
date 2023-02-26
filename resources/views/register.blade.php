@@ -18,7 +18,8 @@
                 <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
                 <h2 class="fw-bold text-center pb-3">Registro</h2>
                 <!-Registro>
-                <form action="#">
+                <form action="{{ route('register') }}" method="post">
+                    {!! csrf_field() !!}
                     <div class="mb-4">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)">
@@ -26,7 +27,7 @@
 
                     <div class="mb-4">
                         <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" name="apellidos" placeholder="Apellido Paterno, Materno">
+                        <input type="text" class="form-control" name="apellido" placeholder="Apellido Paterno, Materno">
                     </div>
 
                     <div class="mb-4">
@@ -36,10 +37,10 @@
 
                     <div class="mb-4">
                         <label for="pass" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" name="pass" placeholder="Contraseña">
+                        <input type="password" class="form-control" name="password" placeholder="Contraseña">
                     </div>
 
-                    <div class="my-3"><span>Ya tienes una cuenta?</span><a href="">Inicia Sesión</a></div>
+                    <div class="my-3"><span>Ya tienes una cuenta?</span><a href="login">Inicia Sesión</a></div>
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Registrame</button>

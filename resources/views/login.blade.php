@@ -82,10 +82,7 @@
 
 </head>
 <body>
-<?php
-        $session_name = session('session_name');
-        $session_id = session('session_id');
-         ?>
+
     <form action="{{route ('valida')}}" method="POST">
         @csrf
         <img src="logo/logo.png">

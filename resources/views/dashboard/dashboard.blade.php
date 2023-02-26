@@ -11,12 +11,18 @@
             $session_name = session('session_name');
       echo '¡Bienvenido! <b>    ' . $session_name . '</b><br>';
             ?>
-                @auth
+                <!-- @auth
                     {{ auth()->user()->name ?? auth()->user()->username }}, estas autenticado a la página.
                 @endauth
                 @guest
                     Para ver el contenido <a href="/login">Iniciar Sesión</a>.
-                @endguest
+                @endguest -->
+                @if($session_id)
+                    <p>Estas en Dashboard</p>
+                    @else
+                      <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+                @endif
+
             </p>
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
