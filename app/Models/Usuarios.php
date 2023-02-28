@@ -12,8 +12,9 @@ class Usuarios extends Model
     protected $primaryKey = 'id_usuario';
     protected $fillable = [
         'nombre',
+        'apellido',
         'email',
-        'password',
-        'activo'
+        'password'
+        // 'activo'
     ];
 }

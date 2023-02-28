@@ -1,108 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style type="text/css">
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: sans-serif;
-    }
-
-    body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: linear-gradient(#367E18, #86eb5b);
-
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        background: #fff;
-        text-align: center;
-        padding: 20px 25px;
-        box-shadow: 0 5px 10px rgba(71, 3, 6, 0.7);
-    }
-
-    form .title {
-        color: #252525;
-        font-size: 35px;
-        font-weight: 800;
-        margin-bottom: 30px;
-    }
-
-    form label {
-        margin-bottom: 35px;
-    }
-
-    form label .fa-solid {
-        font-size: 20px;
-        color: #000000;
-        margin-right: 10px;
-    }
-
-    form label input {
-        outline: none;
-        border: none;
-        color: #252525;
-        border-bottom: solid 1px #252525;
-        padding: 0 5px;
-        font-size: 18px;
-    }
-
-    form label input::placeholder {
-        color: rgba(37, 37, 37, 0.5);
-    }
-
-
-    form .link {
-        color: #252525;
-        margin-bottom: 15px;
-    }
-
-    form button {
-        color: #fff;
-        border: none;
-        background-color: black;
-        padding: 10px 15px;
-        cursor: pointer;
-        font-size: 20px;
-    }
-
-    </style>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/sesiones.css') }}">
+    <title></title>
 </head>
+
 <body>
-<?php
-        $session_name = session('session_name');
-        $session_id = session('session_id');
-         ?>
-    <form action="{{route ('valida')}}" method="POST">
-        @csrf
-        <img src="logo/logo.png">
-        <h1 class="title">Login</h1>
-        <label>
-            <i class="fa-solid fa-user"></i>
-            <input placeholder="Correo Electronico" type="text" id="" name="email">
-        </label>
-        <label>
-            <i class="fa-solid fa-lock"></i>
-            <input placeholder="Contraseña" type="password" id="" name="pass">
-        </label>
-        <p>Aun no tienes cuenta? <a href="{{route ('registrate')}}" >Registrate</a></p>
+    <div class="container w-75 pb-3 rounded shadow">
+        <div class="row m-2 align-items-strech"><!-Fila Contenedora>
+                <!-Columnas>
+                    <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded"><!-Imagen></div>
 
-        <button id="button">Login</button>
-    </form>
+                    <div class="col bg-white pd-5"><!-Sesion>
+                            <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
+                                <h2 class="fw-bold text-center pb-3">Iniciar Sesión</h2>
+                                <!-Form de Inicio de Sesion>
+                                    <form action="{{ route('valida') }}" method="POST">
+                                        @csrf
+                                        <div class="mb-4">
+                                            <div class="mb-4">
+                                                <label for="email" class="form-label">Correo Electronico:</label>
+                                                <input type="email" class="form-control" name="email" placeholder="correo@proveedor.dominio">
+                                            </div>
 
-    <script src="main.js"></script>
+                                            <div class="mb-4">
+                                                <label for="pass" class="form-label">Contraseña:</label>
+                                                <input type="password" class="form-control" name="pass" placeholder="Contraseña">
+                                            </div>
+
+                                            <div class="my-3"><span>No tienes cuenta? </span><a href="{{ route('registrate') }}">Registrate</a></div>
+
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+                                            </div>
+                                    </form>
+                    </div>
+        </div>
+    </div>
 </body>
+
 </html>
