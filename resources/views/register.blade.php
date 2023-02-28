@@ -9,7 +9,7 @@
 	<title></title>
 </head>
 <body>
-	<div class="container w-50 mt-5 pb-3 rounded shadow"> 
+	<div class="container w-75 mt-5 pb-3 rounded shadow"> 
         <div class="row m-2 align-items-strech"><!-Fila Contenedora>
             <!-Columnas>
             <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded"><!-Imagen></div>
@@ -40,7 +40,7 @@
                         <input type="password" class="form-control" name="password" placeholder="Contraseña">
                     </div>
 
-                    <div class="my-3"><span>Ya tienes una cuenta?</span><a href="login">Inicia Sesión</a></div>
+                    <div class="my-3"><span>Ya tienes una cuenta? </span><a href="login">Inicia Sesión</a></div>
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Registrame</button>

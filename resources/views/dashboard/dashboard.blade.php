@@ -5,23 +5,24 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <h1>Inicio</h1>
-             <br>
             <?php
             $session_id = session('session_id');
             $session_name = session('session_name');
-      echo '¡Bienvenido! <b>    ' . $session_name . '</b><br>';
+            echo '¡Bienvenido! <b>    ' . $session_name . '</b><br>';
             ?>
-                <!-- @auth
+            <!-- 
+                @auth
                     {{ auth()->user()->name ?? auth()->user()->username }}, estas autenticado a la página.
                 @endauth
                 @guest
                     Para ver el contenido <a href="/login">Iniciar Sesión</a>.
-                @endguest -->
-                @if($session_id)
-                    <p>Estas en Dashboard</p>
-                    @else
-                      <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
-                @endif
+                @endguest 
+            -->
+            @if($session_id)
+            <p>Estas en Dashboard</p>
+            @else
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+            @endif
 
             </p>
         </div>

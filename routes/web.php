@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('login');
    // return view('dashboard.dashboard');
 });
+Route::get('dashboard', function () {
+   return view('dashboard.dashboard');
+});
 
 Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
