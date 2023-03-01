@@ -35,7 +35,7 @@
 
 
                                             <div class="d-grid">
-                                                <button type="submit" class="btn btn-outline-success" >Iniciar Sesion</button>
+                                                <button type="submit" class="btn btn-outline-success">Iniciar Sesion</button>
                                             </div>
                                     </form>
                     </div>
