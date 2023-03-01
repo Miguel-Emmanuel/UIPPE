@@ -8,12 +8,6 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />                 
     <style type="text/css">  
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: sans-serif;
-    }
     
     body {
         display: flex;
@@ -21,6 +15,7 @@
         justify-content: center;
         min-height: 100vh;
         background: linear-gradient(#367E18, #86eb5b);
+        background-attachment: fixed;
 
     }
     
@@ -44,6 +39,7 @@
         margin-bottom: 35px;
     }
     
+    
     form label .fa-solid {
         font-size: 20px;
         color: #000000;
@@ -63,18 +59,11 @@
         color: rgba(37, 37, 37, 0.5);
     }
     
-    
-    form .link {
-        color: #252525;
-        margin-bottom: 15px;
-    }
-    
     form button {
         color: #fff;
         border: none;
         background-color: black;
         padding: 10px 15px;
-        cursor: pointer;
         font-size: 20px;
     }
 
@@ -98,6 +87,5 @@
         <button id="button">Login</button>
     </form>
     
-    <script src="main.js"></script>
 </body>
 </html>
