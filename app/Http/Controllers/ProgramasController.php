@@ -11,7 +11,7 @@ class ProgramasController extends Controller
     public function show()
     {
         $programas = Programas::all();
-        return view("lista_empleados")
+        return view("programas.index")
         ->with(['programas' => $programas]);
     }
     public function index(){
@@ -30,4 +30,10 @@ class ProgramasController extends Controller
 
          ));
     }
+    public function destroy(Programas $programa){
+
+        $programa->delete();
+        return redirect()->route("programas.show");
+
+     }
 }
