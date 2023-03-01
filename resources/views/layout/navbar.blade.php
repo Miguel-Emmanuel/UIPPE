@@ -26,6 +26,18 @@ $session_apellido = session('session_apellido');
 </header>
 
 <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_text">
+            @if($session_id)
+            <?php
+            echo  $session_name . " " . $session_apellido;
+            ?>
+            @endif
+        </div>
+
+        <!-- @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth -->
+    </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
