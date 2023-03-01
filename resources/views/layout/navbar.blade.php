@@ -1,5 +1,3 @@
-
-
 <!Doctype html>
 <html lang="en">
 
@@ -16,21 +14,19 @@ $session_id = session('session_id');
 $session_name = session('session_name');
 $session_apellido = session('session_apellido');
 ?>
+<header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    <div class="header_text">
+        @if($session_id)
+        <?php
+        echo  $session_name . " " . $session_apellido;
+        ?>
+        @endif
+    </div>
+    <!-- @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth -->
+</header>
 
 <body id="body-pd">
-
-    <header class="header" id="header">
-        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <div class="header_text">
-            @if($session_id)
-            <?php
-            echo  $session_name . " " . $session_apellido;
-            ?>
-            @endif
-        </div>
-
-        <!-- @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth -->
-    </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
@@ -58,11 +54,15 @@ $session_apellido = session('session_apellido');
             @endauth -->
         </nav>
     </div>
+
     <!--Container Main start-->
     <div class="height-100">
         @yield('content')
     </div>
     <!--Container Main end-->
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
