@@ -13,18 +13,26 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        schema::create('tb_usuarios', function (Blueprint $table){
-            $table->bigincrements('id_usuario');
-            $table->string('nombre', 50);
-            $table->string('apellido', 50);
-            $table->string('email');
-            $table->string('password');
-            // $table->boolean('activo');
-            $table->timestamps();
+     //
+     schema::create('tb_usuarios', function (Blueprint $table){
+        $table->bigincrements('id_usuario');
+        $table->string('clave', 30);
+        $table->string('nombre', 50);
+        $table->string('app', 50);
+        $table->string('apm', 50);
+        $table->string('gen', 15);
+        $table->date('fn');
+        $table->text('academico');
+        $table->text('foto')->nullable();
+        $table->string('email')->unique();
+        $table->string('pass');
+        $table->integer('id_tipo');
+        $table->boolean('activo');
+        $table->integer('id_registro');
+        $table->timestamps();
 
 
-        });
+    });
     }
 
     /**

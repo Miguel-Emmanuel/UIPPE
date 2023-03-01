@@ -5,23 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Usuarios extends Model
+class Areas extends Model
 {
     use HasFactory;
-    protected $table = 'tb_usuarios';
-    protected $primaryKey = 'id_usuario';
+    protected $table = 'tb_areas';
+    protected $primaryKey = 'id_area';
     protected $fillable = [
         'clave',
         'nombre',
-        'app',
-        'apm',
-        'gen',
-        'fn',
-        'academico',
+        'descripcion',
         'foto',
-        'email',
-        'pass',
-        'id_tipo',
         'activo',
          'id_registro'
     ];

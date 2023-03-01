@@ -5,23 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Usuarios extends Model
+class Metas extends Model
 {
     use HasFactory;
-    protected $table = 'tb_usuarios';
-    protected $primaryKey = 'id_usuario';
+    protected $table = 'tb_metas';
+    protected $primaryKey = 'id_meta';
     protected $fillable = [
         'clave',
         'nombre',
-        'app',
-        'apm',
-        'gen',
-        'fn',
-        'academico',
-        'foto',
-        'email',
-        'pass',
-        'id_tipo',
+        'descripcion',
         'activo',
          'id_registro'
     ];

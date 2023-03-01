@@ -26,7 +26,7 @@ class Login extends Controller
         $pass = $request->input('pass');
 
         $consulta = Usuarios::where('email', '=', $email)
-            ->where('password', '=', $pass)
+            ->where('pass', '=', $pass)
             ->get();
 
         if (count($consulta) == 0) {
