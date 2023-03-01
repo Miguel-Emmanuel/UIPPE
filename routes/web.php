@@ -4,8 +4,8 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +33,9 @@ Route::name('register')->post('register', [Login::class, 'store']);
 
 // ====================== METAS ======================
 Route::name('metas')->get('metas', [MetasController::class, 'metas']);
+
+
+Route::resource('usuarios',UsuariosController::class);
 
 
 Route::resource('programas', ProgramasController::class);
