@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('app'),
+            'root' => public_path('img/post'),
             'throw' => false,
         ],
 

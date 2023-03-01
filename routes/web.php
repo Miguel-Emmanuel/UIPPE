@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AreasController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
+use App\Models\Areas;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,4 +41,6 @@ Route::name('metas')->get('metas', [MetasController::class, 'metas']);
 Route::resource('usuarios',UsuariosController::class);
 
 
+//Resources 
+Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
