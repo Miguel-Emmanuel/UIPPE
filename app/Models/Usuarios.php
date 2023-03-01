@@ -25,4 +25,5 @@ class Usuarios extends Model
         'activo',
          'id_registro'
     ];
+    
 }
