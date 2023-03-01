@@ -21,22 +21,22 @@
                 <form action="{{ route('register') }}" method="post">
                     {!! csrf_field() !!}
                     <div class="mb-4">
-                        <label for="nombre" class="form-label">Nombre</label>
+                        <label for="nombre" class="form-label">Nombre: </label>
                         <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)">
                     </div>
 
                     <div class="mb-4">
-                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <label for="apellidos" class="form-label">Apellidos:</label>
                         <input type="text" class="form-control" name="apellido" placeholder="Apellido Paterno, Materno">
                     </div>
 
                     <div class="mb-4">
-                        <label for="email" class="form-label">E-mail</label>
+                        <label for="email" class="form-label">E-mail: </label>
                         <input type="email" class="form-control" name="email" placeholder="correo@proveedor.dominio">
                     </div>
 
                     <div class="mb-4">
-                        <label for="pass" class="form-label">Contraseña</label>
+                        <label for="pass" class="form-label">Contraseña: </label>
                         <input type="password" class="form-control" name="password" placeholder="Contraseña">
                     </div>
 
