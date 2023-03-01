@@ -21,7 +21,7 @@
                 <table class="table">
 
                     <tr>
-                        <td>#</td>
+                        <td >#</td>
                         <td>ABREVIATURA</td>
                         <td>NOMBRE</td>
                         <td>DESCRIPCION</td>
@@ -100,15 +100,18 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            DESEAS ELIMINAR EL PROGRAMA :
-                            <p>{{ $info->nombre }}</p>
+                          {{--   DESEAS ELIMINAR EL PROGRAMA :
+                            <p>{{ $info->nombre }}</p> --}}
+                            <form action="{{route('programas.destroy',['programa' => $info->id_programa]) }}" method="post">
+@csrf
+@method('DELETE')
 
                         </div>
                         <div class="modal-footer">
-                            <a href="{{ route('programas.destroy', ['programa' => $info->id_programa]) }}">
 
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
-                            </a>
+
+                                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
+                            </form>
                             <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>

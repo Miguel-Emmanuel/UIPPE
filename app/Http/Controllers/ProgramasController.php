@@ -40,7 +40,9 @@ class ProgramasController extends Controller
     public function destroy(Programas $programa){
 
         $programa->delete();
-        return redirect()->route("programas.show");
+        return redirect()->route("programas.index");
+   return redirect()->route("lista_usuarios");
+
 
      }
 }
