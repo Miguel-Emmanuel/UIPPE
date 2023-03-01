@@ -36,7 +36,7 @@
                                             <div class="my-3"><span>No tienes cuenta? </span><a href="{{ route('registrate') }}">Registrate</a></div>
 
                                             <div class="d-grid">
-                                                <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+                                                <button type="submit" class="btn btn-outline-success" >Iniciar Sesion</button>
                                             </div>
                                     </form>
                     </div>
