@@ -30,16 +30,16 @@
                                             <td>    
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal{{ $info->id_programa }}">
+                                    data-bs-target="#exampleModal{{ $usuario->id_usuario }}">
                                     MODIFICAR
                                 </button>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#modalshow{{ $info->id_programa }}">
+                                    data-bs-target="#modalshow{{ $usuario->id_usuario }}">
                                     SHOW
                                 </button>
                                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}">
 ELIMINAR
   </button>
 
@@ -76,10 +76,10 @@ ELIMINAR
             {{-- ELIMINAR MODAL --}}
 
 
-@foreach ($programas as $info )
+@foreach ($Usuarios as $usuario )
 
 
-            <div class="modal fade" id="deleteModal{{ $info->id_programa }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="deleteModal{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -88,7 +88,7 @@ ELIMINAR
                 </div>
                 <div class="modal-body">
                   DESEAS ELIMINAR EL PROGRAMA :
-                  <p>{{$info -> nombre}}</p>
+                  <p>{{$usuario -> nombre}} </p>
 
                 </div>
                 <div class="modal-footer">
@@ -104,8 +104,8 @@ ELIMINAR
           @endforeach
 
         {{-- SHOW MODAL --}}
-        @foreach ($programas as $info)
-        <div class="modal fade" id="modalshow{{ $info->id_programa }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
+        @foreach ($Usuarios as $usuario)
+        <div class="modal fade" id="modalshow{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -114,16 +114,11 @@ ELIMINAR
                     </div>
                     <div class="modal-body">
                         <p>NOMBRE: </p>
-                <p>{{$info -> nombre}}</p>
+                <p>{{$usuario -> nombre}}</p>
                 <p>SIGLAS: </p>
-                <p>{{$info -> abreviatura}}</p>
-                <p>DESCRIPCION: </p>
-                <p>{{$info -> descripcion}}</p>
-
-                <p>ACTIVO: </p>
-                <p>{{$info -> activo}}</p>
-                <p>ID_REGISTRO: </p>
-                <p>{{$info -> id_registro}}</p>
+                <p>{{$usuario -> app}}</p>
+                <p>ACADEMICO: </p>
+                <p>{{$usuario -> academico}}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -135,9 +130,9 @@ ELIMINAR
 @endforeach
         {{-- SHOW END MODAL --}}
 
-        @foreach ($programas as $info)
+        @foreach ($Usuarios as $usuario)
             <!-- Modal MODIFICAR -->
-            <div class="modal fade" id="exampleModal{{ $info->id_programa }}" tabindex="-1"
+            <div class="modal fade" id="exampleModal{{ $usuario->id_usuario }}" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -148,22 +143,71 @@ ELIMINAR
                         <div class="modal-body">
 
                             <div class="input-group">
+                                <span class="input-group-text" style="margin-left: 60px "> CLAVE:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> clave }}">
+                                </div>
+                                 <br><br>
+                            <div class="input-group">
                                 <span class="input-group-text" style="margin-left: 60px "> NOMBRE:</span>
-                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $info -> nombre }}">
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> nombre }}">
                                 </div>
-<br><br>
+                          <br><br>
                             <div class="input-group">
-                                <span class="input-group-text" style="margin-left: 60px "> SIGLAS:</span>
-                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $info -> abreviatura }}">
-                                </div>
-<br><br>
-                            <div class="input-group">
-                                <span class="input-group-text" style="margin-left: 60px "> DESCRIPCION:</span>
-                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $info -> descripcion }}">
+                                <span class="input-group-text" style="margin-left: 60px "> APELLIDO MATERNO:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> app }}">
                                 </div>
 
                         </div>
                         <br><br>
+                        <div class="input-group">
+                                <span class="input-group-text" style="margin-left: 60px "> APELLIDO PATERNO:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> apm }}">
+                                </div>
+
+                        </div>
+                        <br><br>
+                        <div class="input-group">
+                                <span class="input-group-text" style="margin-left: 60px "> GENERO:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> genero }}">
+                                </div>
+
+                        </div>
+                        <br><br>
+                        <div class="input-group">
+                                <span class="input-group-text" style="margin-left: 60px "> FECHA DE NACIMIENTO:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> fn }}">
+                                </div>
+
+                        </div>
+                        <br><br>
+                        <div class="input-group">
+                                <span class="input-group-text" style="margin-left: 60px "> ACADEMICO:</span>
+                                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> academico }}">
+                                </div>
+
+                        </div>
+                        <br><br>
+                        <label for="colFormLabelSm" class="fw-bold">Foto :</label>
+                        <div class="mb-3">
+                            
+                            <input class="form-control form-control-sm" id="formFileSm" type="file" id="photo" name="photo">
+                        <div>
+                        <br>
+                            <div class="input-group">
+                            <div class="input-group-text">@</div>
+                            <input type="text" class="form-control" id="autoSizingInputGroup" name="email" placeholder="ejemplo: jimena.diaz@utvtol.edu.mx">
+                            </div>
+                            <label for="colFormLabelSm" class="fw-bold">Password :</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="pass">
+                            <br>
+                            <div class="form-check">
+                            <input class="form-check-input" type="checkbox"  id="flexCheckDefault" name='activo' value="Activo">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Activo
+                            </label>
+                            </div>
+
+                            <!-- FALTA LO DE TIPO DE USUARIOS MIS ESTIMADOS -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Save changes</button>

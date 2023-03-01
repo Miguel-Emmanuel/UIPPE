@@ -24,7 +24,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +35,33 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request -> file('foto')  !=  '')
+        {
+      $file = $request -> file ('foto');
+      $foto1 = $file->getClientOriginalName();
+      $dates = date('YmdHis');
+      $foto2 = $dates . $foto1;
+      \Storage::disk('local')->put($foto2, \File::get($file));
+        }
+        else{
+          $foto2 = 'men.png';
+        }
+        Usuarios::create(array(
+            'clave' => $request->input('clave'),
+            'nombre' => $request->input('nombre'),
+            'app' => $request->input('app'),
+            'apm' => $request->input('apm'),
+            'gen' => $request->input('gen'),
+            'fn' => $request->input('fn'),
+            'academico' => $request->input('academico'),
+            'foto' => $foto2,
+            'email' => $request->input('email'),
+            'pass' => $request->input('pass'),
+            'id_tipo' => $request->input('id_tipo'),
+            'activo' => $request->input('activo'),
+            'id_registro' => $request->input('id_registro'),
+
+         ));
     }
 
     /**
@@ -46,7 +72,9 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        $Usuarios = Usuarios::all();
+        return view("lista_empleados")
+        ->with(['usuarios' => $Usuarios]);
     }
 
     /**
