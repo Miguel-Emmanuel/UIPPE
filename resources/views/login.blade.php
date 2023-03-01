@@ -33,7 +33,6 @@
                                                 <input type="password" class="form-control" name="pass" placeholder="Contraseña">
                                             </div>
 
-                                            <div class="my-3"><span>No tienes cuenta? </span><a href="{{ route('registrate') }}">Registrate</a></div>
 
         <button id="button">Login</button>
     </form>
