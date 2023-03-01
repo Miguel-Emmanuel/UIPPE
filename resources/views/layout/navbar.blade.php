@@ -42,7 +42,7 @@ $session_apellido = session('session_apellido');
                 <div class="nav_list">
                     <a href="{{route ('programas.index')}}" class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">PROGRAMAS</span> </a>
                     <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">METAS</span> </a>
-                    <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">AREAS </span> </a>
+                    <a href="{{route('areas.index')}}" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">AREAS </span> </a>
                     <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span cl  ass="nav_name">Bookmark</span> </a>
                     <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Files</span> </a>
                     <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a>

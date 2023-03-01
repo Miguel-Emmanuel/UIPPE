@@ -15,9 +15,10 @@
 
                     <tr>
                         <td>#</td>
-                        <td>ABREVIATURA</td>
+                        <td>CLAVE</td>
                         <td>NOMBRE</td>
                         <td>DESCRIPCION</td>
+                        <td>FOTO</td>
                         <td>ACTIVO</td>
                         <td>registro</td>
                         <td>ACCIONES</td>
@@ -25,26 +26,27 @@
                     </tr>
                     <tr>
 
-                        @foreach ($programas as $info)
-                            <td>{{ $info->id_programa }}</td>
-                            <td>{{ $info->abreviatura }}</td>
+                        @foreach ($areas as $info)
+                            <td>{{ $info->id_area }}</td>
+                            <td>{{ $info->clave }}</td>
                             <td>{{ $info->nombre }}</td>
                             <td>{{ $info->descripcion }}</td>
+                            <td><img src="/img/post/{{$info ->foto}}" width="80px"></td>
                             <td>{{ $info->activo }}</td>
                             <td>{{ $info->id_registro }}</td>
                             <td>
 
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal{{ $info->id_programa }}">
+                                    data-bs-target="#exampleModal{{ $info->id_area }}">
                                     MODIFICAR
                                 </button>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#modalshow{{ $info->id_programa }}">
+                                    data-bs-target="#modalshow{{ $info->id_area }}">
                                     SHOW
                                 </button>
                                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}">
 ELIMINAR
   </button>
 
@@ -79,10 +81,10 @@ ELIMINAR
             {{-- ELIMINAR MODAL --}}
 
 
-@foreach ($programas as $info )
+@foreach ($areas as $info )
 
 
-            <div class="modal fade" id="deleteModal{{ $info->id_programa }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="deleteModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -107,8 +109,8 @@ ELIMINAR
           @endforeach
 
         {{-- SHOW MODAL --}}
-        @foreach ($programas as $info)
-        <div class="modal fade" id="modalshow{{ $info->id_programa }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
+        @foreach ($areas as $info)
+        <div class="modal fade" id="modalshow{{ $info->id_area }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,6 +124,8 @@ ELIMINAR
                 <p>{{$info -> abreviatura}}</p>
                 <p>DESCRIPCION: </p>
                 <p>{{$info -> descripcion}}</p>
+                <p>FOTO:</p>
+                <p><img src="/img/post/{{$info ->foto}}" width="80px"></p>
                 <p>ACTIVO: </p>
                 <p>{{$info -> activo}}</p>
                 <p>ID_REGISTRO: </p>
@@ -137,9 +141,9 @@ ELIMINAR
 @endforeach
         {{-- SHOW END MODAL --}}
 
-        @foreach ($programas as $info)
+        @foreach ($areas as $info)
             <!-- Modal MODIFICAR -->
-            <div class="modal fade" id="exampleModal{{ $info->id_programa }}" tabindex="-1"
+            <div class="modal fade" id="exampleModal{{ $info->id_area }}" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -189,13 +193,20 @@ ELIMINAR
                     </div>
                     <div class="modal-body">
                         <div class="contenedor_body">
-            <form action="{{ route('programas.store') }}" method="POST"class="row g-3" enctype="multipart/form-data">
-
-            </form>
+            <form action="{{ route('areas.store') }}" method="POST"class="row g-3" enctype="multipart/form-data">
+               @csrf 
+            
                             <p>ALTA</p>
-                            <label>
-                                <input type="text">
-                            </label>
+
+                                <input type="number" name="clave" id="" placeholder="Numero clave del Area">
+                                <input type="text" name="nombre" id="" placeholder="Nombre del area">
+                                <input type="text" name="descripcion" id="" placeholder="Descripcion del puesto(actividades)">
+                                <input type="file" name="foto" id="" placeholder="Selecciona una foto"> 
+                                <input type="checkbox" name="activo" id="">
+                                <input type="number" name="registro" id="" placeholder="Numero de registro">
+                                <input type="submit">
+                          
+                        </form>
 
 
 

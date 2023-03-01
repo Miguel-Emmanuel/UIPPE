@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AreasController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\ProgramasController;
+use App\Models\Areas;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,6 @@ Route::name('registrate')->get('registrate', [Login::class, 'registrate']);
 Route::name('register')->post('register', [Login::class, 'store']);
 
 
+//Resources 
+Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
