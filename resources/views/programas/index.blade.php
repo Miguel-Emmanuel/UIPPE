@@ -213,7 +213,12 @@
                                 <input type="text" name="siglas" id="">
                                 <input type="text" name="nombre" id="">
                                 <input type="text" name="descripcion" id="">
-                                <input type="checkbox" name="activo" id="">
+                                <input type="checkbox" name="activo"  checked id="">
+              {{--                   <input type="hidden" name="id_empleado" value="    @foreach($id as $uwu)
+                                {{ $uwu -> id_empleado + 1}}
+@endforeach"> --}}
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">AGG</button>
+
                             </form>
 
 

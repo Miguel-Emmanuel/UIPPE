@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->text('descripcion')->nullable();
             $table->boolean('activo');
-            $table->integer('id_registro');
+            $table->integer('id_registro')->nullable();
             $table->timestamps();
 
 
