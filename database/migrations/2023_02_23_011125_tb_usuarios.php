@@ -17,9 +17,10 @@ return new class extends Migration
         schema::create('tb_usuarios', function (Blueprint $table){
             $table->bigincrements('id_usuario');
             $table->string('nombre', 50);
+            $table->string('apellido', 50);
             $table->string('email');
             $table->string('password');
-            $table->boolean('activo');
+            // $table->boolean('activo');
             $table->timestamps();
 
 
