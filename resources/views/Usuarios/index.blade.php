@@ -1,256 +1,326 @@
 @extends('layout.navbar')
 @section('content')
-<style>
-    .container {
-        margin-top: 50px;
-    }
-</style>
-<div class="container ">
+<div class="container">
     <div class="row">
-        <div class="col-12">
-            <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta">
-                AGG
-            </button>
+        <div class="col p-4">
+            <h3>Usuarios</h3>
+        </div>
+        <div class="col p-4 d-flex justify-content-end">
+            <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="table-responsive">
             <table class="table">
-
-                <tr>
-                    <th>Clave</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Operaciones</th>
-                </tr>
-                <tr>
-
+                <thead>
+                    <tr>
+                        <th class="text-center">Foto</th>
+                        <th>Clave</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Genero</th>
+                        <th>Académico</th>
+                        <th>Email</th>
+                        <th>Activo</th>
+                        <th colspan="3">Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach($Usuarios as $usuario)
-                <tr>
-                    <td>{{$usuario->clave}}</td>
-                    <td>{{$usuario->nombre}}</td>
-                    <td>{{$usuario->app}}</td>
-
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}">
-                                MODIFICAR
-                            </button>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}">
-                                SHOW
-                            </button>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}">
-                                ELIMINAR
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </td>
-
-                </tr>
-                @endforeach
+                    <tr>
+                        <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 50px; border-radius: 15px;"></td>
+                        <td>{{ $usuario->clave}}</td>
+                        <td>{{ $usuario->nombre}}</td>
+                        <td>{{ $usuario->app .' '. $usuario->apm }}</td>
+                        <td>
+                            @if($usuario->gen == "M" || $usuario->gen == "masculino")
+                            Masculino
+                            @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
+                            Femenino
+                            @else
+                            {{ $usuario -> gen }}
+                            @endif
+                        </td>
+                        <td>{{ $usuario -> academico }}</td>
+                        <td>{{ $usuario -> email }}</td>
+                        <td>
+                            @if($usuario -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button modif modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($usuario -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
-
-
-
-    {{-- ELIMINAR MODAL --}}
-
-
-    @foreach ($Usuarios as $usuario )
-
-
-    <div class="modal fade" id="deleteModal{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    DESEAS ELIMINAR EL PROGRAMA :
-                    <p>{{$usuario -> nombre}} </p>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    {{-- ELIMINAR END MODAL --}}
-    @endforeach
-
-    {{-- SHOW MODAL --}}
-    @foreach ($Usuarios as $usuario)
-    <div class="modal fade" id="modalshow{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalshowLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>NOMBRE: </p>
-                    <p>{{$usuario -> nombre}}</p>
-                    <p>SIGLAS: </p>
-                    <p>{{$usuario -> app}}</p>
-                    <p>ACADEMICO: </p>
-                    <p>{{$usuario -> academico}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    {{-- SHOW END MODAL --}}
-
-    @foreach ($Usuarios as $usuario)
-    <!-- Modal MODIFICAR -->
-    <div class="modal fade" id="exampleModal{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="input-group">
-                        <span class="input-group-text" style="margin-left: 60px "> CLAVE:</span>
-                        <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> clave }}">
-                    </div>
-                    <br><br>
-                    <div class="input-group">
-                        <span class="input-group-text" style="margin-left: 60px "> NOMBRE:</span>
-                        <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> nombre }}">
-                    </div>
-                    <br><br>
-                    <div class="input-group">
-                        <span class="input-group-text" style="margin-left: 60px "> APELLIDO MATERNO:</span>
-                        <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> app }}">
-                    </div>
-
-                </div>
-                <br><br>
-                <div class="input-group">
-                    <span class="input-group-text" style="margin-left: 60px "> APELLIDO PATERNO:</span>
-                    <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> apm }}">
-                </div>
-
-            </div>
-            <br><br>
-            <div class="input-group">
-                <span class="input-group-text" style="margin-left: 60px "> GENERO:</span>
-                <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> genero }}">
-            </div>
-
-        </div>
-        <br><br>
-        <div class="input-group">
-            <span class="input-group-text" style="margin-left: 60px "> FECHA DE NACIMIENTO:</span>
-            <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> fn }}">
-        </div>
-
-    </div>
-    <br><br>
-    <div class="input-group">
-        <span class="input-group-text" style="margin-left: 60px "> ACADEMICO:</span>
-        <input type="text" aria-label="First name" class="form-control" name="clave" style="margin-right: 20px" value="{{ $usuario -> academico }}">
-    </div>
-
-</div>
-<br><br>
-<label for="colFormLabelSm" class="fw-bold">Foto :</label>
-<div class="mb-3">
-
-    <input class="form-control form-control-sm" id="formFileSm" type="file" id="photo" name="photo">
-    <div>
-        <br>
-        <div class="input-group">
-            <div class="input-group-text">@</div>
-            <input type="text" class="form-control" id="autoSizingInputGroup" name="email" placeholder="ejemplo: jimena.diaz@utvtol.edu.mx">
-        </div>
-        <label for="colFormLabelSm" class="fw-bold">Password :</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" name="pass">
-        <br>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name='activo' value="Activo">
-            <label class="form-check-label" for="flexCheckDefault">
-                Activo
-            </label>
-        </div>
-
-        <!-- FALTA LO DE TIPO DE USUARIOS MIS ESTIMADOS -->
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-    </div>
-</div>
 </div>
 
-{{-- MODAL MODIFICAR END --}}
-@endforeach
 
-{{-- ALTA MODAL --}}
 
-<div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
-
+<!-- ELIMINAR START MODAL -->
+@foreach ($Usuarios as $usuario )
+<div class="modal fade" id="deleteModal{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalalta">MODAL | DETALLE DE EMPLEADO</h5>
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar Usuarios</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="contenedor_body">
-                    <form action="{{ route('programas.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
-
-                    </form>
-                    <p>ALTA</p>
-
-
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CERRAR</button>
-                </div>
+            <div class="modal-body text-center">
+                ¿Realmente desea eliminar el registro?
+                <strong>
+                    <p>{{$usuario -> clave .' | '. $usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
+                </strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
             </div>
         </div>
     </div>
-    {{-- ALTA END MODAL --}}
-
-
-
-
-
-
 </div>
+@endforeach
+<!-- ELIMINAR END MODAL -->
+
+<!-- SHOW MODAL START -->
+@foreach ($Usuarios as $usuario)
+<div class="modal fade" id="modalshow{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalshowLabel">Detalles | {{ $usuario -> clave }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center py-3">
+                    <img src="{{ asset('img/post/'.$usuario->foto) }}" alt="{{ $usuario -> foto }}">
+                </div>
+                <div style="margin-left: 90%;">
+                    <h4>
+                        @if($usuario->gen == "M" || $usuario->gen == "masculino")
+                        <i class="fa-solid fa-mars" style="color: blue;"></i>
+                        @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
+                        <i class="fa-solid fa-venus" style="color: pink;"></i>
+                        @endif
+                    </h4>
+                </div>
+                <p>Nombre: {{$usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
+                <p>Fecha de nacimiento: {{$usuario -> fn}}</p>
+                <p>Academico: {{$usuario -> academico}}</p>
+                <p>Correo: {{$usuario -> email}}</p>
+                <!-- <p>Tipo: {{$usuario -> id_tipo}}</p> -->
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- SHOW MODAL END -->
+
+
+<!-- EDIT MODAL START -->
+@foreach ($Usuarios as $usuario)
+<div class="modal fade" id="exampleModal{{ $usuario->id_usuario }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Registro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
+                    <label for="floatingInput">Clave:</label>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <label for="exampleInputEmail1" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" aria-label="First name" value="{{ $usuario -> nombre }}">
+                    </div>
+                    <div class="col">
+                        <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
+                        <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> app }}">
+                    </div>
+                    <div class="col">
+                        <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
+                        <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> apm }}">
+                    </div>
+                </div>
+                <div class="py-2">
+                    <label for="colFormLabelSm" class="form-label">Sexo | Genero :</label>
+                    @if($usuario->gen == "F")
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Masculino
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Femenino
+                        </label>
+                    </div>
+                    @else
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Masculino
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Femenino
+                        </label>
+                    </div>
+                    @endif
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Fecha de nacimiento:</label>
+                    <input type="date" class="form-control" id="fn" name="fn" value="{{ $usuario -> fn }}">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Académico:</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" value="{{ $usuario -> academico }}">
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+                <div class="mb-3">
+                    <hr>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Tipos de usuario</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <hr>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        @if($usuario -> activo > 0)
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                        @else
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                        @endif
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- EDIT MODAL END -->
+
+
+<!-- ADD MODAL START -->
+<div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
+                    {!! csrf_field() !!}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
+                        <label for="floatingInput">Clave:</label>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" aria-label="First name" name="nombre">
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
+                            <input type="text" class="form-control" aria-label="Last name" name="app">
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
+                            <input type="text" class="form-control" aria-label="Last name" name="apm">
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gen" id="flexRadioDefault1" value="F" checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Femenino
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gen" id="flexRadioDefault2" value="M">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Masculino
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control" id="fn" name="fn">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">Académico:</label>
+                        <input type="text" class="form-control" name="academico">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email:</label>
+                        <input type="email" class="form-control" name="email" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
+                        <input class="form-control" type="file" name="foto">
+                    </div>
+                    <div class="mb-3">
+                        <hr>
+                        <select class="form-select" aria-label="Default select example" name="id_tipo">
+                            <option selected>Tipos de usuario</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" href="usuarios/store" class="btn btn-success" value="Enviar" />
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ADD MODAL END -->
 <script>
     $(function() {
         $('#modalmod').modal('show')

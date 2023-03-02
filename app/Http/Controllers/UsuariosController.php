@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,6 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -35,16 +35,14 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        if($request -> file('foto')  !=  '')
-        {
-      $file = $request -> file ('foto');
-      $foto1 = $file->getClientOriginalName();
-      $dates = date('YmdHis');
-      $foto2 = $dates . $foto1;
-      \Storage::disk('local')->put($foto2, \File::get($file));
-        }
-        else{
-          $foto2 = 'men.png';
+        if ($request->file('foto')  !=  '') {
+            $file = $request->file('foto');
+            $foto1 = $file->getClientOriginalName();
+            $dates = date('YmdHis');
+            $foto2 = $dates . $foto1;
+            \Storage::disk('local')->put($foto2, \File::get($file));
+        } else {
+            $foto2 = 'cuervo.png';
         }
         Usuarios::create(array(
             'clave' => $request->input('clave'),
@@ -56,12 +54,13 @@ class UsuariosController extends Controller
             'academico' => $request->input('academico'),
             'foto' => $foto2,
             'email' => $request->input('email'),
-            'pass' => $request->input('pass'),
+            'pass' => "123123", //$request->input('pass'),
             'id_tipo' => $request->input('id_tipo'),
-            'activo' => $request->input('activo'),
-            'id_registro' => $request->input('id_registro'),
+            'activo' => 1,
+            'id_registro' => 1 //$request->input('id_registro'),
+        ));
 
-         ));
+        return redirect('usuarios');
     }
 
     /**
@@ -74,7 +73,7 @@ class UsuariosController extends Controller
     {
         $Usuarios = Usuarios::all();
         return view("lista_empleados")
-        ->with(['usuarios' => $Usuarios]);
+            ->with(['usuarios' => $Usuarios]);
     }
 
     /**
