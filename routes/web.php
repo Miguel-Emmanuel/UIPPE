@@ -27,7 +27,7 @@ Route::get('dashboard', function () {
 Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
 Route::name('valida')->post('valida', [Login::class, 'valida']);
-Route::name('registrate')->get('registrate', [Login::class, 'registrate']);
+Route::name('registrate')->get('registrate',  [Login::class, 'registrate']);
 Route::name('register')->post('register', [Login::class, 'store']);
 
 
