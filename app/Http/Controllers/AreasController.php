@@ -32,20 +32,20 @@ class AreasController extends Controller
       \Storage::disk('local')->put($foto2, \File::get($file));
         }
         else{
-          $foto2 = 'men.png';
+          $foto2 = 'cuervo.png';
         }
         Areas::create(array(
             'clave' => $request->input('clave'),
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
-            'activo' => '1',
             'foto' => $foto2,
+            'activo' => '1',
             //el registro queda nulo
-            'registro' => $request->input('registro'),
+            'id_registro' => 1 ,//$request->input('registro'),
 
          ));
 
-        return redirect()->route("areas.index");
+         return redirect('areas');
     }
 
 }

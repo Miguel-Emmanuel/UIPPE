@@ -7,7 +7,6 @@ use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
-use App\Models\Areas;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +34,7 @@ Route::name('registrate')->get('registrate', [Login::class, 'registrate']);
 Route::name('register')->post('register', [Login::class, 'store']);
 
 // ====================== METAS ======================
-Route::name('metas')->get('metas', [MetasController::class, 'metas']);
+Route::resource('metas',MetasController::class);
 
 
 Route::resource('usuarios',UsuariosController::class);

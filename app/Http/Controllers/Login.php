@@ -34,7 +34,7 @@ class Login extends Controller
         } else {
             $request->session()->put('session_id', $consulta[0]->id_usuario);
             $request->session()->put('session_name', $consulta[0]->nombre);
-            $request->session()->put('session_apellido', $consulta[0]->apellido);
+            $request->session()->put('session_apellido', $consulta[0]->app);
 
 
 

@@ -144,8 +144,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <form action="usuarios/{{$usuario->id_usuario}}/edit" method="POST" enctype="multipart/form-data">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
+                    <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
                     <label for="floatingInput">Clave:</label>
                 </div>
                 <div class="row py-2">
@@ -227,8 +228,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Editar</button>
+                <input type="submit" href="{{url('usuarios/' .$usuario->id_usuario) }}" class="btn btn-success" value="Enviar" />
             </div>
+         </form>
         </div>
     </div>
 </div>

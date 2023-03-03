@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class MetasController extends Controller
 {
-    public function metas()
+    public function index()
     {
         $metas = Metas::all();
-        return view('dashboard.metas.index')
+        return view('metas.index')
             ->with(['metas' => $metas]);
     }
 }
