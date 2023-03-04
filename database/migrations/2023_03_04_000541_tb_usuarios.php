@@ -15,7 +15,7 @@ return new class extends Migration
     {
      //
      schema::create('tb_usuarios', function (Blueprint $table){
-        $table->bigincrements('id_usuario');
+        $table->increments('id_usuario');
         $table->string('clave', 30);
         $table->string('nombre', 50);
         $table->string('app', 50);
@@ -26,7 +26,8 @@ return new class extends Migration
         $table->text('foto')->nullable();
         $table->string('email')->unique();
         $table->string('pass');
-        $table->integer('id_tipo');
+        $table->integer('id_tipo')->unsigned();
+        $table->foreign('id_tipo')->references('id')->on('tb_tipos');
         $table->boolean('activo');
         $table->integer('id_registro');
         $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
+use App\Models\Tipos;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
@@ -15,9 +16,10 @@ class UsuariosController extends Controller
     public function index()
     {
         $Usuarios = Usuarios::all();
-        return view('Usuarios.index', compact('Usuarios'));
+        $Tipos = Tipos::all('id','nombre');
+        return view('Usuarios.index', compact('Usuarios'), compact('Tipos'));
+    
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,6 +27,8 @@ class UsuariosController extends Controller
      */
     public function create()
     {
+        
+       
     }
 
     /**
@@ -44,6 +48,8 @@ class UsuariosController extends Controller
         } else {
             $foto2 = 'cuervo.png';
         }
+
+      
         Usuarios::create(array(
             'clave' => $request->input('clave'),
             'nombre' => $request->input('nombre'),
@@ -60,7 +66,7 @@ class UsuariosController extends Controller
             'id_registro' => 1 //$request->input('id_registro'),
         ));
 
-        return redirect('usuarios');
+        return redirect('usuarios')->compact('tb_tipos');
     }
 
     /**

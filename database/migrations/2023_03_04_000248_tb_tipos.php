@@ -15,7 +15,7 @@ return new class extends Migration
     {
         //
         schema::create('tb_tipos', function (Blueprint $table){
-            $table->bigincrements('id_tipo');
+            $table->increments('id');
             $table->string('clave', 30);
             $table->string('nombre', 50);
             $table->text('descripcion')->nullable();

@@ -144,93 +144,94 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form action="usuarios/{{$usuario->id_usuario}}/edit" method="POST" enctype="multipart/form-data">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
-                    <label for="floatingInput">Clave:</label>
-                </div>
-                <div class="row py-2">
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control" aria-label="First name" value="{{ $usuario -> nombre }}">
+                <form action="usuarios/{{$usuario->id_usuario}}/edit" method="POST" enctype="multipart/form-data">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
+                        <label for="floatingInput">Clave:</label>
                     </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
-                        <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> app }}">
+                    <div class="row py-2">
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" aria-label="First name" value="{{ $usuario -> nombre }}">
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
+                            <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> app }}">
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
+                            <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> apm }}">
+                        </div>
                     </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
-                        <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> apm }}">
-                    </div>
-                </div>
-                <div class="py-2">
-                    <label for="colFormLabelSm" class="form-label">Sexo | Genero :</label>
-                    @if($usuario->gen == "F")
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Masculino
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Femenino
-                        </label>
-                    </div>
-                    @else
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Masculino
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Femenino
-                        </label>
-                    </div>
-                    @endif
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Fecha de nacimiento:</label>
-                    <input type="date" class="form-control" id="fn" name="fn" value="{{ $usuario -> fn }}">
-                </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label">Académico:</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" value="{{ $usuario -> academico }}">
-                </div>
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
-                    <input class="form-control" type="file" id="formFile">
-                </div>
-                <div class="mb-3">
-                    <hr>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Tipos de usuario</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <hr>
-                </div>
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        @if($usuario -> activo > 0)
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    <div class="py-2">
+                        <label for="colFormLabelSm" class="form-label">Sexo | Genero :</label>
+                        @if($usuario->gen == "F")
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Femenino
+                            </label>
+                        </div>
                         @else
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Femenino
+                            </label>
+                        </div>
                         @endif
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control" id="fn" name="fn" value="{{ $usuario -> fn }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">Académico:</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" value="{{ $usuario -> academico }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="mb-3">
+                        <hr>
+                        <label for=""> Tipo de usuario:</label>
+                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}">
+                            
+                            @foreach($Tipos as $info)
+                            <option value={{$info->id}}>{{$info->nombre}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            @if($usuario -> activo > 0)
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            @else
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                            @endif
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                        </div>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <input type="submit" href="{{url('usuarios/' .$usuario->id_usuario) }}" class="btn btn-success" value="Enviar" />
             </div>
-         </form>
+            </form>
         </div>
     </div>
 </div>
@@ -299,11 +300,12 @@
                     </div>
                     <div class="mb-3">
                         <hr>
-                        <select class="form-select" aria-label="Default select example" name="id_tipo">
-                            <option selected>Tipos de usuario</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <label for=""> Tipo de usuario:</label>
+                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo">
+                            <option value="">Elige al tipo de usuario</option>
+                            @foreach($Tipos as $info)
+                            <option value={{$info->id}}>{{$info->nombre}}</option>
+                            @endforeach
                         </select>
                         <hr>
                     </div>

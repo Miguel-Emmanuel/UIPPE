@@ -23,7 +23,12 @@ class Usuarios extends Model
         'pass',
         'id_tipo',
         'activo',
-         'id_registro'
+        'id_registro'
     ];
+
+    public function tb_tipos() {
+        return $this->belongsTo(tb_tipos::class,'id_tipo');
+
+    }
     
 }

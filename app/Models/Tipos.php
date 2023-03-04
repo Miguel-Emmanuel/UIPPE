@@ -17,4 +17,9 @@ class Tipos extends Model
         'activo',
          'id_registro'
     ];
+
+    public function Usuarios() {
+        return $this->hasMany(Usuarios::class, 'id_tipos', 'id');
+
+    }
 }
