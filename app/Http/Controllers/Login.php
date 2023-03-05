@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReestablecerPassword;
+use Illuminate\Support\Facades\DB;
 
 class Login extends Controller
 {
@@ -12,14 +15,21 @@ class Login extends Controller
 
     public function login()
     {
-        return view('login');
+        return view('sesiones/login');
     }
+
     public function registrate()
     {
-
         //aca va la vista de edugo!!
-        return view('register');
+        return view('sesiones/register');
     }
+
+    public function recuperar()
+    {
+        //recuperar contrase!!
+        return view('sesiones/recuperacion');
+    }
+
     public function valida(Request $request)
     {
         $email = $request->input('email');
@@ -63,5 +73,53 @@ class Login extends Controller
         Usuarios::create($input);
 
         return redirect('login');
+    }
+
+    public function EnviarCorreo(Request $request){
+        $uwu = "holi";
+        $email = $request->input('email');
+        $consulta = Usuarios::where('email', '=', $email)
+            ->get();
+
+            $contacto = Usuarios::select('id_usuario')->where('email', '=', $email)
+            ->get();
+
+            if (count($consulta) == 0) {
+                session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+                return redirect('recuperacion');
+            } else {
+                Mail::to($email)->send(new ReestablecerPassword($contacto));
+                session()->flash('Exito', 'Revise su bandeja de entrada.');
+                return redirect('recuperacion');
+                //return new ReestablecerPassword($contacto);
+        }
+    }
+
+    public function reset()
+    {
+        //recuperar contrase!!
+        return view('sesiones/reset');
+    }
+    public function resetpass(Request $request)
+    {
+        $email = $request->input('email');
+        $consulta = Usuarios::where('email', '=', $email)->get();
+        $pass1 = $request->input('pass1');
+        $pass2 = $request->input('pass2');
+
+        if (count($consulta) == 0) {
+            session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+                return redirect('reset');
+        } else{
+            if($pass1 == $pass2){
+                Usuarios::where('email', $email)->update(array('pass'=>$pass1,));
+                session()->flash('Exito', 'La contraseña se ha reestablecido correctamente.');
+                return redirect('/');
+            }else{
+                session()->flash('Error', 'Las contraseñas no coinciden.');
+                return redirect('reset');
+            }
+            
+        }
     }
 }
