@@ -20,13 +20,13 @@
                         <th>Académico</th>
                         <th>Email</th>
                         <th>Activo</th>
-                        <th colspan="3">Operaciones</th>
+                        <th class="text-center" colspan="3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($Usuarios as $usuario)
                     <tr>
-                        <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 50px; border-radius: 15px;"></td>
+                        <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
                         <td>{{ $usuario->clave}}</td>
                         <td>{{ $usuario->nombre}}</td>
                         <td>{{ $usuario->app .' '. $usuario->apm }}</td>
@@ -53,7 +53,7 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}"><i class="fa-solid fa-eye"></i></button>
                         </td>
                         <td>
-                            <!-- Button modif modal -->
+                            <!-- Button edit modal -->
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
                         <td>
@@ -109,23 +109,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="text-center py-3">
-                    <img src="{{ asset('img/post/'.$usuario->foto) }}" alt="{{ $usuario -> foto }}">
+                <div class="row">
+                    <div class="text-center py-3">
+                        <img src="{{ asset('img/post/'.$usuario->foto) }}" alt="{{ $usuario -> foto }}" style="width: 300px; border-radius: 100px;">
+                    </div>
+                    <div class="text-center">
+                        <h4>
+                            @if($usuario->gen == "M" || $usuario->gen == "masculino")
+                            <i class="fa-solid fa-mars" style="color: blue;"></i>
+                            @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
+                            <i class="fa-solid fa-venus" style="color: pink;"></i>
+                            @endif
+                        </h4>
+                    </div>
+                    <p><strong>Nombre: </strong><br>{{$usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
+                    <div class="col-6 text-center">
+                        <p><strong>Fecha de nacimiento: </strong><br>{{$usuario -> fn}}</p>
+                    </div>
+                    <div class="col-6 text-center">
+                    <strong>Estado: </strong>@if($usuario -> activo > 0) <p style="color: green;">Activo</p> @else <p style="color: red;">Inactivo</p> @endif
+                    </div>
+                    <p><strong>Academico: </strong>{{$usuario -> academico}}</p>
+                    <p><strong>Correo: </strong>{{$usuario -> email}}</p>
+                    <!-- <p>Tipo: {{$usuario -> id_tipo}}</p> -->
                 </div>
-                <div style="margin-left: 90%;">
-                    <h4>
-                        @if($usuario->gen == "M" || $usuario->gen == "masculino")
-                        <i class="fa-solid fa-mars" style="color: blue;"></i>
-                        @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
-                        <i class="fa-solid fa-venus" style="color: pink;"></i>
-                        @endif
-                    </h4>
-                </div>
-                <p>Nombre: {{$usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
-                <p>Fecha de nacimiento: {{$usuario -> fn}}</p>
-                <p>Academico: {{$usuario -> academico}}</p>
-                <p>Correo: {{$usuario -> email}}</p>
-                <!-- <p>Tipo: {{$usuario -> id_tipo}}</p> -->
             </div>
         </div>
     </div>
@@ -310,7 +317,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>

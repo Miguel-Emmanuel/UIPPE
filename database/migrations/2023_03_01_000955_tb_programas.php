@@ -22,8 +22,6 @@ return new class extends Migration
             $table->boolean('activo');
             $table->integer('id_registro')->nullable();
             $table->timestamps();
-
-
         });
     }
 
