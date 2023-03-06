@@ -208,10 +208,9 @@
                     <div class="mb-3">
                         <hr>
                         <label for=""> Tipo de usuario:</label>
-                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}">
-                            
+                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}"> 
                             @foreach($Tipos as $info)
-                            <option value={{$info->id}}>{{$info->nombre}}</option>
+                            <option value={{$info->id}} {{ $info->id == $usuario->id_tipo ?'selected':''; }}>{{$info->nombre}}</option>
                             @endforeach
                         </select>
                         <hr>
