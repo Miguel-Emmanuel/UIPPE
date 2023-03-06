@@ -30,15 +30,15 @@ $session_apellido = session('session_apellido');
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="#" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
+                <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
-                    <a href="/dashboard" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Panel Administrativo</span> </a>
-                    <a href="{{route('areas.index')}}" class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Áreas</span> </a>
-                    <a href="{{ route('metas') }}" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Metas</span> </a>
+                    <a href="/dashboard" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Panel</span> </a>
+                    <a href="{{ route('areas.index') }}" class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Áreas</span> </a>
+                    <a href="{{ route('metas.index') }}" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Metas</span> </a>
                     <a href="usuarios" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Usuarios</span> </a>
                     <a href="{{ route('programas.index') }}" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Programas</span> </a>
-                    <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Stats</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Tipos</span> </a>
                 </div>
             </div>
             @if($session_id)

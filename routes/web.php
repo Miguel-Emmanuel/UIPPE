@@ -34,13 +34,10 @@ Route::name('valida')->post('valida', [Login::class, 'valida']);
 Route::name('registrate')->get('registrate', [Login::class, 'registrate']);
 Route::name('register')->post('register', [Login::class, 'store']);
 
-// ====================== METAS ======================
-Route::name('metas')->get('metas', [MetasController::class, 'metas']);
-
-
-Route::resource('usuarios',UsuariosController::class);
-
-
 //Resources 
 Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
+Route::resource('usuarios',UsuariosController::class);
+Route::resource('metas', MetasController::class);
+Route::name('deleteMeta')->get('deleteMeta/{id}',[MetasController::class, 'destroy']);
+Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);

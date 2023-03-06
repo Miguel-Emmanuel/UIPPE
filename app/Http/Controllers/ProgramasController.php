@@ -30,9 +30,9 @@ class ProgramasController extends Controller
         Programas::create(array(
             'abreviatura' => $request->input('siglas'),
             'nombre' => $request->input('nombre'),
-            'descripcion' => $request->input('descipcion'),
+            'descripcion' => $request->input('descripcion'),
             'activo' => 1,
-
+            //FALTA ===> id_registro
          ));
         return redirect()->route("programas.index");
 
