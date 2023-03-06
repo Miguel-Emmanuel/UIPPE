@@ -66,7 +66,7 @@ class UsuariosController extends Controller
             'id_registro' => 1 //$request->input('id_registro'),
         ));
 
-        return redirect('usuarios')->compact('tb_tipos');
+        return redirect('usuarios');
     }
 
     /**

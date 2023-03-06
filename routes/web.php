@@ -7,6 +7,7 @@ use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
+use App\Http\Controllers\TiposController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ Route::resource('metas',MetasController::class);
 
 
 Route::resource('usuarios',UsuariosController::class);
-
+Route::resource('tipos', TiposController::class);
 
 //Resources 
 Route::resource('areas', AreasController::class);
