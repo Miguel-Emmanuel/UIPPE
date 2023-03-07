@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         // $Usuarios = Usuarios::all();
@@ -20,21 +16,7 @@ class UsuariosController extends Controller
         $Tipos = Tipos::all('id', 'nombre');
         return view('Usuarios.index', compact('Usuarios'), compact('Tipos'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         if ($request->file('foto')  !=  '') {
@@ -119,19 +101,6 @@ class UsuariosController extends Controller
         return redirect('usuarios');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-       
-    }
-
- 
     public function destroy(Usuarios $id)
     {
         $query = Usuarios::find($id->id_usuario);

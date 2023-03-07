@@ -91,9 +91,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('deleteUsuario', ['id' => $usuario->id_usuario]) }}">
+                <a href="{{ route('deleteUsers', ['id' => $usuario->id_usuario]) }}">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
                 </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
