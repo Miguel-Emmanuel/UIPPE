@@ -9,7 +9,7 @@ class Tipos extends Model
 {
     use HasFactory;
     protected $table = 'tb_tipos';
-    protected $primaryKey = 'id_tipo';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'clave',
         'nombre',

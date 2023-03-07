@@ -17,7 +17,7 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Registro</th>
+                        <!-- <th scope="col">Registro</th> -->
                         <th scope="col" class="text-center" colspan="3">Acciones</th>
                     </tr>
                 </thead>
@@ -35,10 +35,10 @@
                             <p style="color: red;">Inactivo</p>
                             @endif
                         </td>
-                        <td class="text-center">{{ $info->id_registro }}</td>
+                        <!-- <td class="text-center">{{ $info->id_registro }}</td> -->
                         <td>
                             <!-- Button show modal -->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_programa }}"><i class="fa-solid fa-eye"></i></button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_programa }}"><i class="fa-solid fa-eye"></i></button>
                         </td>
                         <td>
                             <!-- Button edit modal -->
@@ -46,7 +46,11 @@
                         </td>
                         <td>
                             <!-- Button delete modal -->
+                            @if($info -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
                         </td>
                 </tbody>
                 @endforeach
@@ -99,7 +103,9 @@
                         <p><strong>Descripción</strong><br>{{ $info->descripcion }}</p>
                     </div>
                     <div class="col-6 text-center">
-                        @if($info->activo > 0) <strong>Estado: </strong> <p style="color: green;">Activo</p>@else <strong>Estado: </strong> <p style="color: red;">Inactivo</p>@endif
+                        @if($info->activo > 0) <strong>Estado: </strong>
+                        <p style="color: green;">Activo</p>@else <strong>Estado: </strong>
+                        <p style="color: red;">Inactivo</p>@endif
                     </div>
                     <div class="col-6 text-center">
                         <p><strong>Registro: </strong><br>{{ $info->id_registro }}</p>
@@ -125,36 +131,38 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="py-2">
-                    <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
-                    <input type="text" class="form-control" name="siglas" value="{{ $info -> abreviatura }}">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>
-                    <textarea type="text" class="form-control" name="nombre">{{ $info -> nombre }}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Descripción del programa:</label>
-                    <textarea type="text" class="form-control" name="descripcion" rows="7">{{ $info -> descripcion }}</textarea>
-                </div>
-                <div class="mb-3">
-                    <div class="form-check">
-                        @if($info -> activo > 0)
-                        <input class="form-check-input" type="checkbox" name="activo" checked>
-                        @else
-                        <input class="form-check-input" type="checkbox" name="activo">
-                        @endif
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                <form action="{{ route('editProgram', ['id' => $info->id_programa]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <div class="py-2">
+                        <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
+                        <input type="text" class="form-control" name="abreviatura" value="{{ $info -> abreviatura }}">
                     </div>
-                </div>
-                <!-- id de registro -->
-                {{-- <input type="hidden" name="id_registro" value="@foreach($id as $uwu){{ $uwu -> id_empleado + 1}}@endforeach"> --}}
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>
+                        <textarea type="text" class="form-control" name="nombre">{{ $info -> nombre }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Descripción del programa:</label>
+                        <textarea type="text" class="form-control" name="descripcion" rows="7">{{ $info -> descripcion }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            @if($info -> activo > 0)
+                            <input class="form-check-input" type="checkbox" name="activo" checked>
+                            @else
+                            <input class="form-check-input" type="checkbox" name="activo">
+                            @endif
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                        </div>
+                    </div>
             </div>
             <br><br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-success">Editar</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
@@ -175,7 +183,7 @@
                     @csrf
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
-                        <input type="text" class="form-control" name="siglas" placeholder="UIPPE">
+                        <input type="text" class="form-control" name="abreviatura" placeholder="UIPPE">
                     </div>
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>

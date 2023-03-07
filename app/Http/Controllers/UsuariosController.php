@@ -15,10 +15,10 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        $Usuarios = Usuarios::all();
-        $Tipos = Tipos::all('id','nombre');
+        // $Usuarios = Usuarios::all();
+        $Usuarios = \DB::select('SELECT usuario.id_usuario, usuario.clave, usuario.nombre as nombreU, usuario.app, usuario.apm, usuario.gen, usuario.fn, usuario.academico, usuario.foto, usuario.email,usuario.activo,usuario.id_tipo, tipo.nombre as nombreT FROM tb_usuarios as usuario, tb_tipos as tipo WHERE usuario.id_tipo = tipo.id');
+        $Tipos = Tipos::all('id', 'nombre');
         return view('Usuarios.index', compact('Usuarios'), compact('Tipos'));
-    
     }
     /**
      * Show the form for creating a new resource.
@@ -27,8 +27,6 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        
-       
     }
 
     /**
@@ -49,7 +47,7 @@ class UsuariosController extends Controller
             $foto2 = 'cuervo.png';
         }
 
-      
+
         Usuarios::create(array(
             'clave' => $request->input('clave'),
             'nombre' => $request->input('nombre'),
@@ -69,12 +67,7 @@ class UsuariosController extends Controller
         return redirect('usuarios');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $Usuarios = Usuarios::all();
@@ -82,15 +75,48 @@ class UsuariosController extends Controller
             ->with(['usuarios' => $Usuarios]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+ 
+    public function edit(Usuarios $id, Request $request)
     {
-        //
+        $query = Usuarios::find($id->id_usuario);
+
+        if ($request->file('foto') != '') {
+            $file = $request->file('foto');
+
+            $foto1 = $file->getClientOriginalName();
+            $ldate = date('YmdHis');
+            $foto2 = $ldate . $foto1;
+
+            \Storage::disk('local')->put($foto2, \File::get($file));
+        } else {
+            $foto2 = $query-> foto;
+        }
+
+        //dd($foto2);
+    
+        $activo = 1;
+
+        if ($request->input('activo') == '') {
+            $activo = 0;
+        } else if ($request->input('activo') == 'ON') {
+            $activo = 1;
+        }
+
+        
+        $query->clave = trim($request->clave);
+        $query->nombre = trim($request->nombre);
+        $query->app = trim($request->app);
+        $query->apm = trim($request->apm);
+        $query->gen = trim($request->gen);
+        $query->fn = trim($request->fn);
+        $query->academico = trim($request->academico);
+        $query->foto = $foto2;
+        $query->email = trim($request->email);
+        $query->id_tipo = $request->id_tipo;
+        $query->activo = $activo;
+        $query->save();
+
+        return redirect('usuarios');
     }
 
     /**
@@ -102,44 +128,15 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Usuarios= Usuarios::findOrFail($id);
-        // $input=$request->all();
-        // $Usuarios->update($input);
-        if ($request->file('foto')  !=  '') {
-            $file = $request->file('foto');
-            $foto1 = $file->getClientOriginalName();
-            $dates = date('YmdHis');
-            $foto2 = $dates . $foto1;
-            \Storage::disk('local')->put($foto2, \File::get($file));
-        } else {
-            $foto2 = 'cuervo.png';
-        }
-        $Usuarios::update(array(
-            'clave' => $request->input('clave'),
-            'nombre' => $request->input('nombre'),
-            'app' => $request->input('app'),
-            'apm' => $request->input('apm'),
-            'gen' => $request->input('gen'),
-            'fn' => $request->input('fn'),
-            'academico' => $request->input('academico'),
-            'foto' => $foto2,
-            'email' => $request->input('email'),
-            'pass' => "123123", //$request->input('pass'),
-            'id_tipo' => $request->input('id_tipo'),
-            'activo' => 1,
-            'id_registro' => 1 //$request->input('id_registro'),
-        ));
-        return redirect('usuarios');
+       
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+ 
+    public function destroy(Usuarios $id)
     {
-        //
+        $query = Usuarios::find($id->id_usuario);
+        $query -> activo = 0;
+        $query -> save();
+        return redirect('usuarios');
     }
 }

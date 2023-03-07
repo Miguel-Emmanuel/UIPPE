@@ -28,7 +28,7 @@
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
                         <td>{{ $usuario->clave}}</td>
-                        <td>{{ $usuario->nombre}}</td>
+                        <td>{{ $usuario->nombreU}}</td>
                         <td>{{ $usuario->app .' '. $usuario->apm }}</td>
                         <td>
                             @if($usuario->gen == "M" || $usuario->gen == "masculino")
@@ -86,12 +86,14 @@
             <div class="modal-body text-center">
                 ¿Realmente desea eliminar el registro?
                 <strong>
-                    <p>{{$usuario -> clave .' | '. $usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
+                    <p>{{$usuario -> clave .' | '. $usuario -> nombreU .' '. $usuario -> app .' '. $usuario->apm}}</p>
                 </strong>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <a href="{{ route('deleteUsuario', ['id' => $usuario->id_usuario]) }}">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </a>
             </div>
         </div>
     </div>
@@ -122,7 +124,7 @@
                             @endif
                         </h4>
                     </div>
-                    <p><strong>Nombre: </strong><br>{{$usuario -> nombre .' '. $usuario -> app .' '. $usuario->apm}}</p>
+                    <p><strong>Nombre: </strong><br>{{$usuario -> nombreU .' '. $usuario -> app .' '. $usuario->apm}}</p>
                     <div class="col-6 text-center">
                         <p><strong>Fecha de nacimiento: </strong><br>{{$usuario -> fn}}</p>
                     </div>
@@ -131,7 +133,7 @@
                     </div>
                     <p><strong>Academico: </strong>{{$usuario -> academico}}</p>
                     <p><strong>Correo: </strong>{{$usuario -> email}}</p>
-                    <!-- <p>Tipo: {{$usuario -> id_tipo}}</p> -->
+                    <p><strong>Tipo: </strong> {{$usuario->nombreT}}</p>
                 </div>
             </div>
         </div>
@@ -151,7 +153,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="usuarios/{{$usuario->id_usuario}}/edit" method="POST" enctype="multipart/form-data">
+               <form action="{{ route('editUsuario', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $usuario -> clave }}">
                         <label for="floatingInput">Clave:</label>
@@ -159,41 +163,41 @@
                     <div class="row py-2">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" aria-label="First name" value="{{ $usuario -> nombre }}">
+                            <input type="text" class="form-control" aria-label="First name" name="nombre" value="{{ $usuario -> nombreU }}" >
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
-                            <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> app }}">
+                            <input type="text" class="form-control" aria-label="Last name" name="app" value="{{ $usuario -> app }}">
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
-                            <input type="text" class="form-control" aria-label="Last name" value="{{ $usuario -> apm }}">
+                            <input type="text" class="form-control" aria-label="Last name" name="apm" value="{{ $usuario -> apm }}">
                         </div>
                     </div>
                     <div class="py-2">
                         <label for="colFormLabelSm" class="form-label">Sexo | Genero :</label>
                         @if($usuario->gen == "F")
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="M" id="flexCheckDefault" name="gen">
                             <label class="form-check-label" for="flexCheckDefault">
                                 Masculino
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" value="F" id="flexCheckChecked" name="gen" checked>
                             <label class="form-check-label" for="flexCheckChecked">
                                 Femenino
                             </label>
                         </div>
                         @else
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                            <input class="form-check-input" type="checkbox" value="M" name="gen" id="flexCheckDefault" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Masculino
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="F" name="gen" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
                                 Femenino
                             </label>
@@ -206,11 +210,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="formGroupExampleInput" class="form-label">Académico:</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" value="{{ $usuario -> academico }}">
+                        <input type="text" class="form-control" id="formGroupExampleInput" name="academico" value="{{ $usuario -> academico }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email:</label>
+                        <input type="email" class="form-control" name="email" value="{{$usuario -> email}}" placeholder="name@example.com">
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" name="foto" id="formFile">
                     </div>
                     <div class="mb-3">
                         <hr>
@@ -223,19 +231,19 @@
                         <hr>
                     </div>
                     <div class="mb-3">
-                        <div class="form-check form-switch">
+                        <div class="form-check">
                             @if($usuario -> activo > 0)
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" name="activo" checked>
                             @else
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                            <input class="form-check-input" type="checkbox" name="activo">
                             @endif
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" href="{{url('usuarios/' .$usuario->id_usuario) }}" class="btn btn-success" value="Enviar" />
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input type="submit" class="btn btn-success" value="Enviar" />
             </div>
             </form>
         </div>

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col p-4">
-            <h3>Usuarios</h3>
+            <h3>Tipo de Usuarios</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
@@ -74,8 +74,10 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <a href="{{ route('deleteTip', ['id' => $tipo->id]) }}">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -94,7 +96,7 @@
             </div>
             <div class="modal-body">
                 <p>Nombre: {{$tipo -> nombre }}</p>
-                <p>Descripción: {{$tipo -> decripción}}</p>
+                <p>Descripción: {{$tipo -> descripcion}}</p>
             </div>
         </div>
     </div>
@@ -113,13 +115,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('editTip', ['id' => $tipo->id]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $tipo -> clave }}">
                         <label for="floatingInput">Clave:</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $tipo -> nombre }}">
+                        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="name@example.com" value="{{ $tipo -> nombre }}">
                         <label for="floatingInput">Nombre:</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -129,9 +133,9 @@
                     <div class="mb-3">
                         <div class="form-check form-switch">
                             @if($tipo -> activo > 0)
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo" checked>
                             @else
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo">
                             @endif
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
@@ -139,7 +143,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" href="#" class="btn btn-success" value="Enviar" />
+                <button type="submit" class="btn btn-success">Editar</button>
             </div>
             </form>
         </div>

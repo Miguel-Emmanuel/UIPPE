@@ -79,7 +79,9 @@ class MetasController extends Controller
 
     public function destroy(Metas $id)
     {
-        $id -> delete();
+        $query = Metas::find($id->id_meta);
+        $query -> activo = 0;
+        $query -> save();
         return redirect('metas');
     }
 }

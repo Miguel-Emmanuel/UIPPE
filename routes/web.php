@@ -39,5 +39,19 @@ Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
 Route::resource('usuarios',UsuariosController::class);
 Route::resource('metas', MetasController::class);
+Route::resource('tipos', TiposController::class);
+
 Route::name('deleteMeta')->get('deleteMeta/{id}',[MetasController::class, 'destroy']);
 Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);
+
+Route::name('editArea')->put('editArea/{id}', [AreasController::class, 'edit']);
+Route::name('deleteArea')->get('deleteArea/{id}',[AreasController::class, 'destroy']);
+
+Route::name('editUsuario')->put('editUsuario/{id}', [UsuariosController::class, 'edit']);
+Route::name('deleteUsuario')->get('deleteUsuario/{id}',[UsuariosController::class, 'destroy']);
+
+Route::name('editProgram')->put('editProgram/{id}', [ProgramasController::class, 'edit']);
+Route::name('deleteProgram')->get('deleteUsuario/{id}',[ProgramasController::class, 'destroy']);
+
+Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
+Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);

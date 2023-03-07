@@ -66,7 +66,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar Usuarios</h1>
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar Área</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
@@ -76,8 +76,10 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -118,37 +120,41 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $info -> clave }}">
-                    <label for="floatingInput">Clave:</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $info -> nombre }}">
-                    <label for="floatingInput">Nombre:</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $info -> descripcion }}">
-                    <label for="floatingInput">Descripción:</label>
-                </div>
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
-                    <input class="form-control" type="file" id="formFile">
-                </div>
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        @if($info -> activo > 0)
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                        @else
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                        @endif
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                <form action="{{ route('editArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $info -> clave }}">
+                        <label for="floatingInput">Clave:</label>
                     </div>
-                </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="name@example.com" value="{{ $info -> nombre }}">
+                        <label for="floatingInput">Nombre:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $info -> descripcion }}">
+                        <label for="floatingInput">Descripción:</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
+                        <input class="form-control" type="file" name="foto" id="formFile" value="{{ $info->foto}}">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            @if($info -> activo > 0)
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo" checked>
+                            @else
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo">
+                            @endif
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                        </div>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Editar</button>
+                <button type="submit" class="btn btn-success">Editar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -176,7 +182,7 @@
                         <label for="floatingInput">Nombre:</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" >
+                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com">
                         <label for="floatingInput">Descripción:</label>
                     </div>
                     <div class="mb-3">

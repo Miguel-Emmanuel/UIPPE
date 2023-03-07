@@ -34,4 +34,35 @@ class TiposController extends Controller
         return view("lista_empleados")
             ->with(['tipos' => $Tipos]);
     }
+
+    public function edit(Tipos $id, Request $request)
+    {
+        $query = Tipos::find($id->id);
+
+    
+        $activo = 1;
+
+        if ($request->input('activo') == '') {
+            $activo = 0;
+        } else if ($request->input('activo') == 'ON') {
+            $activo = 1;
+        }
+
+        
+        $query->clave = trim($request->clave);
+        $query->nombre = trim($request->nombre);
+        $query->descripcion = trim($request->descripcion);
+        $query->activo = $activo;
+        $query->save();
+
+        return redirect('tipos');
+    }
+
+    public function destroy(Tipos $id)
+    {
+        $query = Tipos::find($id->id);
+        $query -> activo = 0;
+        $query -> save();
+        return redirect('tipos');
+    }
 }
