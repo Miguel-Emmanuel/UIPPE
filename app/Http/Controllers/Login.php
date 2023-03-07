@@ -81,7 +81,7 @@ class Login extends Controller
         $consulta = Usuarios::where('email', '=', $email)
             ->get();
 
-            $contacto = Usuarios::select('id_usuario')->where('email', '=', $email)
+            $contacto = Usuarios::select('nombre')->where('email', '=', $email)
             ->get();
 
             if (count($consulta) == 0) {
