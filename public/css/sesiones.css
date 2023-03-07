@@ -1,25 +1,14 @@
-/*Universal*/
 .bg{
     background-image: url("../logos/uippelogo.png");
     background-position: center center;
     background-repeat: no-repeat;
 }
+/*body{
+    background: #367E18;
+    background: linear-gradient(to right, #367E18, #5b7e4d);
+}*/
 
 .container{
     margin-top: 100px;
     border: 3px solid #367E18;
-}
-
-
-
-/*Recuperacion*/
-.in{
-    margin: 0 auto;
-    width: 80%;
-}
-.boton{
-text-align: end;
-}
-p{
-    text-align: justify;
 }
