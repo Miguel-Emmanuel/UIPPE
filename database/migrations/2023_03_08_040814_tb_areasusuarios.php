@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         //
-        schema::create('tb_programas', function (Blueprint $table){
-            $table->bigincrements('id_programa');
-            $table->string('abreviatura', 30);
-            $table->string('nombre', 50);
-            $table->text('descripcion')->nullable();
+        schema::create('tb_areasusuarios', function (Blueprint $table){
+            $table->increments('id_areasusuarios');
+            $table->integer('area_id')->unsigned();
+            $table->foreign('area_id')->references('id_area')->on('tb_areas');
+            $table->integer('usuario_id')->unsigned();
+            $table->foreign('usuario_id')->references('id_usuario')->on('tb_usuarios');
             $table->boolean('activo');
-            $table->integer('id_registro')->nullable();
+            $table->integer('id_registro');
             $table->timestamps();
-
 
         });
     }
@@ -35,7 +35,7 @@ return new class extends Migration
     public function down()
     {
         //
-        schema::dropIfExists('tb_programas');
+        schema::dropIfExists('tb_areasusuarios');
 
     }
 };

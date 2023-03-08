@@ -15,7 +15,7 @@ return new class extends Migration
     {
         //
         schema::create('tb_areas', function (Blueprint $table){
-            $table->bigincrements('id_area');
+            $table->increments('id_area');
             $table->string('clave', 30);
             $table->string('nombre', 50);
             $table->text('descripcion')->nullable();
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->boolean('activo');
             $table->integer('id_registro');
             $table->timestamps();
-
 
         });
     }

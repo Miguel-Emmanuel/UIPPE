@@ -9,7 +9,7 @@ class Tipos extends Model
 {
     use HasFactory;
     protected $table = 'tb_tipos';
-    protected $primaryKey = 'id_tipo';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'clave',
         'nombre',
@@ -17,4 +17,9 @@ class Tipos extends Model
         'activo',
          'id_registro'
     ];
+
+    public function Usuarios() {
+        return $this->hasMany(Usuarios::class, 'id_tipos', 'id');
+
+    }
 }

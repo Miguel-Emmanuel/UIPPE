@@ -11,12 +11,7 @@ class ProgramasController extends Controller
     public function show()
     {
         $programas = Programas::all();
-        /*    $des = DB::table('tb_empleados')
-        ->orderBy('id_empleado', 'desc')
-        ->limit(1)
-        ->get(); */
         return view("programas.index")
-            /*      ->with(['id' => $des]) */
             ->with(['programas' => $programas]);
     }
     public function index()
@@ -29,19 +24,42 @@ class ProgramasController extends Controller
     public function store(Request $request)
     {
         Programas::create(array(
-            'abreviatura' => $request->input('siglas'),
+            'abreviatura' => $request->input('abreviatura'),
             'nombre' => $request->input('nombre'),
-            'descripcion' => $request->input('descipcion'),
+            'descripcion' => $request->input('descripcion'),
             'activo' => 1,
-
+            //FALTA ===> id_registro
         ));
         return redirect()->route("programas.index");
     }
-    public function destroy(Programas $programa)
-    {
 
-        $programa->delete();
-        return redirect()->route("programas.index");
-        return redirect()->route("lista_usuarios");
+    public function edit(Programas $id, Request $request)
+    {
+        $query = Programas::find($id->id_programa);
+
+        $activo = 1;
+
+        if ($request->input('activo') == '') {
+            $activo = 0;
+        } else if ($request->input('activo') == 'ON') {
+            $activo = 1;
+        }
+
+
+        $query->abreviatura = trim($request->abreviatura);
+        $query->nombre = trim($request->nombre);
+        $query->descripcion = trim($request->descripcion);
+        $query->activo = $activo;
+        $query->save();
+
+        return redirect('programas');
+    }
+
+    public function destroy(Programas $id)
+    {
+        $query = Programas::find($id->id_programa);
+        $query -> activo = 0;
+        $query -> save();
+        return redirect('programas');
     }
 }
