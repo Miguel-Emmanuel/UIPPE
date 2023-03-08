@@ -23,6 +23,21 @@ class ProgramasController extends Controller
     }
     public function store(Request $request)
     {
+        $rules = [
+            'abreviatura' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ];
+
+        $message = [
+            'abreviatura.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'descripcion.required' => 'Las credenciales son invalidas'
+        ];
+
+        $this->validate($request, $rules, $message);
+
+
         Programas::create(array(
             'abreviatura' => $request->input('abreviatura'),
             'nombre' => $request->input('nombre'),
@@ -58,8 +73,8 @@ class ProgramasController extends Controller
     public function destroy(Programas $id)
     {
         $query = Programas::find($id->id_programa);
-        $query -> activo = 0;
-        $query -> save();
+        $query->activo = 0;
+        $query->save();
         return redirect('programas');
     }
 }

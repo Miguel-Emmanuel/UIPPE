@@ -265,22 +265,35 @@
             <div class="modal-body">
                 <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
+                    @include('components.flash_alerts')
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
                         <label for="floatingInput">Clave:</label>
+                         @error('clave')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="row py-2">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
                             <input type="text" class="form-control" aria-label="First name" name="nombre">
+                         @error('nombre')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="app">
+                            @error('app')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="apm">
+                            @error('apm')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                         </div>
                     </div>
                     <div class="py-2">
@@ -308,6 +321,9 @@
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email:</label>
                         <input type="email" class="form-control" name="email" placeholder="name@example.com">
+                        @error('email')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>

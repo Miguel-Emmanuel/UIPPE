@@ -181,17 +181,27 @@
             <div class="modal-body">
                 <form action="{{ route('programas.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
                     @csrf
+                    @include('components.flash_alerts')
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
                         <input type="text" class="form-control" name="abreviatura" placeholder="UIPPE">
+                        @error('abreviatura')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>
                         <textarea type="text" class="form-control" name="nombre"></textarea>
+                        @error('nombre')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Descripción del programa:</label>
                         <textarea type="text" class="form-control" name="descripcion" rows="7"></textarea>
+                        @error('descripcion')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <div class="form-check">

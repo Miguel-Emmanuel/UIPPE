@@ -53,9 +53,9 @@ class MetasController extends Controller
         ];
 
         $message = [
-            'clave.required' => 'Es necesario colocar una clave',
-            'nombre.required' => 'Es necesario colocar el nombre de la Meta',
-            'unidadmedida.required' => 'Es necesario la Unidad de Medida para la Meta'
+            'clave.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'unidadmedida.required' => 'Las credenciales son invalidas'
         ];
 
         $this->validate($request, $rules, $message);

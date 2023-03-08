@@ -173,17 +173,27 @@
             <div class="modal-body">
                 <form action="{{ route('areas.store') }}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
+                    @include('components.flash_alerts')
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
                         <label for="floatingInput">Clave:</label>
+                        @error('clave')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="name@example.com">
                         <label for="floatingInput">Nombre:</label>
+                        @error('nombre')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com">
                         <label for="floatingInput">Descripción:</label>
+                        @error('descripcion')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>

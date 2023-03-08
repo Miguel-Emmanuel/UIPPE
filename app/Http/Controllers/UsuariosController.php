@@ -19,6 +19,26 @@ class UsuariosController extends Controller
    
     public function store(Request $request)
     {
+
+         $rules = [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'app' => 'required',
+            'apm' => 'required',
+            'email' => 'required'
+        ];
+
+        $message = [
+            'clave.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'app.required' => 'Las credenciales son invalidas',
+            'apm.required' => 'Las credenciales son invalidas',
+            'email.required' => 'Las credenciales son invalidas'
+        ];
+
+        $this->validate($request, $rules, $message);
+        
+
         if ($request->file('foto')  !=  '') {
             $file = $request->file('foto');
             $foto1 = $file->getClientOriginalName();
