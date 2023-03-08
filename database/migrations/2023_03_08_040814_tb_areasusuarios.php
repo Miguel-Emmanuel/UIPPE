@@ -15,13 +15,14 @@ return new class extends Migration
     {
         //
         schema::create('tb_areasusuarios', function (Blueprint $table){
-            $table->bigincrements('id_areasusuarios');
-            $table->integer('id_area');
-            $table->integer('id_usuario');
+            $table->increments('id_areasusuarios');
+            $table->integer('area_id')->unsigned();
+            $table->foreign('area_id')->references('id_area')->on('tb_areas');
+            $table->integer('usuario_id')->unsigned();
+            $table->foreign('usuario_id')->references('id_usuario')->on('tb_usuarios');
             $table->boolean('activo');
             $table->integer('id_registro');
             $table->timestamps();
-
 
         });
     }

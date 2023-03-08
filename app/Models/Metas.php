@@ -14,7 +14,15 @@ class Metas extends Model
         'clave',
         'nombre',
         'descripcion',
+        'unidadmedida',
+        'programa_id',
         'activo',
         'id_registro'
     ];
+    
+    public function Programas() {
+        return $this->belongsTo(Programas::class,'programa_id');
+
+    }
+    
 }

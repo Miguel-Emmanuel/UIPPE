@@ -16,7 +16,7 @@
                     <tr>
                         <th class="text-center">Clave</th>
                         <th>Nombre</th>
-                        <th>Descripción</th>
+                        <th>Programa</th>
                         <th class="text-center">Activo</th>
                         <th>Registro</th>
                         <th class="text-center" colspan="3">Acciones</th>
@@ -27,8 +27,8 @@
                     @foreach($metas as $meta)
                     <tr>
                         <td class="text-center">{{ $meta -> clave }}</td>
-                        <td>{{ $meta -> nombre }}</td>
-                        <td>{{ $meta -> descripcion }}</td>
+                        <td>{{ $meta -> nombreM }}</td>
+                        <td>{{$meta->nombrePA}}</td>
                         <td class="text-center">
                             @if($meta -> activo > 0)
                             <p style="color: green;">Activo</p>
@@ -46,8 +46,8 @@
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
                         <td class="text-center">
-                           <!-- Button delete modal -->
-                           @if($meta -> activo > 0)
+                            <!-- Button delete modal -->
+                            @if($meta -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @else
                             <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
@@ -81,21 +81,41 @@
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control" aria-label="First name" name="nombre">
+                    <div class="py-3">
+                        <div>
+                            <label for="exampleFormControlInput1" class="form-label">Nombre:</label>
+                            <textarea type="text" class="form-control" name="nombre" rows="7"></textarea>
+                        </div>
                         @error('nombre')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="py-3">
-                        <div>
-                            <label for="exampleFormControlInput1" class="form-label">Descripción de la meta:</label>
-                            <textarea type="text" class="form-control" name="descripcion" rows="7"></textarea>
-                        </div>
+                    <div class="col">
+                        <label for="exampleInputEmail1" class="form-label">Descripción de la meta:</label>
+                        <input type="text" class="form-control" aria-label="First name" name="descripcion">
                         @error('descripcion')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
+                    </div>
+                    <div class="py-3">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" name="unidadmedida" placeholder="name@example.com">
+                            <label for="floatingInput">Unidad de Medida:</label>
+                        </div>
+                        @error('unidadmedida')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <hr>
+                        <label for=""> Programa:</label>
+                        <select class="form-control form-select" aria-label="Default select example" name="programa_id">
+                            <option value="">Elige el programa</option>
+                            @foreach($Programas as $info)
+                            <option value={{$info->id_programa}}>{{$info->abreviatura}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
                     </div>
                     <div class="mb-3">
                         <div class="form-check form-switch">
@@ -106,7 +126,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" href="usuarios/store" class="btn btn-success" value="Enviar" />
+                <input type="submit" href="metas/store" class="btn btn-success" value="Enviar" />
             </div>
             </form>
         </div>
@@ -120,16 +140,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalshowLabel">Programa | {{ $meta -> clave }}</h1>
+                <h1 class="modal-title fs-5" id="modalshowLabel">Meta | {{ $meta -> clave }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
-                        <p><strong>Nombre: </strong>{{ $meta->nombre }}</p>
+                        <p><strong>Nombre: </strong>{{ $meta->nombreM }}</p>
                     </div>
                     <div class="col-12">
-                        <p><strong>Descripción</strong><br>{{ $meta->descripcion }}</p>
+                        <p><strong>Unidad de Medida: </strong>{{ $meta->unidadmedida }}</p>
                     </div>
                     <div class="col-6 text-center">
                         @if($meta->activo > 0) <strong>Estado: </strong>
@@ -169,11 +189,25 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Nombre de la meta:</label>
-                        <textarea type="text" class="form-control" name="nombre">{{ $meta -> nombre }}</textarea>
+                        <textarea type="text" class="form-control" name="nombre">{{ $meta -> nombreM }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Descripción de la meta:</label>
                         <textarea type="text" class="form-control" name="descripcion" rows="7">{{ $meta -> descripcion }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">Unidad de Medida:</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" name="unidadmedida" value="{{ $meta -> unidadmedida }}">
+                    </div>
+                    <div class="mb-3">
+                        <hr>
+                        <label for=""> Programa:</label>
+                        <select class="form-control form-select" aria-label="Default select example" name="programa_id" value="{{$meta->programa_id}}"> 
+                            @foreach($Programas as $info)
+                            <option value={{$info->id_programa}} {{ $info->id_programa == $meta->programa_id ?'selected':''; }}>{{$info->abreviatura}}</option>
+                            @endforeach
+                        </select>
+                        <hr>
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
@@ -208,7 +242,7 @@
             </div>
             <div class="modal-body text-center">
                 ¿Realmente desea eliminar el registro?
-                <p><strong>{{ $meta->nombre }}</strong></p>
+                <p><strong>{{ $meta->nombreM }}</strong></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>

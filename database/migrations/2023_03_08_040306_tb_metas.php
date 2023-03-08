@@ -15,10 +15,13 @@ return new class extends Migration
     {
         //
         schema::create('tb_metas', function (Blueprint $table){
-            $table->bigincrements('id_meta');
+            $table->increments('id_meta');
             $table->string('clave', 30)->nullable();
-            $table->string('nombre', 50);
+            $table->text('nombre');
             $table->text('descripcion')->nullable();
+            $table->text('unidadmedida');
+            $table->integer('programa_id')->unsigned();
+            $table->foreign('programa_id')->references('id_programa')->on('tb_programas');
             $table->boolean('activo');
             $table->integer('id_registro');
             $table->timestamps();
