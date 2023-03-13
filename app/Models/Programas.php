@@ -17,4 +17,10 @@ class Programas extends Model
         'activo',
         'id_registro'
     ];
+
+    public function Metas() {
+        return $this->hasMany(Metas::class, 'programa_id', 'id_programa');
+
+    }
+    
 }

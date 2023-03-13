@@ -14,14 +14,16 @@ return new class extends Migration
     public function up()
     {
         //
-        schema::create('tb_metas', function (Blueprint $table){
-            $table->bigincrements('id_meta');
-            $table->string('clave', 30)->nullable();
+        schema::create('tb_areas', function (Blueprint $table){
+            $table->increments('id_area');
+            $table->string('clave', 30);
             $table->string('nombre', 50);
             $table->text('descripcion')->nullable();
+            $table->text('foto')->nullable();
             $table->boolean('activo');
             $table->integer('id_registro');
             $table->timestamps();
+
         });
     }
 
@@ -33,7 +35,7 @@ return new class extends Migration
     public function down()
     {
         //
-        schema::dropIfExists('tb_metas');
+        schema::dropIfExists('tb_areas');
 
     }
 };

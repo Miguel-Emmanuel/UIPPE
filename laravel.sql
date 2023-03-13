@@ -58,14 +58,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2023_03_01_000913_tb_areas', 1),
-(6, '2023_03_01_000925_tb_areasusuarios', 1),
-(7, '2023_03_01_000935_tb_metas', 1),
-(8, '2023_03_01_000945_tb_areasmetas', 1),
-(9, '2023_03_01_000955_tb_programas', 1),
-(10, '2023_03_01_002046_tb_calendarizars', 1),
-(11, '2023_03_04_000248_tb_tipos', 1),
-(12, '2023_03_04_000541_tb_usuarios', 1);
+(5, '2023_03_04_000248_tb_tipos', 1),
+(6, '2023_03_04_000541_tb_usuarios', 1),
+(7, '2023_03_08_035611_tb_areas', 1),
+(8, '2023_03_08_040229_tb_programas', 1),
+(9, '2023_03_08_040306_tb_metas', 1),
+(10, '2023_03_08_040814_tb_areasusuarios', 1),
+(11, '2023_03_08_041215_tb_areasmetas', 1),
+(12, '2023_03_08_042614_tb_calendarizars', 1);
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `tb_areas` (
-  `id_area` bigint(20) UNSIGNED NOT NULL,
+  `id_area` int(10) UNSIGNED NOT NULL,
   `clave` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -151,9 +151,9 @@ INSERT INTO `tb_areas` (`id_area`, `clave`, `nombre`, `descripcion`, `foto`, `ac
 --
 
 CREATE TABLE `tb_areasmetas` (
-  `id_areasmetas` bigint(20) UNSIGNED NOT NULL,
-  `id_area` int(11) NOT NULL,
-  `id_meta` int(11) NOT NULL,
+  `id_areasmetas` int(10) UNSIGNED NOT NULL,
+  `area_id` int(10) UNSIGNED NOT NULL,
+  `meta_id` int(10) UNSIGNED NOT NULL,
   `id_programa` int(11) NOT NULL,
   `objetivo` int(11) NOT NULL,
   `id_registro` int(11) NOT NULL,
@@ -168,9 +168,9 @@ CREATE TABLE `tb_areasmetas` (
 --
 
 CREATE TABLE `tb_areasusuarios` (
-  `id_areasusuarios` bigint(20) UNSIGNED NOT NULL,
-  `id_area` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
+  `id_areasusuarios` int(10) UNSIGNED NOT NULL,
+  `area_id` int(10) UNSIGNED NOT NULL,
+  `usuario_id` int(10) UNSIGNED NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -199,10 +199,12 @@ CREATE TABLE `tb_calendarizars` (
 --
 
 CREATE TABLE `tb_metas` (
-  `id_meta` bigint(20) UNSIGNED NOT NULL,
+  `id_meta` int(10) UNSIGNED NOT NULL,
   `clave` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unidadmedida` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `programa_id` int(10) UNSIGNED NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -213,8 +215,59 @@ CREATE TABLE `tb_metas` (
 -- Volcado de datos para la tabla `tb_metas`
 --
 
-INSERT INTO `tb_metas` (`id_meta`, `clave`, `nombre`, `descripcion`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
-(2, 'MET1', 'Entrega de jabón', 'Para la limpieza de aulas', 0, 1, '2023-03-07 02:07:48', '2023-03-07 02:10:03');
+INSERT INTO `tb_metas` (`id_meta`, `clave`, `nombre`, `descripcion`, `unidadmedida`, `programa_id`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
+(1, '1', 'Fomentar que los estudiantes egresen de sus estudios de tipo superior en el ciclo escolar', '', 'Egresado', 1, 1, 1, '2023-03-08 11:14:25', '2023-03-08 11:39:05'),
+(2, '2', 'Atender a la matrícula de educación superior para contribuir en la disminución de las divergencias entre la oferta y la demanda educativa', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:26:09', '2023-03-08 11:26:09'),
+(3, '3', 'Atender a los estudiantes de nuevo ingreso de educación superior para contribuir en la disminución de las divergencias entre la oferta y la demanda educativa', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:27:55', '2023-03-08 11:27:55'),
+(4, '4', 'Realizar acciones de formación integral, para desarrollar capacidades, valores y habilidades profesionales', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:29:04', '2023-03-08 11:29:04'),
+(5, '5', 'Realizar acciones para fomentar una cultura emprendedora', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:29:42', '2023-03-08 11:29:42'),
+(6, '6', 'Acreditar programas educativos en educación superior para mejorar la calidad', NULL, 'Programa', 1, 1, 1, '2023-03-08 11:30:12', '2023-03-08 11:30:12'),
+(7, '7', 'Fomentar que los egresados se titulen', NULL, 'Documento', 1, 1, 1, '2023-03-08 11:30:43', '2023-03-08 11:30:43'),
+(8, '8', 'Lograr certificaciones en Educación Superior para mejorar la calidad', NULL, 'Documento', 1, 1, 1, '2023-03-08 11:31:15', '2023-03-08 11:31:15'),
+(9, '9', 'Impulsar la capacitación o actualización del personal docente para mejorar la formación académica', NULL, 'Docente', 1, 1, 1, '2023-03-08 11:31:55', '2023-03-08 11:31:55'),
+(10, '10', 'Evaluar al personal docente con la finalidad de encontrar áreas de oportunidad para mejorar su desempeño', NULL, 'Docente', 1, 1, 1, '2023-03-08 11:33:00', '2023-03-08 11:33:00'),
+(11, '11', 'Impulsar la capacitación del personal directivo y administrativo para el fortalecimiento institucional', NULL, 'Persona', 1, 1, 1, '2023-03-08 11:33:35', '2023-03-08 11:33:35'),
+(12, '12', 'Desarrollar proyectos de investigación para atender las necesidades de desarrollo tecnológico, económico y social', NULL, 'Proyecto', 1, 1, 1, '2023-03-08 11:34:15', '2023-03-08 11:34:15'),
+(13, '13', 'Realizar la publicación de documentos derivados de la investigación para su divulgación', NULL, 'Publicación', 1, 1, 1, '2023-03-08 11:35:26', '2023-03-08 11:35:26'),
+(14, '14', 'Realizar acciones de vinculación y extensión que permitan establecer lazos de colaboración con los sectores público, privado y social', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:36:02', '2023-03-08 11:36:02'),
+(15, '15', 'Operar convenios con los sectores público, privado y social, para formalizar los lazos de colaboración institucional', NULL, 'Convenio', 1, 1, 1, '2023-03-08 11:36:46', '2023-03-08 11:36:46'),
+(16, '16', 'Atender estudiantes en educación Dual para desarrollar aptitudes y habilidades en unidades económicas', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:37:16', '2023-03-08 11:37:16'),
+(17, '17', 'Impulsar la internacionalización entre la comunidad de la institución para fortalecer la calidad educativa', NULL, 'Persona', 1, 1, 1, '2023-03-08 11:37:59', '2023-03-08 11:37:59'),
+(18, '18', 'Contactar egresados en educación superior para identificar su situación profesional', '', 'Egresado', 1, 1, 1, '2023-03-08 11:38:29', '2023-03-08 11:38:53'),
+(19, '19', 'Impartir el idioma Inglés a los estudiantes en educación superior para el desarrollo de competencias', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:40:05', '2023-03-08 11:40:05'),
+(20, '20', 'Impulsar la participación de estudiantes de educación superior en procesos de certificación en el idioma Inglés para el desarrollo de competencias', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:40:35', '2023-03-08 11:40:35'),
+(21, '21', 'Destinar equipo de cómputo el proceso de enseñanza-aprendizaje en educación superior para el desarrollo de las habilidades digitales', NULL, 'Equipo de Computo', 1, 1, 1, '2023-03-08 11:41:17', '2023-03-08 11:41:17'),
+(22, '22', 'Impulsar la participación  de estudiantes en procesos de certificación en el uso de tecnologías del aprendizaje, conocimiento, información y comunicación  para el desarrollo de competencias y habilidades', NULL, 'Estudiante', 1, 1, 1, '2023-03-08 11:41:55', '2023-03-08 11:41:55'),
+(23, '23', 'Realizar acciones para la prevención de la violencia escolar de educación superior', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:42:34', '2023-03-08 11:42:34'),
+(24, '24', 'Realizar acciones para igualdad de trato y oportunidades', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:43:03', '2023-03-08 11:43:03'),
+(25, '25', 'Realizar auditorías, con el propósito de verificar el cumplimiento del marco normativo que regula el funcionamiento de las dependencias y organismos auxiliares del Ejecutivo Estatal y los Ayuntamientos', NULL, 'Auditoria', 1, 1, 1, '2023-03-08 11:43:35', '2023-03-08 11:43:35'),
+(26, '26', 'Realizar auditorías para determinar el grado de eficacia y eficiencia en los procesos, así como el desempeño Institucional de las dependencias y organismos auxiliares del Ejecutivo Estatal', NULL, 'Evaluación', 1, 1, 1, '2023-03-08 11:44:06', '2023-03-08 11:44:06'),
+(27, '27', 'Realizar inspecciones a rubros específicos en las dependencias, organismos auxiliares del Ejecutivo Estatal y en su caso Ayuntamientos, con el propósito de constatar el cumplimiento del marco normativo que lo regula', NULL, 'Inspección', 1, 1, 1, '2023-03-08 11:44:57', '2023-03-08 11:44:57'),
+(28, '28', 'Participar en testificaciones, con el propósito de asegurarse que los actos administrativos se realicen con forme a la normatividad vigente', NULL, 'Testificación', 1, 1, 1, '2023-03-08 11:45:39', '2023-03-08 11:45:39'),
+(29, '29', 'Participación del órgano de control interno en reuniones que por mandato legal o disposición administrativa así lo requiera', NULL, 'Sesión', 1, 1, 1, '2023-03-08 11:46:30', '2023-03-08 11:46:30'),
+(30, '30', 'Acompañamiento en la atención de auditorias practicadas por los entes fiscalizadores externos', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:47:05', '2023-03-08 11:47:05'),
+(31, '31', 'Atender acciones derivadas de la Fiscalización realizada por entes fiscalizadores externos', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:47:31', '2023-03-08 11:47:31'),
+(32, '32', 'Atención a observaciones y acciones de mejora determinadas con motivo de los actos de fiscalización realizados por la Dirección General u Órgano Interno de Control', NULL, 'Acción', 1, 1, 1, '2023-03-08 11:48:07', '2023-03-08 11:48:07'),
+(33, '33', 'Elaborar el informe de presunta responsabilidad administrativa', NULL, 'Informe', 1, 1, 1, '2023-03-08 11:48:35', '2023-03-08 11:48:35'),
+(34, '34', 'Substanciar investigaciones derivadas de denuncias ciudadanas', NULL, 'Expediente', 1, 1, 1, '2023-03-08 11:49:01', '2023-03-08 11:49:01'),
+(35, '35', 'Substanciar investigaciones derivadas de auditoria', NULL, 'Expediente', 1, 1, 1, '2023-03-08 11:49:25', '2023-03-08 11:49:25'),
+(36, '36', 'Substanciar investigaciones derivadas de actuación de oficio', '', 'Expediente', 1, 1, 1, '2023-03-08 11:50:08', '2023-03-08 11:53:09'),
+(37, '37', 'Opinión de Empleadores', '', 'Encuesta Realizada', 2, 1, 1, '2023-03-08 11:52:40', '2023-03-08 11:52:54'),
+(38, '38', 'Promoción de Egresados en el Mercado Laboral Post Estadía', NULL, 'Egresado', 2, 1, 1, '2023-03-08 11:53:48', '2023-03-08 11:53:48'),
+(39, '39', 'Sesiones de Vinculación y Pertinencia', NULL, 'Reunión Celebrada', 2, 1, 1, '2023-03-08 11:56:35', '2023-03-08 11:56:35'),
+(40, '40', 'Movilidad Estudiantil Nacional e Internacional', NULL, 'Estudiante', 2, 1, 1, '2023-03-08 11:57:08', '2023-03-08 11:57:08'),
+(41, '41', 'Difusión de la Oferta Educativa en Instituciones de Educación Media Superior', NULL, 'IEMS', 2, 1, 1, '2023-03-08 11:57:49', '2023-03-08 11:57:49'),
+(42, '42', 'Promoción de Planes de Estudio en Eventos de Orientación Vocacional', NULL, 'Evento o Expo', 2, 1, 1, '2023-03-08 11:58:33', '2023-03-08 11:58:33'),
+(43, '43', 'Cursos de Educación Continua', NULL, 'Curso', 2, 1, 1, '2023-03-08 11:59:12', '2023-03-08 11:59:12'),
+(44, '44', 'Campañas de Prevención de Embarazo, Vacunación y Asistencia Médica', NULL, 'Campaña', 2, 1, 1, '2023-03-08 11:59:45', '2023-03-08 11:59:45'),
+(45, '45', 'Seguimiento y Evaluación de los Programas Operativos', NULL, 'Reporte de Seguimiento', 2, 1, 1, '2023-03-08 12:00:20', '2023-03-08 12:00:20'),
+(46, '46', 'Elaborar Reporte de Indicadores del Modelo de Evaluación de la Calidad (MECASUT) y Evaluación Institucional (EVIN)', NULL, 'Informe Elaborado', 2, 1, 1, '2023-03-08 12:00:57', '2023-03-08 12:00:57'),
+(47, '47', 'Informe Anual de Actividades', NULL, 'Documento Elaborado', 2, 1, 1, '2023-03-08 12:01:39', '2023-03-08 12:01:39'),
+(48, '48', 'Sesiones de Comités Institucionales', NULL, 'Sesión', 2, 1, 1, '2023-03-08 12:02:20', '2023-03-08 12:02:20'),
+(49, '49', 'Encuesta de Satisfacción de Servicios Bibliotecarios', NULL, 'Informe de la Encuesta', 2, 1, 1, '2023-03-08 12:03:03', '2023-03-08 12:03:03'),
+(50, '50', 'Alumnos Inscritos a la Biblioteca Digital', NULL, 'Estudiante', 2, 1, 1, '2023-03-08 12:03:31', '2023-03-08 12:03:31'),
+(51, '51', 'Legislación Universitaria Publicado', NULL, 'Documento', 2, 1, 1, '2023-03-08 12:04:04', '2023-03-08 12:04:04'),
+(52, '52', 'Otorgamiento de Becas', NULL, 'Estudiante Becado', 2, 1, 1, '2023-03-08 12:04:44', '2023-03-08 12:04:44');
 
 -- --------------------------------------------------------
 
@@ -223,7 +276,7 @@ INSERT INTO `tb_metas` (`id_meta`, `clave`, `nombre`, `descripcion`, `activo`, `
 --
 
 CREATE TABLE `tb_programas` (
-  `id_programa` bigint(20) UNSIGNED NOT NULL,
+  `id_programa` int(10) UNSIGNED NOT NULL,
   `abreviatura` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -238,11 +291,10 @@ CREATE TABLE `tb_programas` (
 --
 
 INSERT INTO `tb_programas` (`id_programa`, `abreviatura`, `nombre`, `descripcion`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
-(1, 'SIPREP', 'SISTEMA DE PLANEACION Y PRESUPUESTO', 'ENCARGADO DEL PRESUPUESTO', 1, 1, '2023-03-01 01:18:09', '2023-03-07 07:25:01'),
-(2, 'POA FEDERAL', 'PROGRAMA OPERATIVO ANUAL  FEDERAL', 'PRESUPUESTAR LOS RECURSOS FINANCIEROSN NECESARIOS XD', 0, 2, '2023-03-01 01:19:27', '2023-03-01 01:19:30'),
-(3, 'PIDE', 'PLATAFORMA DE INTERINOS DOCENTES DE EXTREMADURA', 'Referencia a Programa Intensivo de Dirección de Empresas de forma abreviada', 1, 3, '2023-03-01 01:22:12', '2023-03-07 07:26:24'),
-(4, 'PROPIAS', 'UTVT', 'PROGRMA DE LA UTVT\r\n', 0, 4, '2023-03-01 01:23:20', '2023-03-01 01:23:23'),
-(5, 'Irure est vel eum de', 'Rerum libero ut esse', 'Pariatur Corporis o', 1, NULL, '2023-03-07 07:27:35', '2023-03-07 07:27:35');
+(1, 'SIPREP', 'SISTEMA DE PLANEACION Y PRESUPUESTO', 'ENCARGADO DEL PRESUPUESTO', 1, 1, '2023-03-01 07:18:09', '2023-03-07 13:25:01'),
+(2, 'POA FEDERAL', 'PROGRAMA OPERATIVO ANUAL  FEDERAL', 'PRESUPUESTAR LOS RECURSOS FINANCIEROSN NECESARIOS XD', 0, 2, '2023-03-01 07:19:27', '2023-03-01 07:19:30'),
+(3, 'PIDE', 'PLATAFORMA DE INTERINOS DOCENTES DE EXTREMADURA', 'Referencia a Programa Intensivo de Dirección de Empresas de forma abreviada', 1, 3, '2023-03-01 07:22:12', '2023-03-07 13:26:24'),
+(4, 'PROPIAS', 'UTVT', 'PROGRMA DE LA UTVT\r\n', 0, 4, '2023-03-01 07:23:20', '2023-03-01 07:23:23');
 
 -- --------------------------------------------------------
 
@@ -266,10 +318,10 @@ CREATE TABLE `tb_tipos` (
 --
 
 INSERT INTO `tb_tipos` (`id`, `clave`, `nombre`, `descripcion`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
-(1, 'TIP1', 'Administardor', 'Contiene todos los permisos sobre el sistema', 0, 1, '2023-03-04 00:17:17', '2023-03-07 07:37:47'),
-(2, 'TIP1', 'Encargado de Área', 'Director o similar', 1, 1, '2023-03-06 22:53:40', '2023-03-06 22:53:40'),
-(3, 'TIP3', 'Secretaria', 'No posee los permisos que le director', 1, 1, '2023-03-06 22:59:01', '2023-03-06 22:59:01'),
-(4, 'TIP4', 'Invitado', 'No tiene la mayoría de permisos', 0, 1, '2023-03-07 07:38:42', '2023-03-07 07:40:39');
+(1, 'TIP1', 'Administardor', 'Contiene todos los permisos sobre el sistema', 0, 1, '2023-03-04 06:17:17', '2023-03-07 13:37:47'),
+(2, 'TIP2', 'Encargado de Área', 'Director o similar', 1, 1, '2023-03-07 04:53:40', '2023-03-07 04:53:40'),
+(3, 'TIP3', 'Secretaria', 'No posee los permisos que le director', 1, 1, '2023-03-07 04:59:01', '2023-03-07 04:59:01'),
+(4, 'TIP4', 'Invitado', 'No tiene la mayoría de permisos', 0, 1, '2023-03-07 13:38:42', '2023-03-07 13:40:39');
 
 -- --------------------------------------------------------
 
@@ -301,11 +353,11 @@ CREATE TABLE `tb_usuarios` (
 --
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `clave`, `nombre`, `app`, `apm`, `gen`, `fn`, `academico`, `foto`, `email`, `pass`, `id_tipo`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
-(1, 'USR1', 'Jimena', 'Diaz', 'De Los Santos', 'F', '2003-02-24', 'TSU Area desarrollo de software multiplataforma', 'cuervo.png', 'al222110707@gmail.com', '123456', 1, 1, 1, '2023-03-04 00:18:34', '2023-03-07 08:18:26'),
-(2, 'USR2', 'Jossue', 'Candelas', 'Hernandez', 'M', '2003-06-06', 'TSU Desarrollo de software multiplataforma', '20230306165445imagen_uippe2.png', 'al222010230@gmail.com', '123123', 2, 0, 1, '2023-03-06 22:54:46', '2023-03-07 04:57:11'),
-(3, 'USR3', 'Eduardo', 'Diaz', 'Perez', 'M', '1978-02-01', 'TSU Desarrollo de software multiplataforma', '20230306165955cropped-logo-utvt.png', 'lalo@gmail.com', '123123', 3, 1, 1, '2023-03-06 22:59:55', '2023-03-07 07:57:07'),
-(4, 'USR4', 'Leopoldo', 'Diaz', 'De Los Santos', 'M', '2003-06-05', 'TSU Desarrollo de software multiplataforma', '20230306214257rectoria.jpeg', 'leo@gmail.com', '123123', 3, 1, 1, '2023-03-07 01:58:42', '2023-03-07 03:42:57'),
-(5, 'URS5', 'Francis', 'Carney', 'Jacobs', 'M', '1991-08-01', 'TSU Desarrollo de software multiplataforma', 'cuervo.png', 'suvikubyt@mailinator.com', '123123', 1, 1, 1, '2023-03-07 03:26:09', '2023-03-07 03:26:09');
+(1, 'USR1', 'Jimena', 'Diaz', 'De Los Santos', 'F', '2003-02-24', 'TSU Area desarrollo de software multiplataforma', 'cuervo.png', 'al222110707@gmail.com', '123456', 1, 1, 1, '2023-03-04 06:18:34', '2023-03-07 14:18:26'),
+(2, 'USR2', 'Jossue', 'Candelas', 'Hernandez', 'M', '2003-06-06', 'TSU Desarrollo de software multiplataforma', '20230306165445imagen_uippe2.png', 'al222010230@gmail.com', '123123', 2, 0, 1, '2023-03-07 04:54:46', '2023-03-07 10:57:11'),
+(3, 'USR3', 'Eduardo', 'Diaz', 'Perez', 'M', '1978-02-01', 'TSU Desarrollo de software multiplataforma', '20230306165955cropped-logo-utvt.png', 'lalo@gmail.com', '123123', 3, 1, 1, '2023-03-07 04:59:55', '2023-03-07 13:57:07'),
+(4, 'USR4', 'Leopoldo', 'Diaz', 'De Los Santos', 'M', '2003-06-05', 'TSU Desarrollo de software multiplataforma', '20230306214257rectoria.jpeg', 'leo@gmail.com', '123123', 3, 1, 1, '2023-03-07 07:58:42', '2023-03-07 09:42:57'),
+(5, 'URS5', 'Francis', 'Carney', 'Jacobs', 'M', '1991-08-01', 'TSU Desarrollo de software multiplataforma', 'cuervo.png', 'suvikubyt@mailinator.com', '123123', 1, 1, 1, '2023-03-07 09:26:09', '2023-03-07 09:26:09');
 
 -- --------------------------------------------------------
 
@@ -365,13 +417,17 @@ ALTER TABLE `tb_areas`
 -- Indices de la tabla `tb_areasmetas`
 --
 ALTER TABLE `tb_areasmetas`
-  ADD PRIMARY KEY (`id_areasmetas`);
+  ADD PRIMARY KEY (`id_areasmetas`),
+  ADD KEY `tb_areasmetas_area_id_foreign` (`area_id`),
+  ADD KEY `tb_areasmetas_meta_id_foreign` (`meta_id`);
 
 --
 -- Indices de la tabla `tb_areasusuarios`
 --
 ALTER TABLE `tb_areasusuarios`
-  ADD PRIMARY KEY (`id_areasusuarios`);
+  ADD PRIMARY KEY (`id_areasusuarios`),
+  ADD KEY `tb_areasusuarios_area_id_foreign` (`area_id`),
+  ADD KEY `tb_areasusuarios_usuario_id_foreign` (`usuario_id`);
 
 --
 -- Indices de la tabla `tb_calendarizars`
@@ -383,7 +439,8 @@ ALTER TABLE `tb_calendarizars`
 -- Indices de la tabla `tb_metas`
 --
 ALTER TABLE `tb_metas`
-  ADD PRIMARY KEY (`id_meta`);
+  ADD PRIMARY KEY (`id_meta`),
+  ADD KEY `tb_metas_programa_id_foreign` (`programa_id`);
 
 --
 -- Indices de la tabla `tb_programas`
@@ -438,19 +495,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `tb_areas`
 --
 ALTER TABLE `tb_areas`
-  MODIFY `id_area` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_area` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_areasmetas`
 --
 ALTER TABLE `tb_areasmetas`
-  MODIFY `id_areasmetas` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_areasmetas` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_areasusuarios`
 --
 ALTER TABLE `tb_areasusuarios`
-  MODIFY `id_areasusuarios` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_areasusuarios` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_calendarizars`
@@ -462,13 +519,13 @@ ALTER TABLE `tb_calendarizars`
 -- AUTO_INCREMENT de la tabla `tb_metas`
 --
 ALTER TABLE `tb_metas`
-  MODIFY `id_meta` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_meta` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_programas`
 --
 ALTER TABLE `tb_programas`
-  MODIFY `id_programa` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_programa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_tipos`
@@ -491,6 +548,26 @@ ALTER TABLE `users`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `tb_areasmetas`
+--
+ALTER TABLE `tb_areasmetas`
+  ADD CONSTRAINT `tb_areasmetas_area_id_foreign` FOREIGN KEY (`area_id`) REFERENCES `tb_areas` (`id_area`),
+  ADD CONSTRAINT `tb_areasmetas_meta_id_foreign` FOREIGN KEY (`meta_id`) REFERENCES `tb_metas` (`id_meta`);
+
+--
+-- Filtros para la tabla `tb_areasusuarios`
+--
+ALTER TABLE `tb_areasusuarios`
+  ADD CONSTRAINT `tb_areasusuarios_area_id_foreign` FOREIGN KEY (`area_id`) REFERENCES `tb_areas` (`id_area`),
+  ADD CONSTRAINT `tb_areasusuarios_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `tb_usuarios` (`id_usuario`);
+
+--
+-- Filtros para la tabla `tb_metas`
+--
+ALTER TABLE `tb_metas`
+  ADD CONSTRAINT `tb_metas_programa_id_foreign` FOREIGN KEY (`programa_id`) REFERENCES `tb_programas` (`id_programa`);
 
 --
 -- Filtros para la tabla `tb_usuarios`

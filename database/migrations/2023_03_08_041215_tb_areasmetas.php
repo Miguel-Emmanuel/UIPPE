@@ -15,14 +15,15 @@ return new class extends Migration
     {
         //
         schema::create('tb_areasmetas', function (Blueprint $table){
-            $table->bigincrements('id_areasmetas');
-            $table->integer('id_area');
-            $table->integer('id_meta');
+            $table->increments('id_areasmetas');
+            $table->integer('area_id')->unsigned();
+            $table->foreign('area_id')->references('id_area')->on('tb_areas');
+            $table->integer('meta_id')->unsigned();
+            $table->foreign('meta_id')->references('id_meta')->on('tb_metas');
             $table->integer('id_programa');
-            $table->integer('objetivo');
+            $table->string('objetivo');
             $table->integer('id_registro');
             $table->timestamps();
-
 
         });
     }

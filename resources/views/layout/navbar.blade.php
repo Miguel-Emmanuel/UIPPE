@@ -8,9 +8,9 @@
     <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="css/virtual-select.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
 
-    </style>
 </head>
 <?php
 $session_id = session('session_id');
@@ -40,14 +40,14 @@ $session_foto = session('session_foto');
                 <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
-                @if($session_id)
+                    @if($session_id)
                     <a href="dashboard" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Panel</span> </a>
                     @if($session_tipo == 4)
                     <a href="metas" class="nav_link"> <i class='bx bx-check nav_icon'></i> <span class="nav_name">Metas</span> </a>
                     @else
                     @endif
-                @else
-                @endif
+                    @else
+                    @endif
                 </div>
             </div>
             @if($session_id)
@@ -69,10 +69,10 @@ $session_foto = session('session_foto');
         @yield('content')
     </div>
     <!--Container Main end-->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ asset('js/menu.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
     <script>
         (function($) {
             "use strict"; // Start of use strict
