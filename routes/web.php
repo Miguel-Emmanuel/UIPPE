@@ -69,7 +69,7 @@ Route::name('editUsuario')->put('editUsuario/{id}', [UsuariosController::class, 
 Route::name('deleteUsers')->put('deleteUsers/{id}',[UsuariosController::class, 'destroy']);
 
 Route::name('editProgram')->put('editProgram/{id}', [ProgramasController::class, 'edit']);
-Route::name('deleteProgram')->get('deleteUsuario/{id}',[ProgramasController::class, 'destroy']);
+Route::name('deleteProgram')->put('deleteProgram/{id}',[ProgramasController::class, 'destroy']);
 
 Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
 Route::name('deleteTip')->put('deleteTip/{id}',[TiposController::class, 'destroy']);

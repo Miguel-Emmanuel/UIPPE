@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <div class="container">
     <div class="row">
         <div class="col p-4">
@@ -22,8 +25,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($programas as $info)
+                    @if($session_id != 3)
                     <tr>
-                        @foreach ($programas as $info)
                         <td class="text-center">{{ $info->id_programa }}</td>
                         <td class="text-center">{{ $info->abreviatura }}</td>
                         <td>{{ $info->nombre }}</td>
@@ -49,11 +53,45 @@
                             @if($info -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
+                    </tr>
+                    @elseif($info->activo > 0)
+                    <tr>
+                        <td class="text-center">{{ $info->id_programa }}</td>
+                        <td class="text-center">{{ $info->abreviatura }}</td>
+                        <td>{{ $info->nombre }}</td>
+                        <td>{{ $info->descripcion }}</td>
+                        <td class="text-center">
+                            @if($info->activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <!-- <td class="text-center">{{ $info->id_registro }}</td> -->
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_programa }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_programa }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($info -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
         </div>
     </div>
@@ -74,9 +112,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('programas.destroy', ['programa' => $info->id_programa]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
-                </a>
+                <form action="{{ route('deleteProgram', ['id' => $info->id_programa]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <!-- Id Registro -->
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -156,13 +198,15 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <!-- Id Registro -->
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <br><br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
@@ -200,7 +244,7 @@
                         </div>
                     </div>
                     <!-- id de registro -->
-                    {{-- <input type="hidden" name="id_registro" value="@foreach($id as $uwu){{ $uwu -> id_empleado + 1}}@endforeach"> --}}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

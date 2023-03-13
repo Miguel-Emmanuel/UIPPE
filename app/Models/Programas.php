@@ -15,6 +15,6 @@ class Programas extends Model
         'nombre',
         'descripcion',
         'activo',
-         'id_registro'
+        'id_registro'
     ];
 }
