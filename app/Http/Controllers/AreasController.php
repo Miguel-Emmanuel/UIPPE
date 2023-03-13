@@ -39,8 +39,7 @@ class AreasController extends Controller
       'descripcion' => $request->input('descripcion'),
       'foto' => $foto2,
       'activo' => '1',
-      //el registro queda nulo
-      'id_registro' => 1, //$request->input('registro'),
+      'id_registro' => $request->input('registro'),
 
     ));
 
@@ -76,15 +75,17 @@ class AreasController extends Controller
     $query->descripcion = trim($request->descripcion);
     $query->foto = $foto2;
     $query->activo = $activo;
+    $query->id_registro = trim($request->registro);
     $query->save();
 
     return redirect('areas');
   }
 
-  public function destroy(Areas $id)
+  public function destroy(Areas $id, Request $request)
     {
         $query = Areas::find($id->id_area);
         $query -> activo = 0;
+        $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('areas');
     }

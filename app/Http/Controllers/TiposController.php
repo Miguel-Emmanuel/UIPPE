@@ -22,7 +22,7 @@ class TiposController extends Controller
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
             'activo' => 1,
-            'id_registro' => 1 //$request->input('id_registro'),
+            'id_registro' => $request->input('registro'),
         ));
 
         return redirect('tipos');
@@ -53,15 +53,17 @@ class TiposController extends Controller
         $query->nombre = trim($request->nombre);
         $query->descripcion = trim($request->descripcion);
         $query->activo = $activo;
+        $query->id_registro = trim($request->registro);
         $query->save();
 
         return redirect('tipos');
     }
 
-    public function destroy(Tipos $id)
+    public function destroy(Tipos $id, Request $request)
     {
         $query = Tipos::find($id->id);
         $query -> activo = 0;
+        $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('tipos');
     }

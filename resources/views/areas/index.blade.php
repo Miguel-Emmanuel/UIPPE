@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <div class="container">
     <div class="row">
         <div class="col p-4">
@@ -22,6 +25,7 @@
                 </thead>
                 <tbody>
                     @foreach($areas as $info)
+                    @if($session_id != 3)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->clave}}</td>
@@ -47,10 +51,42 @@
                             @if($info -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
+                    @elseif($info -> activo > 0)
+                    <tr>
+                        <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
+                        <td>{{ $info->clave}}</td>
+                        <td>{{ $info->nombre}}</td>
+                        <td>{{ $info->descripcion}}</td>
+                        <td>
+                            @if($info -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_area }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button modif modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_area }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($info -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -76,10 +112,13 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form action="{{ route('deleteArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -149,6 +188,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

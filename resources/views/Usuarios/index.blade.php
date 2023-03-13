@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <div class="container">
     <div class="row">
         <div class="col p-4">
@@ -25,6 +28,7 @@
                 </thead>
                 <tbody>
                     @foreach($Usuarios as $usuario)
+                    @if($session_id != 3)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
                         <td>{{ $usuario->clave}}</td>
@@ -61,10 +65,53 @@
                             @if($usuario -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
+                    @elseif($usuario->activo > 0)
+                    <tr>
+                        <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
+                        <td>{{ $usuario->clave}}</td>
+                        <td>{{ $usuario->nombreU}}</td>
+                        <td>{{ $usuario->app .' '. $usuario->apm }}</td>
+                        <td>
+                            @if($usuario->gen == "M" || $usuario->gen == "masculino")
+                            Masculino
+                            @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
+                            Femenino
+                            @else
+                            {{ $usuario -> gen }}
+                            @endif
+                        </td>
+                        <td>{{ $usuario -> academico }}</td>
+                        <td>{{ $usuario -> email }}</td>
+                        <td>
+                            @if($usuario -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($usuario -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -91,10 +138,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('deleteUsers', ['id' => $usuario->id_usuario]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form action="{{ route('deleteUsers', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -241,6 +290,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -330,6 +380,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

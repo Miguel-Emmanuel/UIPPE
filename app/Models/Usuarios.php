@@ -28,7 +28,6 @@ class Usuarios extends Model
 
     public function tb_tipos() {
         return $this->belongsTo(tb_tipos::class,'id_tipo');
-
     }
     
 }

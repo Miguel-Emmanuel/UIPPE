@@ -61,7 +61,11 @@ a {
 }
 
 .header_img img {
-    width: 40px
+    width: 40px;
+}
+
+.header_text{
+    margin-left: auto;
 }
 
 .l-navbar {

@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <title>Metas</title>
 <div class="container">
     <div class="row">
@@ -25,6 +28,7 @@
                 <tbody>
                     <!-- Regitros en tabla metas -->
                     @foreach($metas as $meta)
+                    @if($session_id != 3)
                     <tr>
                         <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombre }}</td>
@@ -50,10 +54,42 @@
                            @if($meta -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
+                    @elseif($meta->activo > 0)
+                    <tr>
+                        <td class="text-center">{{ $meta -> clave }}</td>
+                        <td>{{ $meta -> nombre }}</td>
+                        <td>{{ $meta -> descripcion }}</td>
+                        <td class="text-center">
+                            @if($meta -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>{{ $meta -> id_registro }}</td>
+                        <td class="text-center">
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td class="text-center">
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td class="text-center">
+                           <!-- Button delete modal -->
+                           @if($meta -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
                     @endforeach
                 </tbody>
             </table>
