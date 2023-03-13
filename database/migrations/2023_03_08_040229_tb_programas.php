@@ -17,7 +17,7 @@ return new class extends Migration
         schema::create('tb_programas', function (Blueprint $table){
             $table->increments('id_programa');
             $table->string('abreviatura', 30);
-            $table->string('nombre', 50);
+            $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->boolean('activo');
             $table->integer('id_registro')->nullable();
