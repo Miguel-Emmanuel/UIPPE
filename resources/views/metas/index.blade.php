@@ -202,7 +202,7 @@
                     <div class="mb-3">
                         <hr>
                         <label for=""> Programa:</label>
-                        <select class="form-control form-select" aria-label="Default select example" name="programa_id" value="{{$meta->programa_id}}"> 
+                        <select class="form-control form-select" aria-label="Default select example" name="programa_id" value="{{$meta->programa_id}}">
                             @foreach($Programas as $info)
                             <option value={{$info->id_programa}} {{ $info->id_programa == $meta->programa_id ?'selected':''; }}>{{$info->abreviatura}}</option>
                             @endforeach

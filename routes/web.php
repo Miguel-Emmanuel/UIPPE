@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
+use App\Http\Controllers\AreasMetasController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
 use App\Http\Controllers\TiposController;
@@ -27,8 +28,12 @@ Route::get('/', function () {
    // return view('dashboard.dashboard');
 });
 Route::get('dashboard', function () {
-   return view('dashboard.dashboard');
-});
+    return view('dashboard.dashboard');
+ });
+
+ Route::get('multi', function () {
+    return view('multi');
+ });
 
 /*Route::post('crecuperar', function(){
    Mail::to('admiuippe@gmail.com')->send(new ReestablecerPassword);
@@ -45,6 +50,9 @@ Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
 Route::name('valida')->post('valida', [Login::class, 'valida']);
 Route::name('registrate')->get('registrate',  [Login::class, 'registrate']);
+
+Route::name('multi')->get('multi',  [AreasMetasController::class, 'index']);
+
 Route::name('register')->post('register', [Login::class, 'store']);
 Route::name('recuperacion')->get('recuperacion', [Login::class, 'recuperar']);
 
@@ -52,12 +60,14 @@ Route::name('EnviarCorreo')->get('EnviarCorreo', [Login::class, 'EnviarCorreo'])
 Route::name('reset')->get('reset', [Login::class, 'reset']);
 Route::name('resetpass')->get('resetpass', [Login::class, 'resetpass']);
 
-//Resources 
+//Resources
 Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
 Route::resource('usuarios',UsuariosController::class);
 Route::resource('metas', MetasController::class);
 Route::resource('tipos', TiposController::class);
+Route::resource('areasmetas', AreasMetasController::class);
+//Route::resource('multi', AreasMetasController::class);
 
 Route::name('deleteMeta')->get('deleteMeta/{id}',[MetasController::class, 'destroy']);
 Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);

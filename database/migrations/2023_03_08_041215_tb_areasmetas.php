@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('meta_id')->unsigned();
             $table->foreign('meta_id')->references('id_meta')->on('tb_metas');
             $table->integer('id_programa');
-            $table->integer('objetivo');
+            $table->string('objetivo');
             $table->integer('id_registro');
             $table->timestamps();
 

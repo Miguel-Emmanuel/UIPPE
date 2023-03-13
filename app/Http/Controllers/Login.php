@@ -42,7 +42,7 @@ class Login extends Controller
             ->get();
 
         if (count($consulta) == 0) {
-            return view('login');
+            return view('sesiones/login');
         } else {
             $request->session()->put('session_id', $consulta[0]->id_usuario);
             $request->session()->put('session_name', $consulta[0]->nombre);
@@ -121,7 +121,7 @@ class Login extends Controller
                 session()->flash('Error', 'Las contraseñas no coinciden.');
                 return redirect('reset');
             }
-            
+
         }
     }
 }
