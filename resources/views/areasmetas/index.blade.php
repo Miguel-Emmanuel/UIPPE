@@ -141,7 +141,7 @@
                        @csrf
                        @method('PATCH')
                             <select multiple placeholder="METAS" data-search="true" data-silent-initial-value-set="true"
-                                name="id_meta">
+                                name="id_meta[]">
 
                                 @foreach ($metas as $info)
                                     <option value="{{ $info->id_meta }}">
@@ -151,7 +151,7 @@
 
                             </select>
                             <select multiple placeholder="PROGRAMAS" data-search="true"
-                                data-silent-initial-value-set="true" name="id_programa">
+                                data-silent-initial-value-set="true" name="id_programa[]">
 
                                 @foreach ($programas as $info)
                                     <option value=" {{ $info->id_programa }}">
@@ -161,7 +161,7 @@
 
                             </select>
                             <select multiple placeholder="AREAS" data-search="true" data-silent-initial-value-set="true"
-                                name="id_area">
+                                name="id_area[]">
 
                                 @foreach ($areas as $info)
                                     <option value="{{ $info->id_area }}">

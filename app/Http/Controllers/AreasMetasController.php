@@ -16,6 +16,13 @@ public function index(){
     $programas = Programas::all();
     $areas = Areas::all();
 
+/*     $users = DB::table('AreasMetas')
+            ->join('tb_empleados', 'tb_relacion_areas.id_empleado', '=', 'tb_empleados.id_empleado')
+            ->join('tb_areas', 'tb_relacion_areas.id_area', '=', 'tb_areas.id_area')
+            ->join('tb_sueldos', 'tb_areas.id_area', '=', 'tb_sueldos.id_area')
+            ->join('tb_tipos_empleados', 'tb_sueldos.idt_empleado', '=', 'tb_tipos_empleados.idt_empleado')
+            ->select('tb_empleados.*', 'tb_areasx`.nombre as area', 'tb_areas.id_area as id_area', 'tb_tipos_empleados.nombre as tipo','tb_tipos_empleados.idt_empleado as id_tipo', 'tb_sueldos.sueldo as sueldo', 'tb_relacion_areas.*' )
+            ->get(); */
     return view('areasmetas.index')
         ->with(['areasmetas' => $areasmetas])
         ->with(['programas' => $programas])
@@ -40,7 +47,7 @@ public function update(Request $request, AreasMetas $areasMetas){
     $areasMetas->update(array(
         'objetivo' => $request->input('objetivo'),
         'id_programa' => $request->input('id_programa'),
-        'id_registro' => $request->input('id_registro'),    
+        'id_registro' => $request->input('id_registro'),
     ));
 
     return redirect()->route("areasmetas.index");
