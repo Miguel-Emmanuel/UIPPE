@@ -84,12 +84,9 @@ Route::name('editProgram')->put('editProgram/{id}', [ProgramasController::class,
 Route::name('deleteProgram')->put('deleteProgram/{id}',[ProgramasController::class, 'destroy']);
 
 Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
-<<<<<<< HEAD
 Route::name('deleteTip')->put('deleteTip/{id}',[TiposController::class, 'destroy']);
-=======
 Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);
 
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
->>>>>>> 3695bbcbdc96e5ba1957abd0618484d594bb29c0
