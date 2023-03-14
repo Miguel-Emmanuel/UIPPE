@@ -30,7 +30,7 @@ class AreasController extends Controller
     ];
 
     $message =[
-      'clve.required' => 'Las credenciales son invalidas',
+      'clave.required' => 'Las credenciales son invalidas',
       'nombre.required' => 'Las credenciales son invalidas',
       'descripcion.required' => 'Las credenciales son invalidas'
     ];

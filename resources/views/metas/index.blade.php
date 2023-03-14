@@ -80,8 +80,8 @@ $session_id = session('session_id');
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
                         <td class="text-center">
-                           <!-- Button delete modal -->
-                           @if($meta -> activo > 0)
+                            <!-- Button delete modal -->
+                            @if($meta -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @else
                             <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
@@ -117,23 +117,25 @@ $session_id = session('session_id');
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="py-3">
+                    <div class="col-12">
                         <div>
                             <label for="exampleFormControlInput1" class="form-label">Nombre:</label>
-                            <textarea type="text" class="form-control" name="nombre" rows="7"></textarea>
+                            <textarea type="text" class="form-control" name="nombre" rows="3"></textarea>
                         </div>
                         @error('nombre')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Descripción de la meta:</label>
-                        <input type="text" class="form-control" aria-label="First name" name="descripcion">
+                    <div class="col-12">
+                        <br>
+                        <label for="exampleFormControlInput1" class="form-label">Descripción:</label>
+                        <textarea type="text" class="form-control" name="descripcion" rows="7"></textarea>
                         @error('descripcion')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="py-3">
+                    <hr>
+                    <div class="col-12">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" name="unidadmedida" placeholder="name@example.com">
                             <label for="floatingInput">Unidad de Medida:</label>
@@ -159,6 +161,7 @@ $session_id = session('session_id');
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -255,6 +258,7 @@ $session_id = session('session_id');
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -282,9 +286,12 @@ $session_id = session('session_id');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
+                <form action="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
