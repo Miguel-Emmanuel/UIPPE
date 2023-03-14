@@ -8,6 +8,9 @@
     <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/virtual-select.min.css">
+
+    
 </head>
 <?php
 $session_id = session('session_id');
@@ -39,6 +42,7 @@ $session_apellido = session('session_apellido');
                     <a href="usuarios" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Usuarios</span> </a>
                     <a href="programas" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Programas</span> </a>
                     <a href="tipos" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Tipos</span> </a>
+                    <a href="areas-usuarios" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Areas-Usuarios</span> </a>
                 </div>
             </div>
             @if($session_id)

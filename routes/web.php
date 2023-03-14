@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AreasController;
+use App\Http\Controllers\AreasUsuariosController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
@@ -58,6 +59,7 @@ Route::resource('programas', ProgramasController::class);
 Route::resource('usuarios',UsuariosController::class);
 Route::resource('metas', MetasController::class);
 Route::resource('tipos', TiposController::class);
+Route::resource('areas-usuarios', AreasUsuariosController::class);
 
 Route::name('deleteMeta')->get('deleteMeta/{id}',[MetasController::class, 'destroy']);
 Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);
@@ -73,3 +75,7 @@ Route::name('deleteProgram')->get('deleteUsuario/{id}',[ProgramasController::cla
 
 Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
 Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);
+
+Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
+Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
+Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
