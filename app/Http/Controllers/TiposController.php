@@ -16,6 +16,19 @@ class TiposController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ];
+
+        $message = [
+            'clave.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'descripcion.required' => 'Las credenciales son invalidas'
+        ];
+
+        $this->validate($request, $rules, $message);
        
         Tipos::create(array(
             'clave' => $request->input('clave'),
