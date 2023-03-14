@@ -124,6 +124,27 @@ $session_tipo = session('session_tipo');
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
+                <div class="card-body">
+                    <a href="areasmetas">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Áreas | Metas
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    5
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bx bx-male-female fa-3x text-gray-300" style="color: #027333;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
         @elseif($session_tipo == 4)
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
