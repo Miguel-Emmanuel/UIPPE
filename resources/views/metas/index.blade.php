@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <title>Metas</title>
 <div class="container">
     <div class="row">
@@ -25,6 +28,7 @@
                 <tbody>
                     <!-- Regitros en tabla metas -->
                     @foreach($metas as $meta)
+                    @if($session_id != 3)
                     <tr>
                         <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
@@ -50,10 +54,42 @@
                             @if($meta -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
+                    @elseif($meta->activo > 0)
+                    <tr>
+                        <td class="text-center">{{ $meta -> clave }}</td>
+                        <td>{{ $meta -> nombre }}</td>
+                        <td>{{ $meta -> descripcion }}</td>
+                        <td class="text-center">
+                            @if($meta -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>{{ $meta -> id_registro }}</td>
+                        <td class="text-center">
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td class="text-center">
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td class="text-center">
+                            <!-- Button delete modal -->
+                            @if($meta -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_meta }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -81,23 +117,25 @@
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="py-3">
+                    <div class="col-12">
                         <div>
                             <label for="exampleFormControlInput1" class="form-label">Nombre:</label>
-                            <textarea type="text" class="form-control" name="nombre" rows="7"></textarea>
+                            <textarea type="text" class="form-control" name="nombre" rows="3"></textarea>
                         </div>
                         @error('nombre')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="col">
-                        <label for="exampleInputEmail1" class="form-label">Descripción de la meta:</label>
-                        <input type="text" class="form-control" aria-label="First name" name="descripcion">
+                    <div class="col-12">
+                        <br>
+                        <label for="exampleFormControlInput1" class="form-label">Descripción:</label>
+                        <textarea type="text" class="form-control" name="descripcion" rows="7"></textarea>
                         @error('descripcion')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="py-3">
+                    <hr>
+                    <div class="col-12">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" name="unidadmedida" placeholder="name@example.com">
                             <label for="floatingInput">Unidad de Medida:</label>
@@ -123,6 +161,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -202,7 +241,7 @@
                     <div class="mb-3">
                         <hr>
                         <label for=""> Programa:</label>
-                        <select class="form-control form-select" aria-label="Default select example" name="programa_id" value="{{$meta->programa_id}}"> 
+                        <select class="form-control form-select" aria-label="Default select example" name="programa_id" value="{{$meta->programa_id}}">
                             @foreach($Programas as $info)
                             <option value={{$info->id_programa}} {{ $info->id_programa == $meta->programa_id ?'selected':''; }}>{{$info->abreviatura}}</option>
                             @endforeach
@@ -219,6 +258,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -246,9 +286,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
+                <form action="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>

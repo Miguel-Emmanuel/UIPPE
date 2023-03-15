@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuarios;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Illuminate\Support\Facades\Mail;
@@ -39,23 +41,19 @@ class Login extends Controller
             ->where('pass', '=', $pass)
             ->get();
 
-        if (count($consulta) == 0) {
-            return view('login');
+        if (count($consulta)==0 or $consulta[0]->activo == '0') {
+            return redirect('login');
         } else {
             $request->session()->put('session_id', $consulta[0]->id_usuario);
-            $request->session()->put('session_name', $consulta[0]->nombre);
+            $request->session()->put('session_name', $consulta[0]->nombre.' '.$consulta[0]->app.' '.$consulta[0]->apm);
             $request->session()->put('session_apellido', $consulta[0]->app);
-
-
+            $request->session()->put('session_tipo', $consulta[0]->id_tipo);
+            $request->session()->put('session_foto', $consulta[0]->foto);
 
             $session_id = $request->session()->get('session_id');
             $session_name = $request->session()->get('session_name');
-            //     if($session_id == 1) {
-            //         return view('dashboard.dashboard');
-            //    }else{
-            //     return view('login');
+            $session_idTipo = $request->session()->get('session_tipo');
 
-            //     }
             return redirect('dashboard');
         }
     }
@@ -119,7 +117,7 @@ class Login extends Controller
                 session()->flash('Error', 'Las contraseñas no coinciden.');
                 return redirect('reset');
             }
-            
+
         }
     }
 }

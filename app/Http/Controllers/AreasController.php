@@ -23,6 +23,19 @@ class AreasController extends Controller
   }
   public function store(Request $request)
   {
+    $rules =[
+            'clave'=>'required',
+            'nombre'=>'required',
+            'descripcion'=>'required',
+    ];
+
+    $message =[
+      'clave.required' => 'Las credenciales son invalidas',
+      'nombre.required' => 'Las credenciales son invalidas',
+      'descripcion.required' => 'Las credenciales son invalidas'
+    ];
+
+    $this->validate($request, $rules, $message);
 
     if ($request->file('foto')  !=  '') {
       $file = $request->file('foto');
@@ -39,8 +52,7 @@ class AreasController extends Controller
       'descripcion' => $request->input('descripcion'),
       'foto' => $foto2,
       'activo' => '1',
-      //el registro queda nulo
-      'id_registro' => 1, //$request->input('registro'),
+      'id_registro' => $request->input('registro'),
 
     ));
 
@@ -76,15 +88,17 @@ class AreasController extends Controller
     $query->descripcion = trim($request->descripcion);
     $query->foto = $foto2;
     $query->activo = $activo;
+    $query->id_registro = trim($request->registro);
     $query->save();
 
     return redirect('areas');
   }
 
-  public function destroy(Areas $id)
+  public function destroy(Areas $id, Request $request)
     {
         $query = Areas::find($id->id_area);
         $query -> activo = 0;
+        $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('areas');
     }

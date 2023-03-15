@@ -18,4 +18,8 @@ class Areas extends Model
         'activo',
          'id_registro'
     ];
+      /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
 }

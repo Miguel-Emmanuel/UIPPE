@@ -39,6 +39,7 @@ class MetasController extends Controller
         $query -> unidadmedida = trim($request -> unidadmedida);
         $query-> programa_id = $request->programa_id;
         $query -> activo = $activo;
+        $query -> id_registro = $request->registro;
         $query->save();
 
         return redirect('metas');
@@ -53,9 +54,9 @@ class MetasController extends Controller
         ];
 
         $message = [
-            'clave.required' => 'Es necesario colocar una clave',
-            'nombre.required' => 'Es necesario colocar el nombre de la Meta',
-            'unidadmedida.required' => 'Es necesario la Unidad de Medida para la Meta'
+            'clave.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'unidadmedida.required' => 'Las credenciales son invalidas'
         ];
 
         $this->validate($request, $rules, $message);
@@ -75,16 +76,17 @@ class MetasController extends Controller
             'unidadmedida' => $request ->input('unidadmedida'),
             'programa_id' => $request->input('programa_id'),
             'activo' => $activo,
-            'id_registro' => 1,
+            'id_registro' => $request->input('registro'),
         ));
 
         return redirect('metas');
     }
 
-    public function destroy(Metas $id)
+    public function destroy(Metas $id, Request $request)
     {
         $query = Metas::find($id->id_meta);
         $query -> activo = 0;
+        $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('metas');
     }
