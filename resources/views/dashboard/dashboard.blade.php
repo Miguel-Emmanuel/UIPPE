@@ -240,7 +240,7 @@ $session_tipo = session('session_tipo');
     var Grafica = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ['col1', 'col2', 'col3'],
+            labels: ['col1', 'col2', 'col3',],
             datasets: [{
                 label: 'Becas Mes de Enero',
                 data: [10, 9, 15],

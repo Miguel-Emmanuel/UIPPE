@@ -1,5 +1,53 @@
 @extends('layout.navbar')
 @section('content')
+
+<head>
+    <script src="{{ asset('js\jquery-3.6.4.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+              // --------Programas =-> Metas---------------------------------------------------
+              $("#programa").on('change', function() {
+                      var    id_programa  =  $(this).find(":selected").val();
+                          console.log(id_programa);
+                      if(id_programa == 0){
+                          $("#metas").html('<option value="0">-- Seleccione un programa antes --</option>');
+                      }
+                      else{
+                          $("#metas").load('js_metas?id_programa=' + id_programa);
+
+
+                      }
+              });
+
+          });
+
+
+  </script>
+  <script>
+           $(document).ready(function(){
+              // -------- Metas - > Areas---------------------------------------------------
+              $("#metas").on('change', function() {
+                      var id_meta  =  $(this).find(":selected").val();
+
+                      console.log(id_meta);
+                      if(id_meta == 0){
+                          $("#areas").html('<option value="0">-- Seleccione una meta antes 2 --</option>');
+                      }
+                      else{
+                            var id_programa2  =  $("#programa").find(":selected").val();
+                          $("#areas").load('js_areas?id_meta=' + id_meta+'&&id_programa='+id_programa2);
+                      console.log("progrma"+id_programa2);
+
+                      }
+              });
+
+          });
+  </script>
+
+</head>
+
+
     <div class="container">
         <div class="row">
             <div class="col p-4">
@@ -12,15 +60,16 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
 
                 <body>
-                    <table class="table table-striped mt-3" id="dts">
+                    <table class="table table-striped mt-3">
                         <thead class="table-success table-striped">
 
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col"> AREA</th>
                                 <th scope="col"> PROGRAMA</th>
                                 <th scope="col"> META</th>
                                 <th scope="col">OBJETIVO</th>
-                                <th scope="col">ACCIONES</th>
+                                <th scope="col" colspan="3">ACCIONES</th>
 
                             </tr>
                         </thead>
@@ -28,38 +77,37 @@
                             <tr>
                                 @foreach ($areasmetas as $info)
                                     <td>{{ $info->id_areasmetas }}</td>
-                                    <td>{{ $info->id_programa }}</td>
-                                    <td>{{ $info->meta_id }}</td>
+                                    <td>{{ $info->area }}</td>
+                                    <td>{{ $info->pnombre  }}</td>
+                                    <td>{{ $info->nmeta }}</td>
                                     <td>{{ $info->objetivo }}</td>
                                     <td>
                                         <!-- Button show modal -->
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#modalshow{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-eye"></i></button>
-
+                                            </td><td>
                                         <!-- Button edit modal -->
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-pen-to-square"></i></button>
 
                                         <!-- Button delete modal -->
-
+                                    </td><td>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-trash"></i></button>
-
-
                                     </td>
-
                             </tr>
                         </tbody>
                         @endforeach
                     </table>
 
+
             </div>
         </div>
         <!-- MODAL DELETE START -->
-        @foreach ($areasmetas as $areasmeta)
+        @foreach ($areasmetasd as $areasmeta)
             <div class="modal fade" id="deleteModal{{ $areasmeta->id_areasmetas }}" tabindex="-1"
                 aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -136,12 +184,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('areasmetas.update',  $info->id_areasmetas) }}" method="POST"
+                        <form action="{{ route('areasmetas.update', $info->id_areasmetas) }}" method="POST"
                             enctype="multipart/form-data">
-                       @csrf
-                       @method('PATCH')
+                            @csrf
+                            @method('PATCH')
                             <select multiple placeholder="METAS" data-search="true" data-silent-initial-value-set="true"
-                                name="id_meta">
+                                name="id_meta[]">
 
                                 @foreach ($metas as $info)
                                     <option value="{{ $info->id_meta }}">
@@ -151,7 +199,7 @@
 
                             </select>
                             <select multiple placeholder="PROGRAMAS" data-search="true"
-                                data-silent-initial-value-set="true" name="id_programa">
+                                data-silent-initial-value-set="true" name="id_programa[]">
 
                                 @foreach ($programas as $info)
                                     <option value=" {{ $info->id_programa }}">
@@ -161,7 +209,7 @@
 
                             </select>
                             <select multiple placeholder="AREAS" data-search="true" data-silent-initial-value-set="true"
-                                name="id_area">
+                                name="id_area[]">
 
                                 @foreach ($areas as $info)
                                     <option value="{{ $info->id_area }}">
@@ -175,7 +223,7 @@
 
 
                                 <input type="text" class="form-control" id="floatingInput" name="objetivo"
-                             value="{{ $info->objetivo }}" >
+                                    value="{{ $info->objetivo }}">
                                 <label for="floatingInput">OBJETIVO: {{ $info->objetivo }} </label>
 
                             </div>
@@ -207,36 +255,25 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <select multiple placeholder="METAS" data-search="true" data-silent-initial-value-set="true"
-                            name="id_meta">
-
-                            @foreach ($metas as $info)
-                                <option value="{{ $info->id_meta }}">
-                                    {{ $info->nombre }}
-                                </option>
-                            @endforeach
-
-                        </select>
-                        <select multiple placeholder="PROGRAMAS" data-search="true" data-silent-initial-value-set="true"
-                            name="id_programa">
-
+                        <select  placeholder="PROGRAMAS"     name="id_programa" id="programa">
+                            <option value="0" selected>--- Selecciona un Programa ---</option>
                             @foreach ($programas as $info)
-                                <option value=" {{ $info->id_programa }}">
-                                    {{ $info->nombre }}
+                                <option value="{{ $info->id_programa }}">
+                                    {{ $info->abreviatura }}
                                 </option>
                             @endforeach
 
                         </select>
-                        <select multiple placeholder="AREAS" data-search="true" data-silent-initial-value-set="true"
-                            name="id_area">
-
-                            @foreach ($areas as $info)
-                                <option value="{{ $info->id_area }}">
-                                    {{ $info->nombre }}
-                                </option>
-                            @endforeach
+                        <select name="id_meta" id="metas">
+                            <option selected>--- Selecciona un Programa antes ---</option>
 
                         </select>
+
+                        <select  name="id_area" id="areas">
+                            <option selected>--- Selecciona un meta antes ---</option>
+
+                        </select>
+
                         <div class="py-3">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="objetivo"
@@ -278,25 +315,13 @@
     </script>
     <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-    <script type="text/javascript">
+{{--     <script type="text/javascript">
         VirtualSelect.init({
             ele: 'select'
         });
     </script>
+ --}}
 
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            $('#dts').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
-                }
-            });
-        });
-    </script>
     <!-- SCRIPT MODAL END -->
 @endsection

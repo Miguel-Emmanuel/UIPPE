@@ -13,6 +13,8 @@ use App\Http\Controllers\TiposController;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReestablecerPassword;
+use App\Models\AreasMetas;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,3 +92,8 @@ Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
+
+/////////////////SELECTS//////////////////
+Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
+Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
+
