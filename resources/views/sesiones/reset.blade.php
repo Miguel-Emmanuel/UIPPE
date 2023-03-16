@@ -26,7 +26,7 @@
     @endif
     </div>
     
-    <div class="container w-75 rounded shadow">
+    <div class="contenedor rounded shadow">
         <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
             <!-Columna central>
             <h2 class="text-center pb-3">Restablece tu Contraseña</h2>
@@ -34,7 +34,6 @@
 
                 <form id="recuperar" action="{{route('resetpass')}}" method="GET">
                     @csrf
-
                     <p>Instrucciones.</p>
                     <ol>
                         <li>Ingresa elcorreo electronico.</li>
