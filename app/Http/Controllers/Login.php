@@ -18,12 +18,6 @@ class Login extends Controller
         return view('sesiones/login');
     }
 
-    public function registrate()
-    {
-        //aca va la vista de edugo!!
-        return view('sesiones/register');
-    }
-
     public function recuperar()
     {
         //recuperar contrase!!
@@ -76,7 +70,6 @@ class Login extends Controller
     }
 
     public function EnviarCorreo(Request $request){
-        $uwu = "holi";
         $email = $request->input('email');
         $consulta = Usuarios::where('email', '=', $email)
             ->get();
@@ -85,13 +78,12 @@ class Login extends Controller
             ->get();
 
             if (count($consulta) == 0) {
-                session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+                session()->flash('Error', 'Credenciales Incorrectas.');
                 return redirect('recuperacion');
             } else {
                 Mail::to($email)->send(new ReestablecerPassword($contacto));
                 session()->flash('Exito', 'Revise su bandeja de entrada.');
                 return redirect('recuperacion');
-                //return new ReestablecerPassword($contacto);
         }
     }
 
@@ -102,13 +94,14 @@ class Login extends Controller
     }
     public function resetpass(Request $request)
     {
-        $email = $request->input('email');
+        /*FUERA DE SERVICIO*/
+        /*$email = $request->input('email');
         $consulta = Usuarios::where('email', '=', $email)->get();
         $pass1 = $request->input('pass1');
         $pass2 = $request->input('pass2');
 
         if (count($consulta) == 0) {
-            session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+            session()->flash('Error', 'Credenciales Incorrectas.');
                 return redirect('reset');
         } else{
             if($pass1 == $pass2){
@@ -119,7 +112,15 @@ class Login extends Controller
                 session()->flash('Error', 'Las contraseñas no coinciden.');
                 return redirect('reset');
             }
-            
-        }
+            }*/
+    }
+
+    public function cuser(){
+        $user = Usuarios::all();
+        return $user;   
+    }
+
+    public function pcorreo(){
+        
     }
 }
