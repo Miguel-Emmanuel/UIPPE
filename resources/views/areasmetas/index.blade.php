@@ -20,14 +20,9 @@
                       }
               });
 
-          });
-
-
-  </script>
-  <script>
-           $(document).ready(function(){
               // -------- Metas - > Areas---------------------------------------------------
               $("#metas").on('change', function() {
+                // VirtualSelect.init({ ele: '#areas' });
                       var id_meta  =  $(this).find(":selected").val();
 
                       console.log(id_meta);
@@ -269,8 +264,8 @@
 
                         </select>
 
-                        <select  name="id_area" id="areas">
-                            <option selected>--- Selecciona un meta antes ---</option>
+                        <select   name="id_area" id="areas">
+                            <option selected>--- Selecciona un Programa antes ---</option>
 
                         </select>
 
@@ -315,12 +310,10 @@
     </script>
     <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-{{--     <script type="text/javascript">
-        VirtualSelect.init({
-            ele: 'select'
-        });
+   <script type="text/javascript">
+
     </script>
- --}}
+
 
 
     <!-- SCRIPT MODAL END -->

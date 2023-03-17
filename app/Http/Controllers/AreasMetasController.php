@@ -18,7 +18,7 @@ class AreasMetasController extends Controller
         $areasmetas = DB::table('tb_areasmetas')
             ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
             ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
-            ->join('tb_areas', 'tb_areas.id_area', 'tb_areasmetas.meta_id')
+            ->join('tb_areas', 'tb_areasmetas.area_id',  'tb_areas.id_area')
             ->select('tb_metas.nombre as nmeta', 'tb_metas.id_meta as mid', 'tb_programas.nombre as pnombre', 'tb_areas.nombre as area', 'tb_areasmetas.id_areasmetas', 'tb_areasmetas.objetivo as objetivo')
             ->orderBy('tb_areasmetas.id_areasmetas', 'asc')
             ->get();
@@ -121,10 +121,14 @@ class AreasMetasController extends Controller
             ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
             ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
             ->join('tb_areas', 'tb_areas.id_area', 'tb_areasmetas.area_id')
-            ->select('tb_metas.nombre as nmeta', 'tb_metas.id_meta as mid',
-            'tb_programas.nombre as pnombre', 'tb_areas.nombre as arean',
-            'tb_areasmetas.objetivo as objetivo',
-            'tb_areas.id_area as idare')
+            ->select(
+                'tb_metas.nombre as nmeta',
+                'tb_metas.id_meta as mid',
+                'tb_programas.nombre as pnombre',
+                'tb_areas.nombre as arean',
+                'tb_areasmetas.objetivo as objetivo',
+                'tb_areas.id_area as idare'
+            )
             ->where('tb_metas.id_meta', $id_meta)
             ->get();
 

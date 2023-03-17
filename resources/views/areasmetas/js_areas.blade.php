@@ -1,6 +1,8 @@
 
-<option value="0">-- Seleccione un Area  --</option>
+<option  multiple data-search="true"
+data-silent-initial-value-set="true"  value="0">-- Seleccione un Area  --</option>
 @foreach ($area as $info)
-    <option value="{{ $info->idare }}">{{ $info->arean }}</option>
+    <option multiple data-search="true"
+    data-silent-initial-value-set="true" value="{{ $info->idare }}">{{ $info->arean }}</option>
 @endforeach
 
