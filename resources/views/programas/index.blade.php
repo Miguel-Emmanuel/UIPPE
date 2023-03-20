@@ -111,7 +111,7 @@ $session_id = session('session_id');
                 <p><strong>{{ $info->nombre }}</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <form action="{{ route('deleteProgram', ['id' => $info->id_programa]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
@@ -157,15 +157,11 @@ $session_id = session('session_id');
                     </div>
                 </div>
             </div>
-            <!-- Id Registro -->
-            <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+            <br><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <br><br>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Editar</button>
-        </div>
-        </form>
     </div>
 </div>
 @endforeach
@@ -210,7 +206,7 @@ $session_id = session('session_id');
             </div>
             <br><br>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>
             </form>

@@ -35,19 +35,16 @@ $session_foto = session('session_foto');
 
 <body id="body-pd">
     <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
+        <nav class="navSidebar">
             <div>
                 <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
-                    <a href="dashboard" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Panel</span> </a>
-                    @if($session_tipo == 4)
-                    <a href="metas" class="nav_link"> <i class='bx bx-check nav_icon'></i> <span class="nav_name">Metas</span> </a>
+                    <a href="dashboard" class="nav_link"> <i class='bx bx-notepad'></i> <span class="nav_name">Registros</span> </a>
                     @else
                     @endif
-                    @else
-                    @endif
+                    <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Gráficos</span> </a>
                 </div>
             </div>
             @if($session_id)
