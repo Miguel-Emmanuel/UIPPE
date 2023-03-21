@@ -17,7 +17,7 @@ return new class extends Migration
         schema::create('tb_areas', function (Blueprint $table){
             $table->increments('id_area');
             $table->string('clave', 30);
-            $table->string('nombre', 50);
+            $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->text('foto')->nullable();
             $table->boolean('activo');
