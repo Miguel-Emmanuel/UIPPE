@@ -13,8 +13,11 @@ use PhpParser\Node\Expr\FuncCall;
 class AreasUsuariosController extends Controller
 {
     public function index(){
-        $areausuario = AreasUsuarios::all();
-        $areas =Areas::all();
+        $areausuario = AreasUsuarios::select('tb_areasusuarios.id_areasusuarios','tb_areas.nombre as area_id', 'tb_usuarios.nombre as usuario_id' )
+        ->join('tb_areas','tb_areas.id_area','tb_areasusuarios.area_id')
+        ->join('tb_usuarios','tb_usuarios.id_usuario','tb_areasusuarios.usuario_id')
+        ->get();
+        $areas = Areas::all();
         $usuarios = Usuarios::all();
         return view('areas-usuarios.index', compact('areausuario','areas','usuarios'));
     }
