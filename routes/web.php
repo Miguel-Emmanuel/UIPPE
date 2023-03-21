@@ -93,3 +93,10 @@ Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
+
+
+
+
+
+
+Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);
