@@ -39,16 +39,6 @@ Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashbo
    return view('graficos.graficos');
 });
 
-/*Route::post('crecuperar', function(){
-   Mail::to('admiuippe@gmail.com')->send(new ReestablecerPassword);
-   return("Revise su Bandeja de Entrada");
-})->name('mails.crecuperar');
-
-Route::get('crecuperar', function(){
-   Mail::to('admiuippe@gmail.com')->send(new ReestablecerPassword);
-   return("Revise su Bandeja de Entrada");
-})->name('mails.crecuperar');*/
-
 
 Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
@@ -65,6 +55,7 @@ Route::name('reset')->get('reset', [Login::class, 'reset']);
 Route::name('resetpass')->get('resetpass', [Login::class, 'resetpass']);
 
 //Resources
+//Resources 
 Route::resource('areas', AreasController::class);
 Route::resource('programas', ProgramasController::class);
 Route::resource('usuarios',UsuariosController::class);
@@ -100,3 +91,11 @@ Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('a
 
 
 Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);
+Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);
+
+//CORREOS
+Route::name('EnviarCorreo')->get('EnviarCorreo', [Login::class, 'EnviarCorreo']);
+Route::name('reset')->get('reset', [Login::class, 'reset']);
+Route::name('resetpass')->get('resetpass', [Login::class, 'resetpass']);
+
+Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
