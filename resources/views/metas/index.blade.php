@@ -3,8 +3,16 @@
 <?php
 $session_id = session('session_id');
 ?>
+@if($session_id)
 <title>Metas</title>
-<div class="container">
+<div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item">Registros</li>
+            <li class="breadcrumb-item" aria-current="page">Metas</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
             <h3>Metas</h3>
@@ -97,6 +105,19 @@ $session_id = session('session_id');
     </div>
 </div>
 
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Metas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- ADD MODAL START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">

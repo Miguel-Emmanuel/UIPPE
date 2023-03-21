@@ -3,7 +3,15 @@
 <?php
 $session_id = session('session_id');
 ?>
-<div class="container">
+@if($session_id)
+<div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item">Registros</li>
+            <li class="breadcrumb-item" aria-current="page">Usuarios</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
             <h3>Usuarios</h3>
@@ -119,7 +127,19 @@ $session_id = session('session_id');
     </div>
 </div>
 
-
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Usuarios</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- ELIMINAR START MODAL -->
 @foreach ($Usuarios as $usuario )
@@ -179,7 +199,7 @@ $session_id = session('session_id');
                         <p><strong>Fecha de nacimiento: </strong><br>{{$usuario -> fn}}</p>
                     </div>
                     <div class="col-6 text-center">
-                    <strong>Estado: </strong>@if($usuario -> activo > 0) <p style="color: green;">Activo</p> @else <p style="color: red;">Inactivo</p> @endif
+                        <strong>Estado: </strong>@if($usuario -> activo > 0) <p style="color: green;">Activo</p> @else <p style="color: red;">Inactivo</p> @endif
                     </div>
                     <p><strong>Academico: </strong>{{$usuario -> academico}}</p>
                     <p><strong>Correo: </strong>{{$usuario -> email}}</p>
@@ -203,7 +223,7 @@ $session_id = session('session_id');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <form action="{{ route('editUsuario', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('editUsuario', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -213,7 +233,7 @@ $session_id = session('session_id');
                     <div class="row py-2">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" aria-label="First name" name="nombre" value="{{ $usuario -> nombreU }}" >
+                            <input type="text" class="form-control" aria-label="First name" name="nombre" value="{{ $usuario -> nombreU }}">
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
@@ -273,7 +293,7 @@ $session_id = session('session_id');
                     <div class="mb-3">
                         <hr>
                         <label for=""> Tipo de usuario:</label>
-                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}"> 
+                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}">
                             @foreach($Tipos as $info)
                             <option value={{$info->id}} {{ $info->id == $usuario->id_tipo ?'selected':''; }}>{{$info->nombre}}</option>
                             @endforeach
@@ -319,7 +339,7 @@ $session_id = session('session_id');
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
                         <label for="floatingInput">Clave:</label>
-                         @error('clave')
+                        @error('clave')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
@@ -327,23 +347,23 @@ $session_id = session('session_id');
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
                             <input type="text" class="form-control" aria-label="First name" name="nombre">
-                         @error('nombre')
-                        <small class="form-text text-danger">{{$message}}</small>
-                        @enderror
+                            @error('nombre')
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="app">
                             @error('app')
-                        <small class="form-text text-danger">{{$message}}</small>
-                        @enderror
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="apm">
                             @error('apm')
-                        <small class="form-text text-danger">{{$message}}</small>
-                        @enderror
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="py-2">
