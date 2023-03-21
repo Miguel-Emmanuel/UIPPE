@@ -18,6 +18,10 @@ class Login extends Controller
         return view('sesiones/login');
     }
 
+    public function registrate(Request $request){
+        return view('sesiones.register');
+    }
+
     public function recuperar()
     {
         //recuperar contrase!!
@@ -120,7 +124,44 @@ class Login extends Controller
         return $user;   
     }
 
-    public function pcorreo(){
+    public function pcorreo(Request $request){
+        $data = array(
+            'destinatario'=> $request->input('destinatario'),
+            'asunto'=> $request->input('asunto'),
+            'mensaje'=> $request->input('mensaje'),
+        );
+        /*$destinatario = $request->input('destinatario');
+        $asunto = $request->input('asunto');
+        $mensaje = $request->input('mensaje');*/
+
+        /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com'];
+        $data = array(
+            'nombre'=> 'Oliver',
+            'gatito2'=> 'Frederick Segundo',
+            'asunto'=> 'Gatito',
+            'mensaje'=> 'udagdiyshuyfg',
+        );*/
+
+        //return view('mails.prueba', compact('data'));
+
+        Mail::send('mails.prueba', compact('data'), function($message) use ($data){
+            $message->to('admiuippe@gmail.com','Admin Uippe')
+                ->subject($data['asunto']);
+            $message->from('hello@example.com', 'Eduardoh');
+        });
+
+        /*Mail::send('mails.prueba', compact('data'), function($message) use ($emails){
+            $message->to($emails)
+                ->subject('nose');
+            $message->from('hello@example.com', 'Eduardoh');
+        });*/
+
+        /*Mail::send('mails.prueba', compact('data'), function($message){
+            $message->to('eduholvera@gmail.com', 'Eduardoh')
+                ->subject('nose');
+            $message->from('hello@example.com', 'Eduardo2');
+        });*/
+
         
     }
 }
