@@ -7,6 +7,7 @@ use App\Models\AreasUsuarios;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Schema;
 use PhpParser\Node\Expr\FuncCall;
 
 class AreasUsuariosController extends Controller
@@ -20,18 +21,32 @@ class AreasUsuariosController extends Controller
 
     public function store(Request $request){
 
-        
-        dd($request ->all());
-        $areausuario = new AreasUsuarios();
- 
-        $areausuario -> area_id = $request -> area_id;
-        $areausuario -> usuario_id = $request -> usuario_id;
-        $areausuario -> activo = $request -> activo;
+        $activo = 1;
 
-        $areausuario -> save(); 
+        if ($request->input('activo') == '') {
+            $activo = 0;
+        } else if ($request->input('activo') == 'ON') {
+            $activo = 1;
+        }
 
-       
-        //return redirect()->route('areas-usuarios.index');
+        $area_id = $request -> area_id;
+        $usuarios = $request -> usuario_id[0];
+        $separador = ',';
+        $id_usuarios = explode($separador,$usuarios);
+        $contador = count($id_usuarios);
+
+        $id_registro = $request -> input('registro');
+
+        for($i = 0; $i<$contador; $i++){
+            AreasUsuarios::create(array(
+                'area_id' => $area_id,
+                'usuario_id' => $id_usuarios[$i],
+                'activo' => $activo,
+                'id_registro' => $id_registro
+            ));
+        }
+
+        return redirect('areas-usuarios');
 
     }
 }

@@ -1,5 +1,8 @@
 @extends('layout.navbar')
 @section('content')
+<?php
+$session_id = session('session_id');
+?>
 <div class="container">
     <div class="row">
         <div class="col p-4">
@@ -22,7 +25,7 @@
                 <tbody>
                     @foreach($areausuario as $info)
                     <tr>
-                        <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
+                        <!-- <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td> -->
                         <td>{{ $info->id_areasusuarios}}</td>
                         <td>{{ $info->area_id}}</td>
                         <td>{{ $info->usuario_id}}</td>
@@ -75,7 +78,7 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">
+                <a href="#">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
                 </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -119,7 +122,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('editArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">
+                <form action="#" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -197,10 +200,11 @@
                     
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" name="activo" role="switch" id="flexSwitchCheckChecked" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
