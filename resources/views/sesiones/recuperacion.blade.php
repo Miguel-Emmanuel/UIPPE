@@ -29,7 +29,7 @@
     <div class="contenedor rounded shadow">
             <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
             <!-Columna central>
-            <h3 class="text-center pb-3">Olvidaste tu Contraseña?</h3>
+            <h4 class="text-center pb-3">¿Olvidaste tu Contraseña?</h4>
         <div class="in">
 
             <form id="recuperar" action="{{route('EnviarCorreo')}}" method="GET">
