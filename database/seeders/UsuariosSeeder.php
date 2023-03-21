@@ -44,7 +44,7 @@ class UsuariosSeeder extends Seeder
         $usuario->pass = '123456';
         $usuario->id_tipo = '1';
         $usuario->activo = '1';
-        $usuario->id_registro = '2';
+        $usuario->id_registro = '1';
         $usuario->save();
 
         $usuario= new Usuarios();
@@ -56,11 +56,59 @@ class UsuariosSeeder extends Seeder
         $usuario->fn = '2003-05-01';
         $usuario->academico = 'TSU Área Dasarrollo de Software Multiplataforma';
         $usuario->foto = 'cuervo.png';
-        $usuario->email = 'aal222010230@gmail.com';
+        $usuario->email = 'al222010230@gmail.com';
         $usuario->pass = '123456';
         $usuario->id_tipo = '1';
         $usuario->activo = '1';
-        $usuario->id_registro = '2';
+        $usuario->id_registro = '1';
+        $usuario->save();
+
+        $usuario= new Usuarios();
+        $usuario->clave = 'URS4';
+        $usuario->nombre = 'Juan Carlos';
+        $usuario->app = 'Lopez';
+        $usuario->apm = 'Alarcon';
+        $usuario->gen = 'M';
+        $usuario->fn = '1998-09-04';
+        $usuario->academico = 'TSU Área Dasarrollo de Software Multiplataforma';
+        $usuario->foto = 'cuervo.png';
+        $usuario->email = 'al222220002@gmail.com';
+        $usuario->pass = '123456';
+        $usuario->id_tipo = '1';
+        $usuario->activo = '1';
+        $usuario->id_registro = '1';
+        $usuario->save();
+
+        $usuario= new Usuarios();
+        $usuario->clave = 'URS5';
+        $usuario->nombre = 'Christopher Dan';
+        $usuario->app = 'Zarate';
+        $usuario->apm = 'Bedolla';
+        $usuario->gen = 'M';
+        $usuario->fn = '1999-12-05';
+        $usuario->academico = 'TSU Área Dasarrollo de Software Multiplataforma';
+        $usuario->foto = 'cuervo.png';
+        $usuario->email = 'al222111400@gmail.com';
+        $usuario->pass = '123456';
+        $usuario->id_tipo = '1';
+        $usuario->activo = '1';
+        $usuario->id_registro = '1';
+        $usuario->save();
+
+        $usuario= new Usuarios();
+        $usuario->clave = 'URS6';
+        $usuario->nombre = 'Carlos Eduardo';
+        $usuario->app = 'Olvera';
+        $usuario->apm = 'Aldama';
+        $usuario->gen = 'M';
+        $usuario->fn = '2003-12-30';
+        $usuario->academico = 'TSU Área Dasarrollo de Software Multiplataforma';
+        $usuario->foto = 'cuervo.png';
+        $usuario->email = 'al222111275@gmail.com';
+        $usuario->pass = '123456';
+        $usuario->id_tipo = '1';
+        $usuario->activo = '1';
+        $usuario->id_registro = '1';
         $usuario->save();
     }
 }

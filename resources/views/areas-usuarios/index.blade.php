@@ -174,7 +174,6 @@ $session_id = session('session_id');
             <div class="modal-body">
                 <form action="{{route('areausuario.store')}}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
-
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
                         <select name="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
