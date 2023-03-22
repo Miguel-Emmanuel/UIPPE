@@ -14,6 +14,8 @@ use App\Http\Controllers\TiposController;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReestablecerPassword;
+use App\Models\AreasMetas;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,3 +96,7 @@ Route::name('reset')->get('reset', [Login::class, 'reset']);
 Route::name('resetpass')->get('resetpass', [Login::class, 'resetpass']);
 
 Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
+/////////////////SELECTS//////////////////
+Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
+Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
+

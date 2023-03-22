@@ -22,5 +22,5 @@ class Programas extends Model
         return $this->hasMany(Metas::class, 'programa_id', 'id_programa');
 
     }
-    
+
 }
