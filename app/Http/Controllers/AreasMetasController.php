@@ -38,18 +38,49 @@ class AreasMetasController extends Controller
     }
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
-        AreasMetas::create(array(
-            'area_id' => $request->input('id_area'),
-            'meta_id' => $request->input('id_meta'),
-            'id_programa' => $request->input('id_programa'),
-            'objetivo' => $request->input('objetivo'),
-            'id_registro' => 1,
-        ));
+        $meta_id     = $request->id_meta;
+        $id_programa     = $request->id_programa;
+        $objetivo     = $request->objetivo;
+        $contador = count($request->id_area);
+        $area_id     = $request->id_area;
 
+
+        $areas = $request->id_area[0];
+        $separador = ',';
+        $id_area = explode($separador,$areas);
+
+        for ($i = 0;  $i <= $contador ; $i++ ) {
+            AreasMetas::create(array(
+                'area_id' => $id_area[$i],
+                'meta_id' =>  $meta_id,
+                'id_programa' => $id_programa,
+                'objetivo' => $objetivo,
+                'id_registro' =>  1,
+            ));
+        }
+        // dd($datos);
+        // DB::table('tb_areasmetas')->insert($datos);
         return redirect()->route("areasmetas.index");
     }
+    // AreasMetas::create(array(
+    //     'area_id' => $request->input('id_area'),
+    //     'meta_id' => $request->input('id_meta'),
+    //     'id_programa' => $request->input('id_programa'),
+    //     'objetivo' => $request->input('objetivo'),
+    //     'id_registro' => 1,
+    // ));
+    // dd($request->all());
+    // valio vrg
+    // for ($i = 1; $i <=$contador; $i++) {
+    //     $datos[$i]= [
+    //         'area_id' => $area_id[$i],
+    //         'meta_id' =>  $meta_id,
+    //         'id_programa' => $id_programa,
+    //         'objetivo' => $objetivo,
+    //         'id_registro' =>  1,
+    //     ];
     public function update(Request $request, AreasMetas $areasMetas)
     {
         $areasMetas->update(array(
@@ -109,16 +140,8 @@ class AreasMetasController extends Controller
     {
         $id_programa = $request->get('id_programa');
         $id_meta = $request->get('id_meta');
-        // $area = DB::table('tb_areasmetas')
-        //     ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
-        //     ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
-        //     ->join('tb_areas', 'tb_areas.id_area', 'tb_areasmetas.area_id')
-        //     ->select('tb_areas.nombre as anombre', 'tb_areas.id_area as ida')
-        //     ->where('tb_metas.id_meta', $id_meta)
-        //     ->where('tb_programas.id_programa', $id_programa)
-        //     ->get();
         $area = DB::table('tb_areasmetas')
-            ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
+        ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
             ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
             ->join('tb_areas', 'tb_areas.id_area', 'tb_areasmetas.area_id')
             ->select(
@@ -127,9 +150,9 @@ class AreasMetasController extends Controller
                 'tb_programas.nombre as pnombre',
                 'tb_areas.nombre as arean',
                 'tb_areasmetas.objetivo as objetivo',
-                'tb_areas.id_area as idare'
-            )
-            ->where('tb_metas.id_meta', $id_meta)
+                'tb_areas.id_area as idare')
+            // ->whereNot('tb_metas.id_meta', $id_meta)
+            ->whereNot('tb_programas.id_programa', $id_programa)
             ->get();
 
 
@@ -138,6 +161,14 @@ class AreasMetasController extends Controller
         //  $area = AreasMetas::where('id_programa',$id_programa)->get();
 
 
+        // $area = DB::table('tb_areasmetas')
+        //     ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
+        //     ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
+        //     ->join('tb_areas', 'tb_areas.id_area', 'tb_areasmetas.area_id')
+        //     ->select('tb_areas.nombre as anombre', 'tb_areas.id_area as ida')
+        //     ->where('tb_metas.id_meta', $id_meta)
+        //     ->where('tb_programas.id_programa', $id_programa)
+        //     ->get();
 
         return view("areasmetas.js_areas")
             ->with(['area' => $area]);

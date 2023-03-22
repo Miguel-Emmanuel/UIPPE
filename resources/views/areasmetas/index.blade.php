@@ -1,46 +1,44 @@
 @extends('layout.navbar')
 @section('content')
 
-<head>
-    <script src="{{ asset('js\jquery-3.6.4.min.js') }}"></script>
+    <head>
+        <script src="{{ asset('js\jquery-3.6.4.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function(){
-              // --------Programas =-> Metas---------------------------------------------------
-              $("#programa").on('change', function() {
-                      var    id_programa  =  $(this).find(":selected").val();
-                          console.log(id_programa);
-                      if(id_programa == 0){
-                          $("#metas").html('<option value="0">-- Seleccione un programa antes --</option>');
-                      }
-                      else{
-                          $("#metas").load('js_metas?id_programa=' + id_programa);
+        <script>
+            $(document).ready(function() {
+                // --------Programas =-> Metas---------------------------------------------------
+                $("#programa").on('change', function() {
+                    var id_programa = $(this).find(":selected").val();
+                    console.log(id_programa);
+                    if (id_programa == 0) {
+                        $("#metas").html('<option value="0">-- Seleccione un programa antes --</option>');
+                    } else {
+                        $("#metas").load('js_metas?id_programa=' + id_programa);
 
 
-                      }
-              });
+                    }
+                });
 
-              // -------- Metas - > Areas---------------------------------------------------
-              $("#metas").on('change', function() {
-                // VirtualSelect.init({ ele: '#areas' });
-                      var id_meta  =  $(this).find(":selected").val();
+                // -------- Metas - > Areas---------------------------------------------------
+                $("#metas").on('change', function() {
+                    // VirtualSelect.init({ ele: '#areas' });
+                    var id_meta = $(this).find(":selected").val();
 
-                      console.log(id_meta);
-                      if(id_meta == 0){
-                          $("#areas").html('<option value="0">-- Seleccione una meta antes 2 --</option>');
-                      }
-                      else{
-                            var id_programa2  =  $("#programa").find(":selected").val();
-                          $("#areas").load('js_areas?id_meta=' + id_meta+'&&id_programa='+id_programa2);
-                      console.log("progrma"+id_programa2);
+                    console.log(id_meta);
+                    if (id_meta == 0) {
+                        $("#areas").html('<option value="0">-- Seleccione una meta antes  --</option>');
+                    } else {
+                        var id_programa2 = $("#programa").find(":selected").val();
+                        $(".areas").load('js_areas?id_meta=' + id_meta + '&&id_programa=' + id_programa2);
+                        console.log("progrma" + id_programa2);
 
-                      }
-              });
+                    }
+                });
 
-          });
-  </script>
+            });
+        </script>
 
-</head>
+    </head>
 
 
     <div class="container">
@@ -73,7 +71,7 @@
                                 @foreach ($areasmetas as $info)
                                     <td>{{ $info->id_areasmetas }}</td>
                                     <td>{{ $info->area }}</td>
-                                    <td>{{ $info->pnombre  }}</td>
+                                    <td>{{ $info->pnombre }}</td>
                                     <td>{{ $info->nmeta }}</td>
                                     <td>{{ $info->objetivo }}</td>
                                     <td>
@@ -81,14 +79,16 @@
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#modalshow{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-eye"></i></button>
-                                            </td><td>
+                                    </td>
+                                    <td>
                                         <!-- Button edit modal -->
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-pen-to-square"></i></button>
 
                                         <!-- Button delete modal -->
-                                    </td><td>
+                                    </td>
+                                    <td>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal{{ $info->id_areasmetas }}"><i
                                                 class="fa-solid fa-trash"></i></button>
@@ -250,7 +250,7 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <select  placeholder="PROGRAMAS"     name="id_programa" id="programa">
+                        <select placeholder="PROGRAMAS" name="id_programa" id="programa">
                             <option value="0" selected>--- Selecciona un Programa ---</option>
                             @foreach ($programas as $info)
                                 <option value="{{ $info->id_programa }}">
@@ -263,11 +263,13 @@
                             <option selected>--- Selecciona un Programa antes ---</option>
 
                         </select>
+                        <div class="areas">
+                            <select name="id_area[]" id="areas">
+                                <option selected>--- Selecciona un Programa antes ---</option>
 
-                        <select   name="id_area" id="areas">
-                            <option selected>--- Selecciona un Programa antes ---</option>
+                            </select>
+                        </div>
 
-                        </select>
 
                         <div class="py-3">
                             <div class="form-floating mb-3">
@@ -308,12 +310,8 @@
             $('#eliminarmodal').modal('show')
         });
     </script>
-    <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-   <script type="text/javascript">
-
-    </script>
-
+<script type="text/javascript" src="js/virtual-select.min.js"></script>
 
 
     <!-- SCRIPT MODAL END -->
