@@ -48,14 +48,14 @@ $session_tipo = session('session_tipo');
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
             <div class="card">
                 <div class="card-body">
-                    <canvas id="Graficavertical" width="600" height="400"></canvas>
+                    <canvas id="GraficaProgamasMetas" width="600" height="400"></canvas>
                 </div>
             </div>
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
             <div class="card">
                 <div class="card-body">
-                    <canvas id="Graficapuntos" width="600" height="400"></canvas>
+                    <canvas id="GraficaUsuarioTipo" width="600" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -193,30 +193,28 @@ $session_tipo = session('session_tipo');
         });
     </script>
 
-<!-- -----------------------------------------------Script para modificar la grafica de areas------------------------------------------------ -->
-
-        <script>
-        new Chart(document.getElementById("GraficoAreas"), {
-            type: 'pie',
+<!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
+<script>
+        new Chart(document.getElementById("GraficaProgamasMetas"), {
+            type: 'bar',
             data: {
                 labels: [
 
-                    @foreach($areas_a as $area)
-                       
-                    "{{ $area  -> activo }}",
+                    @foreach($programas as $programa)
+                        "{{ $programa -> abreviatura}}",
                    
                     @endforeach
                 ],
                 datasets: [{
-                    label: "El area se encuentra activa o inactiva",
+                    label: "Numero de metas que tiene el programa",
                     backgroundColor: [
-                        @foreach($areas as $area)
+                        @foreach($programas as $programa)
                         "#" + Math.floor(Math.random() * 16777215).toString(16),
                         @endforeach
                     ],
                     data: [
-                        @foreach($areas as $area)
-                        "{{ $area -> cantidad}}",
+                        @foreach($metas as $metas)
+                        "{{ $metas -> conteo}}",
  
                         @endforeach
                     ]
@@ -235,7 +233,7 @@ $session_tipo = session('session_tipo');
                 },
                 title: {
                     display: true,
-                    text: 'Areas activas o inactivas'
+                    text: 'Programas y sus metas'
                 }
 
             }
@@ -243,4 +241,52 @@ $session_tipo = session('session_tipo');
         });
     </script>
 
+    <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
+<script>
+        new Chart(document.getElementById("GraficaUsuarioTipo"), {
+            type: 'bar',
+            data: {
+                labels: [
+
+                    @foreach($usuarios_b as $usu)
+                        "{{ $usu -> usuarios}}",
+                   
+                    @endforeach
+                ],
+                datasets: [{
+                    label: "Tipo de usuario",
+                    backgroundColor: [
+                        @foreach($usuarios_b as $usu)
+                        "#" + Math.floor(Math.random() * 16777215).toString(16),
+                        @endforeach
+                    ],
+                    data: [
+                        @foreach($tipos as $tipos)
+                        "{{ $tipos -> id}}",
+ 
+                        @endforeach
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Programas y sus metas'
+                }
+
+            }
+
+        });
+    </script>
+   
     @endsection
