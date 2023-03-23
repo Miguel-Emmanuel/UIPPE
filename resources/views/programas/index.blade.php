@@ -3,7 +3,15 @@
 <?php
 $session_id = session('session_id');
 ?>
-<div class="container">
+@if($session_id)
+<div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item">Registros</li>
+            <li class="breadcrumb-item" aria-current="page">Programas</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
             <h3>Programas</h3>
@@ -97,6 +105,20 @@ $session_id = session('session_id');
     </div>
 </div>
 
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Programas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
+
 <!-- MODAL DELETE START -->
 @foreach ($programas as $info)
 <div class="modal fade" id="deleteModal{{ $info->id_programa }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -111,7 +133,7 @@ $session_id = session('session_id');
                 <p><strong>{{ $info->nombre }}</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <form action="{{ route('deleteProgram', ['id' => $info->id_programa]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
@@ -157,15 +179,11 @@ $session_id = session('session_id');
                     </div>
                 </div>
             </div>
-            <!-- Id Registro -->
-            <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+            <br><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <br><br>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Editar</button>
-        </div>
-        </form>
     </div>
 </div>
 @endforeach
@@ -210,7 +228,7 @@ $session_id = session('session_id');
             </div>
             <br><br>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>
             </form>

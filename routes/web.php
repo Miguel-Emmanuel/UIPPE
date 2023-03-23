@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\AreasMetasController;
+use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
 use App\Http\Controllers\TiposController;
@@ -28,13 +29,15 @@ Route::get('/', function () {
     return view('sesiones/login');
    // return view('dashboard.dashboard');
 });
-Route::get('dashboard', function () {
-    return view('dashboard.dashboard');
- });
+Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 
  Route::get('multi', function () {
     return view('multi');
  });
+
+ Route::get('graficos', function () {
+   return view('graficos.graficos');
+});
 
 /*Route::post('crecuperar', function(){
    Mail::to('admiuippe@gmail.com')->send(new ReestablecerPassword);

@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/virtual-select.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-
 </head>
 <?php
 $session_id = session('session_id');
@@ -21,31 +20,28 @@ $session_foto = session('session_foto');
 ?>
 <header class="header" id="header">
     <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    @if($session_id)
     <div class="header_text">
-        @if($session_id)
         <?php
         echo  $session_name;
         ?>
-        @endif
     </div>
     &nbsp;&nbsp;
     <div class="header_img"> <img src="{{ asset('img/post/'.$session_foto) }}" alt=""> </div>
+    @endif
     <!-- @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth -->
 </header>
 
 <body id="body-pd">
     <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
+        <nav class="navSidebar">
             <div>
                 <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
-                    <a href="dashboard" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Panel</span> </a>
-                    @if($session_tipo == 4)
-                    <a href="metas" class="nav_link"> <i class='bx bx-check nav_icon'></i> <span class="nav_name">Metas</span> </a>
-                    @else
-                    @endif
+                    <a href="dashboard" class="nav_link"> <i class='bx bx-notepad'></i> <span class="nav_name">Registros</span> </a>
+                    <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Gráficos</span> </a>
                     @else
                     @endif
                 </div>
