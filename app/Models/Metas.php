@@ -19,10 +19,15 @@ class Metas extends Model
         'activo',
         'id_registro'
     ];
-    
-    public function Programas() {
-        return $this->belongsTo(Programas::class,'programa_id');
+
+
+    public function programas() {
+        return $this->belongsTo(Programas::class,'programa_id','id_meta');
 
     }
-    
+    public function areameta() {
+        return $this->hasOne(AreasMetas::class, 'id', 'programa_id');
+
+    }
+
 }
