@@ -244,7 +244,7 @@ $session_tipo = session('session_tipo');
     <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
 <script>
         new Chart(document.getElementById("GraficaUsuarioTipo"), {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: [
 
