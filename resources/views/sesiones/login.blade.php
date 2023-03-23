@@ -11,15 +11,15 @@
     <title></title>
 </head>
 
-<body>
+<body onload="nobackbutton();">
 
     <div class="mb5 alert">
         @if($Alerta = Session::get('Exito'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Alerta!</strong> {{$Alerta}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    @endif
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Alerta!</strong> {{$Alerta}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
     </div>
 
     <div class="contenedor rounded shadow">
@@ -35,26 +35,36 @@
                                         @csrf
                                         <div class="mb-4">
                                             <div class="mb-4">
-                                                <label for="email" class="form-label">&nbsp;<i class="fa-solid fa-envelope"></i> Correo Electronico:</label>
+                                                <label for="email" class="form-label">&nbsp;<i class="fa-solid fa-envelope"></i>Correo Electrónico:</label>
                                                 <input type="email" class="form-control" name="email" placeholder="correo@proveedor.dominio" required>
                                             </div>
 
                                             <div class="mb-4">
-                                                <label for="pass" class="form-label">&nbsp;<i class="fa-sharp fa-solid fa-key"></i> Contraseña:</label>
+                                                <label for="pass" class="form-label">&nbsp;<i class="fa-sharp fa-solid fa-key"></i>Contraseña:</label>
                                                 <input type="password" class="form-control" name="pass" placeholder="Contraseña" required>
                                             </div>
-                                            
+
                                             <div class="my-3">
                                                 <span><a href="/recuperacion">Recuperar Contraseña</a></span>
                                             </div>
                                             <br>
                                             <div class="d-grid">
-                                                <button type="submit" class="btn btn-outline-success">Iniciar Sesion</button>
+                                                <button type="submit" class="btn btn-outline-success">Iniciar Sesión</button>
                                             </div>
                                     </form>
                     </div>
         </div>
     </div>
 </body>
+
+<script>
+    function nobackbutton() {
+        window.location.hash = "uippe";
+        window.location.hash = "Again-uippe"
+        window.onhashchange = function() {
+            window.location.hash = "uippe";
+        }
+    }
+</script>
 
 </html>

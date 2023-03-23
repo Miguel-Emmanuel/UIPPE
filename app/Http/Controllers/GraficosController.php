@@ -11,6 +11,11 @@ class GraficosController extends Controller
 {
     public function dashboard()
     {
+        return view('dashboard.index');
+    }
+
+    public function registros()
+    {
         $area = \DB::select('SELECT COUNT(*) as areas FROM tb_areas');
         $tUsuarios = \DB::select('SELECT COUNT(*) as tUsuarios FROM tb_tipos');
         $usuarios = \DB::select('SELECT COUNT(*) as usuarios FROM tb_usuarios');
@@ -18,7 +23,7 @@ class GraficosController extends Controller
         $programas = \DB::select('SELECT COUNT(*) as programas FROM tb_programas');
         $metas = \DB::select('SELECT COUNT(*) as metas FROM tb_metas');
         $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas');
-        return view('dashboard.dashboard')
+        return view('dashboard.registros')
             ->with(['areas' => $area])
             ->with(['usuarios' => $usuarios])
             ->with(['tUsuarios' => $tUsuarios])

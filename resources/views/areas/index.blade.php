@@ -8,7 +8,7 @@ $session_id = session('session_id');
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
-            <li class="breadcrumb-item">Registros</li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
             <li class="breadcrumb-item" aria-current="page">Áreas</li>
         </ol>
     </nav>

@@ -5,17 +5,18 @@ $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 ?>
-<title>Home</title>
+<title>Registros</title>
 <div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item">Registros</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
-            <h1>Inicio</h1>
-            @if($session_id)
-            <?php
-            echo '¡Bienvenido! <b>    ' . $session_name . '</b><br>';
-            ?>
-            @else
-            @endif
+            <h3 class="text-bold">Registros</h3>
+            <p>En este apartado se realiza el registro de datos.</p>
         </div>
         @if($session_id) <!-- Contenido para verificar sesión iniciada -->
         @if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3) <!-- Contenido dependiendo del tipo de usuario -->
@@ -37,7 +38,7 @@ $session_tipo = session('session_tipo');
                                 <h3 style="color: black;">Registro Áreas</h3>
                             </div>
                             <div class="col-12 py-2 text-center">
-                                <p style="color: black;">Se requiere tener registros en "Áreas" para poder continuar con los demas registros de datos.</p>
+                                <p style="color: black;">Se requiere tener registros en "Áreas" para continuar con el proceso.</p>
                             </div>
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
@@ -73,7 +74,7 @@ $session_tipo = session('session_tipo');
                                 <h3 style="color: black;">Registro Usuarios</h3>
                             </div>
                             <div class="col-12 py-2 text-center">
-                                <p style="color: black;">Se requiere tener registros en "Tipos Usuarios" para poder realizar registros en "Usuarios" y poder continuar con los demas registros de datos.</p>
+                                <p style="color: black;">Se requiere tener registros en "Roles" y "Usuarios" para continuar con el proceso.</p>
                             </div>
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
@@ -82,7 +83,7 @@ $session_tipo = session('session_tipo');
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #fd7e14;">
-                                                        Tipos Usuarios
+                                                        Roles
                                                     </div>
                                                     <div class="h5 mb-0 font-weight-bold" style="color: #fd7e14;">
                                                         @foreach($tUsuarios as $tUsuario)
@@ -155,7 +156,7 @@ $session_tipo = session('session_tipo');
                                 <h3 style="color: black;">Registro Metas</h3>
                             </div>
                             <div class="col-12 py-2 text-center">
-                                <p style="color: black;">Se requiere tener registros en "Programas" para poder realizar registros en "Metas" y poder continuar con los demas registros de datos.</p>
+                                <p style="color: black;">Se requiere tener registros en "Programas" y "Metas" para continuar con el proceso.</p>
                             </div>
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
@@ -206,7 +207,7 @@ $session_tipo = session('session_tipo');
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
                                     <div class="card-body">
-                                        <a href="areas">
+                                        <a href="areasmetas">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
@@ -239,7 +240,7 @@ $session_tipo = session('session_tipo');
                     <h3 style="color: black;">Registro Metas</h3>
                 </div>
                 <div class="col-12 py-2 text-center">
-                    <p style="color: black;">Se requiere tener registros en "Programas" para poder realizar registros en "Metas" y poder continuar con los demas registros de datos.</p>
+                    <p style="color: black;">Se requiere tener registros en "Programas" y "Metas" para continuar con el proceso.</p>
                 </div>
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">

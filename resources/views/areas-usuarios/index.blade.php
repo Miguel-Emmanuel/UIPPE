@@ -3,10 +3,17 @@
 <?php
 $session_id = session('session_id');
 ?>
-<div class="container">
+<div class="container p-4">
+<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Áreas-Usuarios</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
-            <h3>Áreas</h3>
+            <h3>Áreas | Usuarios</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>

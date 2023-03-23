@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Hola, el usuario {{$data['destinatario'];}}</h1>
-    <p>Nos escribimos por el motivo de {{$data['asunto'];}}</p><br>
+    <p>Nos escribio por el motivo de {{$data['asunto'];}}</p><br>
     <p>{{$data['mensaje'];}}</p>
         
     

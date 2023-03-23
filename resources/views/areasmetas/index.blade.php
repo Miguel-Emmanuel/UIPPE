@@ -41,7 +41,14 @@
     </head>
 
 
-    <div class="container">
+    <div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Áreas-Metas</li>
+        </ol>
+    </nav>
         <div class="row">
             <div class="col p-4">
                 <h3>AREAS | METAS</h3>

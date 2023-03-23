@@ -124,7 +124,7 @@ class Login extends Controller
 
     public function pcorreo(Request $request){
         /*MULTIPLES DESTINATARIOS*/ 
-        /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com'];*/
+        /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com', 'ff_lexus@hotmail.com'];*/
 
         /*Mail::send('mails.prueba', compact('data'), function($message) use ($emails){
             $message->to($emails)

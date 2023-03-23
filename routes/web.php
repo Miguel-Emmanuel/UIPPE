@@ -31,6 +31,7 @@ Route::get('/', function () {
     return view('sesiones/login');
    // return view('dashboard.dashboard');
 });
+Route::name('registros') -> get('registros', [GraficosController::class, 'registros']);
 Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 
  Route::get('multi', function () {
