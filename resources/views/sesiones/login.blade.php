@@ -11,23 +11,23 @@
     <title></title>
 </head>
 
-<body>
+<body onload="nobackbutton();">
 
     <div class="mb5 alert">
         @if($Alerta = Session::get('Exito'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Alerta!</strong> {{$Alerta}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    @endif
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Alerta!</strong> {{$Alerta}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
     </div>
 
-    <div class="container w-75 pb-3 rounded shadow">
+    <div class="contenedor rounded shadow">
         <div class="row m-2 align-items-strech"><!-Fila Contenedora>
                 <!-Columnas>
                     <div class="col bg d-none d-lg-block col-md-6 col-lg-6 col-xl-6 rounded"><!-Imagen></div>
 
-                    <div class="col bg-white"><!-Sesion>
+                    <div class="col"><!-Sesion>
                             <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
                                 <h2 class="fw-bold text-center pb-3">Inicia Sesión</h2>
                                 <!-Form de Inicio de Sesion>
@@ -35,26 +35,36 @@
                                         @csrf
                                         <div class="mb-4">
                                             <div class="mb-4">
-                                                <label for="email" class="form-label">&nbsp;<i class="fa-solid fa-envelope"></i> Correo Electronico:</label>
+                                                <label for="email" class="form-label">&nbsp;<i class="fa-solid fa-envelope"></i>Correo Electrónico:</label>
                                                 <input type="email" class="form-control" name="email" placeholder="correo@proveedor.dominio" required>
                                             </div>
 
                                             <div class="mb-4">
-                                                <label for="pass" class="form-label">&nbsp;<i class="fa-sharp fa-solid fa-key"></i> Contraseña:</label>
+                                                <label for="pass" class="form-label">&nbsp;<i class="fa-sharp fa-solid fa-key"></i>Contraseña:</label>
                                                 <input type="password" class="form-control" name="pass" placeholder="Contraseña" required>
                                             </div>
-                                            
+
                                             <div class="my-3">
                                                 <span><a href="/recuperacion">Recuperar Contraseña</a></span>
                                             </div>
                                             <br>
                                             <div class="d-grid">
-                                                <button type="submit" class="btn btn-outline-success">Iniciar Sesion</button>
+                                                <button type="submit" class="btn btn-outline-success">Iniciar Sesión</button>
                                             </div>
                                     </form>
                     </div>
         </div>
     </div>
 </body>
+
+<script>
+    function nobackbutton() {
+        window.location.hash = "uippe";
+        window.location.hash = "Again-uippe"
+        window.onhashchange = function() {
+            window.location.hash = "uippe";
+        }
+    }
+</script>
 
 </html>

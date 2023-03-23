@@ -26,7 +26,7 @@ class AreasSeeder extends Seeder
 
         $area = new Areas();
         $area->clave= 'ARE2';
-        $area->nombre = 'Organo Interno De Control';
+        $area->nombre = 'Organo Interno de Control';
         $area->descripcion = 'Organo Interno De Control';
         $area->foto ='cuervo.png';
         $area->activo = '1';

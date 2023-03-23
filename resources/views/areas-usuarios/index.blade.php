@@ -1,9 +1,19 @@
 @extends('layout.navbar')
 @section('content')
-<div class="container">
+<?php
+$session_id = session('session_id');
+?>
+<div class="container p-4">
+<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Áreas-Usuarios</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
-            <h3>Áreas</h3>
+            <h3>Áreas | Usuarios</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
@@ -16,13 +26,12 @@
                         <th>Area</th>
                         <th>Usuario</th>
                         <th>Activo</th>
-                        <th>Registro</th>
+                        <th colspan="3" class="text-center">Registro</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($areausuario as $info)
                     <tr>
-                        <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->id_areasusuarios}}</td>
                         <td>{{ $info->area_id}}</td>
                         <td>{{ $info->usuario_id}}</td>
@@ -33,20 +42,20 @@
                             <p style="color: red;">Inactivo</p>
                             @endif
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button show modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_area }}"><i class="fa-solid fa-eye"></i></button>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button modif modal -->
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_area }}"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button delete modal -->
                             @if($info -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
@@ -75,7 +84,7 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">
+                <a href="#">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
                 </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -119,7 +128,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('editArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">
+                <form action="#" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -172,7 +181,6 @@
             <div class="modal-body">
                 <form action="{{route('areausuario.store')}}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
-
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
                         <select name="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
@@ -197,10 +205,11 @@
                     
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" name="activo" role="switch" id="flexSwitchCheckChecked" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

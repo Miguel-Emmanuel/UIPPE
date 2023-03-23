@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/virtual-select.min.css">
@@ -27,7 +28,7 @@ $session_foto = session('session_foto');
         ?>
     </div>
     &nbsp;&nbsp;
-    <div class="header_img"> <img src="{{ asset('img/post/'.$session_foto) }}" alt=""> </div>
+    <div class="header_img"> <img src="{{ asset('img/post/'.$session_foto) }}" alt="img"> </div>
     @endif
     <!-- @auth {{ auth()->user()->name ?? auth()->user()->username }} @endauth -->
 </header>
@@ -40,8 +41,9 @@ $session_foto = session('session_foto');
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
-                    <a href="dashboard" class="nav_link"> <i class='bx bx-notepad'></i> <span class="nav_name">Registros</span> </a>
+                    <a href="registros" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
                     <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Gráficos</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                     @else
                     @endif
                 </div>
@@ -51,12 +53,6 @@ $session_foto = session('session_foto');
             @else
             <a href="login" class="nav_link"> <i class='bx bx-log-in nav_icon'></i> <span class="nav_name">Iniciar Sesión</span> </a>
             @endif
-            <!-- @guest
-            <a href="#" class="nav_link"> <i class='bx bx-log-in nav_icon'></i> <span class="nav_name">Iniciar Sesión</span> </a>
-            @endguest
-            @auth
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
-            @endauth -->
         </nav>
     </div>
 
@@ -65,8 +61,12 @@ $session_foto = session('session_foto');
         @yield('content')
     </div>
     <!--Container Main end-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/3aafa2d207.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ asset('js/menu.js') }}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
     <script>

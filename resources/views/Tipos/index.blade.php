@@ -8,13 +8,13 @@ $session_id = session('session_id');
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
-            <li class="breadcrumb-item">Registros</li>
-            <li class="breadcrumb-item" aria-current="page">Tipos Usuarios</li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Roles</li>
         </ol>
     </nav>
     <div class="row">
         <div class="col p-4">
-            <h3>Tipo de Usuarios</h3>
+            <h3>Roles</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
