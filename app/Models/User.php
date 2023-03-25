@@ -12,33 +12,30 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'tb_usuarios';
+    protected $primaryKey = 'id_usuario';
     protected $fillable = [
-        'name',
+        'clave',
+        'nombre',
+        'app',
+        'apm',
+        'gen',
+        'fn',
+        'academico',
+        'foto',
         'email',
-        'password',
+        'pass',
+        'id_tipo',
+        'activo',
+        'id_registro'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    public function tb_tipos() {
+        return $this->belongsTo(tb_tipos::class,'id_tipo');
+    }
+
     protected $hidden = [
-        'password',
-        'remember_token',
+        'pass',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 }

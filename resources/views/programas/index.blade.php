@@ -1,6 +1,17 @@
 @extends('layout.navbar')
 @section('content')
-<div class="container">
+<?php
+$session_id = session('session_id');
+?>
+@if($session_id)
+<div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Programas</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
             <h3>Programas</h3>
@@ -22,8 +33,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($programas as $info)
+                    @if($session_id != 3)
                     <tr>
-                        @foreach ($programas as $info)
                         <td class="text-center">{{ $info->id_programa }}</td>
                         <td class="text-center">{{ $info->abreviatura }}</td>
                         <td>{{ $info->nombre }}</td>
@@ -49,15 +61,63 @@
                             @if($info -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
+                    </tr>
+                    @elseif($info->activo > 0)
+                    <tr>
+                        <td class="text-center">{{ $info->id_programa }}</td>
+                        <td class="text-center">{{ $info->abreviatura }}</td>
+                        <td>{{ $info->nombre }}</td>
+                        <td>{{ $info->descripcion }}</td>
+                        <td class="text-center">
+                            @if($info->activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <!-- <td class="text-center">{{ $info->id_registro }}</td> -->
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_programa }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_programa }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($info -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_programa }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
         </div>
     </div>
 </div>
+
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Programas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- MODAL DELETE START -->
 @foreach ($programas as $info)
@@ -73,10 +133,14 @@
                 <p><strong>{{ $info->nombre }}</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('programas.destroy', ['programa' => $info->id_programa]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
-                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form action="{{ route('deleteProgram', ['id' => $info->id_programa]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <!-- Id Registro -->
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -84,14 +148,13 @@
 @endforeach
 <!-- MODAL DELETE END -->
 
-
 <!-- MODAL SHOW START -->
 @foreach ($programas as $info)
 <div class="modal fade" id="modalshow{{ $info->id_programa }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalshowLabel">Programa | {{ $info -> abreviatura }}</h1>
+                <h1 class="modal-title fs-5" id="modalshowLabel">Programa | {{ $info->abreviatura }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -103,15 +166,20 @@
                         <p><strong>Descripción</strong><br>{{ $info->descripcion }}</p>
                     </div>
                     <div class="col-6 text-center">
-                        @if($info->activo > 0) <strong>Estado: </strong>
-                        <p style="color: green;">Activo</p>@else <strong>Estado: </strong>
-                        <p style="color: red;">Inactivo</p>@endif
+                        @if ($info->activo > 0)
+                        <strong>Estado: </strong>
+                        <p style="color: green;">Activo</p>
+                        @else
+                        <strong>Estado: </strong>
+                        <p style="color: red;">Inactivo</p>
+                        @endif
                     </div>
                     <div class="col-6 text-center">
                         <p><strong>Registro: </strong><br>{{ $info->id_registro }}</p>
                     </div>
                 </div>
             </div>
+            <br><br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
@@ -136,19 +204,19 @@
                     {{ method_field('PUT') }}
                     <div class="py-2">
                         <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
-                        <input type="text" class="form-control" name="abreviatura" value="{{ $info -> abreviatura }}">
+                        <input type="text" class="form-control" name="abreviatura" value="{{ $info->abreviatura }}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>
-                        <textarea type="text" class="form-control" name="nombre">{{ $info -> nombre }}</textarea>
+                        <textarea type="text" class="form-control" name="nombre">{{ $info->nombre }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Descripción del programa:</label>
-                        <textarea type="text" class="form-control" name="descripcion" rows="7">{{ $info -> descripcion }}</textarea>
+                        <textarea type="text" class="form-control" name="descripcion" rows="7">{{ $info->descripcion }}</textarea>
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
-                            @if($info -> activo > 0)
+                            @if ($info->activo > 0)
                             <input class="form-check-input" type="checkbox" name="activo" checked>
                             @else
                             <input class="form-check-input" type="checkbox" name="activo">
@@ -156,13 +224,14 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <br><br>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
@@ -181,17 +250,27 @@
             <div class="modal-body">
                 <form action="{{ route('programas.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
                     @csrf
+                    @include('components.flash_alerts')
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Siglas del programa:</label>
                         <input type="text" class="form-control" name="abreviatura" placeholder="UIPPE">
+                        @error('abreviatura')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Nombre del programa:</label>
                         <textarea type="text" class="form-control" name="nombre"></textarea>
+                        @error('nombre')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="exampleFormControlInput1" class="form-label">Descripción del programa:</label>
                         <textarea type="text" class="form-control" name="descripcion" rows="7"></textarea>
+                        @error('descripcion')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
@@ -200,23 +279,34 @@
                         </div>
                     </div>
                     <!-- id de registro -->
-                    {{-- <input type="hidden" name="id_registro" value="@foreach($id as $uwu){{ $uwu -> id_empleado + 1}}@endforeach"> --}}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Agregar</button>
-            </div>
-            </form>
         </div>
     </div>
+    <!-- MODAL ADD END -->
 </div>
-<!-- MODAL ADD END -->
-</div>
+
 
 <!-- SCRIPT MODAL START -->
 <script>
-    $(function() {
-        $('#modalmod').modal('show')
+    // Para que la alerta desparezca despues de dos segunditos papu
+    window.setTimeout(function() {
+        $(".alert").fadeTo(1000, 0).slideUp(500, function() {
+            $(this).remove();
+        });
+    }, 2000);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#dts').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+            }
+        });
     });
 </script>
 <script>

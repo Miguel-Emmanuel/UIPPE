@@ -14,7 +14,20 @@ class Metas extends Model
         'clave',
         'nombre',
         'descripcion',
+        'unidadmedida',
+        'programa_id',
         'activo',
         'id_registro'
     ];
+
+
+    public function programas() {
+        return $this->belongsTo(Programas::class,'programa_id','id_meta');
+
+    }
+    public function areameta() {
+        return $this->hasOne(AreasMetas::class, 'id', 'programa_id');
+
+    }
+
 }
