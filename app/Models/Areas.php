@@ -22,4 +22,9 @@ class Areas extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
 
+     public function areameta() {
+        return $this->hasOne(AreasMetas::class, 'id', 'programa_id');
+
+    }
+
 }

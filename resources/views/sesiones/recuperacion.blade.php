@@ -18,21 +18,21 @@
         <strong>Alerta!</strong> {{$Alerta}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    @elseif($Alerta = Session::get('Exito'))
+        @elseif($Alerta = Session::get('Exito'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Exito!</strong> {{$Alerta}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    @endif
+        @endif
     </div>
     
-    <div class="container w-75 rounded shadow">
-        <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
+    <div class="contenedor rounded shadow">
+            <div class="text-end"><img src="{{asset('logos/logotipoutvt.png')}}" width="200px" alt=""></div><!-Logo>
             <!-Columna central>
-            <h2 class="text-center pb-3">Olvidaste tu Contraseña?</h2>
-            <div class="in">
+            <h4 class="text-center pb-3">¿Olvidaste tu Contraseña?</h4>
+        <div class="in">
 
-                <form id="recuperar" action="{{route('EnviarCorreo')}}" method="GET">
+            <form id="recuperar" action="{{route('EnviarCorreo')}}" method="GET">
                     @csrf
                 <div class="mb-4">
 
@@ -46,10 +46,9 @@
                         <li>Reestablece tu contraseña.</li>
                     </ol>
                 </div>
-                <div class="boton mb-5"><button class="btn btn-outline-success"> Enviar Correo de Recuperación</button></div>
-                
+                <div class="boton mb-5"><button class="btn btn-success"> Enviar Correo de Recuperación</button></div>
             </form>
-            </div>
+        </div>
     </div>
 </body>
 </html>

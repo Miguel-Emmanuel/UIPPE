@@ -1,6 +1,17 @@
 @extends('layout.navbar')
 @section('content')
-<div class="container">
+<?php
+$session_id = session('session_id');
+?>
+@if($session_id)
+<div class="container p-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item" aria-current="page">Usuarios</li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col p-4">
             <h3>Usuarios</h3>
@@ -25,6 +36,7 @@
                 </thead>
                 <tbody>
                     @foreach($Usuarios as $usuario)
+                    @if($session_id != 3)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
                         <td>{{ $usuario->clave}}</td>
@@ -61,10 +73,53 @@
                             @if($usuario -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
                             @else
-                            <button type="button" class="btn btn-danger" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>
+                    @elseif($usuario->activo > 0)
+                    <tr>
+                        <td class="text-center"><img src="{{ asset('img/post/'.$usuario-> foto) }}" alt="{{ $usuario->foto }}" style="width: 45px; border-radius: 15px;"></td>
+                        <td>{{ $usuario->clave}}</td>
+                        <td>{{ $usuario->nombreU}}</td>
+                        <td>{{ $usuario->app .' '. $usuario->apm }}</td>
+                        <td>
+                            @if($usuario->gen == "M" || $usuario->gen == "masculino")
+                            Masculino
+                            @elseif($usuario->gen == "F" || $usuario->gen == "femenino")
+                            Femenino
+                            @else
+                            {{ $usuario -> gen }}
+                            @endif
+                        </td>
+                        <td>{{ $usuario -> academico }}</td>
+                        <td>{{ $usuario -> email }}</td>
+                        <td>
+                            @if($usuario -> activo > 0)
+                            <p style="color: green;">Activo</p>
+                            @else
+                            <p style="color: red;">Inactivo</p>
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button edit modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            @if($usuario -> activo > 0)
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @else
+                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                    @else
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -72,7 +127,19 @@
     </div>
 </div>
 
-
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Usuarios</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- ELIMINAR START MODAL -->
 @foreach ($Usuarios as $usuario )
@@ -91,10 +158,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('deleteUsers', ['id' => $usuario->id_usuario]) }}">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form action="{{ route('deleteUsers', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -130,7 +199,7 @@
                         <p><strong>Fecha de nacimiento: </strong><br>{{$usuario -> fn}}</p>
                     </div>
                     <div class="col-6 text-center">
-                    <strong>Estado: </strong>@if($usuario -> activo > 0) <p style="color: green;">Activo</p> @else <p style="color: red;">Inactivo</p> @endif
+                        <strong>Estado: </strong>@if($usuario -> activo > 0) <p style="color: green;">Activo</p> @else <p style="color: red;">Inactivo</p> @endif
                     </div>
                     <p><strong>Academico: </strong>{{$usuario -> academico}}</p>
                     <p><strong>Correo: </strong>{{$usuario -> email}}</p>
@@ -154,7 +223,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <form action="{{ route('editUsuario', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('editUsuario', ['id' => $usuario->id_usuario]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -164,7 +233,7 @@
                     <div class="row py-2">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" aria-label="First name" name="nombre" value="{{ $usuario -> nombreU }}" >
+                            <input type="text" class="form-control" aria-label="First name" name="nombre" value="{{ $usuario -> nombreU }}">
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
@@ -224,7 +293,7 @@
                     <div class="mb-3">
                         <hr>
                         <label for=""> Tipo de usuario:</label>
-                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}"> 
+                        <select class="form-control form-select" aria-label="Default select example" name="id_tipo" value="{{$usuario->id_tipo}}">
                             @foreach($Tipos as $info)
                             <option value={{$info->id}} {{ $info->id == $usuario->id_tipo ?'selected':''; }}>{{$info->nombre}}</option>
                             @endforeach
@@ -241,6 +310,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -265,22 +335,35 @@
             <div class="modal-body">
                 <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
+                    @include('components.flash_alerts')
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
                         <label for="floatingInput">Clave:</label>
+                        @error('clave')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="row py-2">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Nombre:</label>
                             <input type="text" class="form-control" aria-label="First name" name="nombre">
+                            @error('nombre')
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Paterno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="app">
+                            @error('app')
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label">Apellido Materno:</label>
                             <input type="text" class="form-control" aria-label="Last name" name="apm">
+                            @error('apm')
+                            <small class="form-text text-danger">{{$message}}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="py-2">
@@ -308,6 +391,9 @@
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email:</label>
                         <input type="email" class="form-control" name="email" placeholder="name@example.com">
+                        @error('email')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
@@ -330,6 +416,7 @@
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

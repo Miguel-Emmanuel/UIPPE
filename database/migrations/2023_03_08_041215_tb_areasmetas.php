@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('objetivo');
             $table->integer('id_registro');
             $table->timestamps();
-
         });
     }
 

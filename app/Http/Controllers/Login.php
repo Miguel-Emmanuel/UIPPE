@@ -20,10 +20,8 @@ class Login extends Controller
         return view('sesiones/login');
     }
 
-    public function registrate()
-    {
-        //aca va la vista de edugo!!
-        return view('sesiones/register');
+    public function registrate(Request $request){
+        return view('sesiones.register');
     }
 
     public function recuperar()
@@ -41,23 +39,19 @@ class Login extends Controller
             ->where('pass', '=', $pass)
             ->get();
 
-        if (count($consulta) == 0) {
-            return view('sesiones/login');
+        if (count($consulta)==0 or $consulta[0]->activo == '0') {
+            return redirect('login');
         } else {
             $request->session()->put('session_id', $consulta[0]->id_usuario);
-            $request->session()->put('session_name', $consulta[0]->nombre);
+            $request->session()->put('session_name', $consulta[0]->nombre.' '.$consulta[0]->app.' '.$consulta[0]->apm);
             $request->session()->put('session_apellido', $consulta[0]->app);
-
-
+            $request->session()->put('session_tipo', $consulta[0]->id_tipo);
+            $request->session()->put('session_foto', $consulta[0]->foto);
 
             $session_id = $request->session()->get('session_id');
             $session_name = $request->session()->get('session_name');
-            //     if($session_id == 1) {
-            //         return view('dashboard.dashboard');
-            //    }else{
-            //     return view('login');
+            $session_idTipo = $request->session()->get('session_tipo');
 
-            //     }
             return redirect('dashboard');
         }
     }
@@ -78,7 +72,6 @@ class Login extends Controller
     }
 
     public function EnviarCorreo(Request $request){
-        $uwu = "holi";
         $email = $request->input('email');
         $consulta = Usuarios::where('email', '=', $email)
             ->get();
@@ -87,13 +80,12 @@ class Login extends Controller
             ->get();
 
             if (count($consulta) == 0) {
-                session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+                session()->flash('Error', 'Credenciales Incorrectas.');
                 return redirect('recuperacion');
             } else {
                 Mail::to($email)->send(new ReestablecerPassword($contacto));
                 session()->flash('Exito', 'Revise su bandeja de entrada.');
                 return redirect('recuperacion');
-                //return new ReestablecerPassword($contacto);
         }
     }
 
@@ -104,13 +96,14 @@ class Login extends Controller
     }
     public function resetpass(Request $request)
     {
-        $email = $request->input('email');
+        /*FUERA DE SERVICIO*/
+        /*$email = $request->input('email');
         $consulta = Usuarios::where('email', '=', $email)->get();
         $pass1 = $request->input('pass1');
         $pass2 = $request->input('pass2');
 
         if (count($consulta) == 0) {
-            session()->flash('Error', 'El correo no ha sido asignado por UIPPE.');
+            session()->flash('Error', 'Credenciales Incorrectas.');
                 return redirect('reset');
         } else{
             if($pass1 == $pass2){
@@ -121,7 +114,51 @@ class Login extends Controller
                 session()->flash('Error', 'Las contraseñas no coinciden.');
                 return redirect('reset');
             }
+            }*/
+    }
 
-        }
+    public function cuser(){
+        $user = Usuarios::all();
+        return $user;   
+    }
+
+    public function pcorreo(Request $request){
+        /*MULTIPLES DESTINATARIOS*/ 
+        /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com', 'ff_lexus@hotmail.com'];*/
+
+        /*Mail::send('mails.prueba', compact('data'), function($message) use ($emails){
+            $message->to($emails)
+                ->subject('nose');
+            $message->from('hello@example.com', 'Eduardoh');
+        });*/
+
+
+        /*FORMULARIO*/
+        /*$data = array(
+            'destinatario'=> $request->input('destinatario'),
+            'asunto'=> $request->input('asunto'),
+            'mensaje'=> $request->input('mensaje'),
+        );*/
+
+        /*Mail::send('mails.prueba', compact('data'), function($message) use ($data){
+            $message->to('admiuippe@gmail.com','Admin Uippe')
+                ->subject($data['asunto']);
+            $message->from('hello@example.com', 'Eduardoh');
+        });*/
+
+
+        //return view('mails.prueba', compact('data'));
+
+        
+
+        
+
+        /*Mail::send('mails.prueba', compact('data'), function($message){
+            $message->to('eduholvera@gmail.com', 'Eduardoh')
+                ->subject('nose');
+            $message->from('hello@example.com', 'Eduardo2');
+        });*/
+
+        
     }
 }
