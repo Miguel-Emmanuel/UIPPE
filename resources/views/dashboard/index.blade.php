@@ -38,7 +38,7 @@ $session_tipo = session('session_tipo');
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
-                    <a href="registros">
+                    <a href="graficos">
                         <div class="row no-gutters align-items-center" style="color: crimson;">
                             <div class="col-12 text-center py-5">
                                 <i class='bx bx-signal-4 bx-lg'></i>

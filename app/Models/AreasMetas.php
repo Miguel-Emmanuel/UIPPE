@@ -15,7 +15,7 @@ class AreasMetas extends Model
         'meta_id',
         'id_programa',
         'objetivo',
-         'id_registro'
+        'id_registro'
     ];
     public function programas()
     {
