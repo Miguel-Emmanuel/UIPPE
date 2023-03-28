@@ -183,7 +183,7 @@ $session_id = session('session_id');
                     {!! csrf_field() !!}
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
+                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
