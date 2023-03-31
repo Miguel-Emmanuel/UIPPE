@@ -3,6 +3,7 @@
 <?php
 $session_id = session('session_id');
 ?>
+
 <head>
     <script src="{{ asset('js\jquery-3.6.4.min.js') }}"></script>
     <script>
@@ -13,8 +14,25 @@ $session_id = session('session_id');
                 console.log(id_programa);
                 if (id_programa == 0) {
                     $("#metas").html('<option value="0">-- Seleccione un programa antes --</option>');
+                    $("#multimetas").html('<select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multimetas"></select');
+                    VirtualSelect.init({
+                        ele: '#multimetas'
+                    });
                 } else {
                     $("#metas").load('js_metas?id_programa=' + id_programa);
+                }
+            });
+
+            $("#metas").on('change', function() {
+                var id_meta = $(this).find(":selected").val();
+                console.log(id_meta);
+                if (id_meta == 0) {
+                    $("#multimetas").html('<select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multimetas"></select');
+                    VirtualSelect.init({
+                        ele: '#multimetas'
+                    });
+                } else {
+                    $("#multimetas").load('js_areas?id_metas=' + id_meta);
                 }
             });
         });
@@ -36,68 +54,65 @@ $session_id = session('session_id');
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
-
-            <body>
-                <table class="table mt-3">
-                    <thead class="table-striped">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Área</th>
-                            <th scope="col">Programa</th>
-                            <th scope="col">Meta</th>
-                            <th scope="col">Objetivo</th>
-                            <th class="text-center" scope="col" colspan="2">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($areasmetas as $info)
-                        <tr>
-                            <td>{{ $info->id_areasmetas }}</td>
-                            <td>{{ $info->area }}</td>
-                            <td>{{ $info->pnombre }}</td>
-                            <td>{{ $info->nmeta }}</td>
-                            <td>{{ $info->objetivo }}</td>
-                            <td>
-                                <!-- Button show modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_areasmetas }}"><i class="fa-solid fa-diamond-turn-right"></i></button>
-                            </td>
-                            <td>
-                                <!-- Button delete modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-
+            <table class="table mt-3">
+                <thead class="table-striped">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Área</th>
+                        <th scope="col">Programa</th>
+                        <th scope="col">Meta</th>
+                        <th scope="col">Objetivo</th>
+                        <th class="text-center" scope="col" colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($areasmetas as $info)
+                    <tr>
+                        <td>{{ $info->id_areasmetas }}</td>
+                        <td>{{ $info->area }}</td>
+                        <td>{{ $info->pnombre }}</td>
+                        <td>{{ $info->nmeta }}</td>
+                        <td>{{ $info->objetivo }}</td>
+                        <td>
+                            <!-- Button show modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_areasmetas }}"><i class="fa-solid fa-diamond-turn-right"></i></button>
+                        </td>
+                        <td>
+                            <!-- Button delete modal -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-    <!-- MODAL DELETE START -->
-    @foreach ($areasmetasd as $areasmeta)
-    <div class="modal fade" id="deleteModal{{ $areasmeta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar registro |
-                        {{ $areasmeta->id_areasmetas }}
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <form action="{{ route('areasmetas.destroy', $areasmeta) }}" method="post">
-                        @csrf @method('DELETE')
-                        <p><strong>{{ $areasmeta->id_areasmetas }}</strong></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
-                </div>
-                </form>
+</div>
+<!-- MODAL DELETE START -->
+@foreach ($areasmetasd as $areasmeta)
+<div class="modal fade" id="deleteModal{{ $areasmeta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar registro |
+                    {{ $areasmeta->id_areasmetas }}
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
+            <div class="modal-body text-center">
+                <form action="{{ route('areasmetas.destroy', $areasmeta) }}" method="post">
+                    @csrf @method('DELETE')
+                    <p><strong>{{ $areasmeta->id_areasmetas }}</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
+            </div>
+            </form>
         </div>
+
     </div>
+</div>
 </div>
 </div>
 @endforeach
@@ -159,11 +174,8 @@ $session_id = session('session_id');
                         </select>
                     </div>
                     <div>
-                    <label for="floatingInput">Áreas:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multiselect">
-                            @foreach ($areas as $info)
-                            <option value="{{ $info->id_area }}">{{ $info->nombre }}</option>
-                            @endforeach
+                        <label for="floatingInput">Selecciona una área:</label>
+                        <select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multimetas">
                         </select>
                     </div>
                     <div multiple data-search="true" data-silent-initial-value-set="true" class="form-floating">
@@ -199,16 +211,12 @@ $session_id = session('session_id');
         $('#eliminarmodal').modal('show')
     });
 </script>
-
 <script type="text/javascript" src="js/virtual-select.min.js"></script>
 <script type="text/javascript">
     VirtualSelect.init({
-        ele: '#multiselect'
+        ele: '#multimetas'
     });
 </script>
-
-<script type="text/javascript" src="js/virtual-select.min.js"></script>
-
 
 <!-- SCRIPT MODAL END -->
 @endsection

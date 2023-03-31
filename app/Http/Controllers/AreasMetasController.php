@@ -109,4 +109,13 @@ class AreasMetasController extends Controller
         return view("areasmetas.js_metas")
             ->with(['meta' => $meta2]);
     }
+
+    public function js_areas(Request $request)
+    {
+        $id_meta = $request->get('id_metas');
+        $id_meta = intval($id_meta);
+        $areas = \DB::select('SELECT areas.* FROM tb_areas AS areas WHERE id_area NOT IN (SELECT area_id FROM tb_areasmetas WHERE area_id AND meta_id = '.$id_meta.')');
+        return view("areasmetas.js_areas")
+            ->with(['areas' => $areas]);
+    }
 }
