@@ -6,6 +6,7 @@ $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 ?>
 <title>UIPPE</title>
+@if($session_id)
 <div class="container p-4">
     <div class="row justify-content-md-center">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
@@ -45,7 +46,7 @@ $session_tipo = session('session_tipo');
                             </div>
                             <div class="col-12 text-center">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    <h3>Gráficas</h3>
+                                    <h3>Reportes</h3>
                                 </div>
                             </div>
                         </div>
@@ -73,3 +74,16 @@ $session_tipo = session('session_tipo');
         </div>
     </div>
 </div>
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Inicio</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif

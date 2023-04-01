@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('fechaentrega');
             $table->boolean('activo');
             $table->timestamps();
-
+ 
         });
     }
 
