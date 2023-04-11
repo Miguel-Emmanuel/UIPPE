@@ -74,10 +74,6 @@ $session_id = session('session_id');
                         <td>{{ $info->nmeta }}</td>
                         <td>{{ $info->objetivo }}</td>
                         <td>
-                            <!-- Button show modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_areasmetas }}"><i class="fa-solid fa-diamond-turn-right"></i></button>
-                        </td>
-                        <td>
                             <!-- Button delete modal -->
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -94,57 +90,32 @@ $session_id = session('session_id');
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar registro |
-                    {{ $areasmeta->id_areasmetas }}
+                <h1 class="modal-title fs-5" id="deleteModalLabel">
+                    Eliminar registro | Área - Meta
                 </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 <form action="{{ route('areasmetas.destroy', $areasmeta) }}" method="post">
                     @csrf @method('DELETE')
-                    <p><strong>{{ $areasmeta->id_areasmetas }}</strong></p>
+                    <p><strong>Datos del Área - Meta</strong></p>
+                    <p class="text-center"><strong>Programa:</strong> {{ $areasmeta->id_programa }} </p>
+                    <p class="text-center"><strong>Meta:</strong> {{ $areasmeta->meta_id }} </p>
+                    <p class="text-center"><strong>Área:</strong> {{ $areasmeta->area_id }} </p>
+                    <p><strong>Objetivos:</strong></p>
+                    <p>{{ $areasmeta->objetivo }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">BORRAR</button>
+                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
             </div>
             </form>
         </div>
 
     </div>
 </div>
-</div>
-</div>
 @endforeach
 <!-- MODAL DELETE END -->
-
-
-<!-- MODAL SHOW START -->
-@foreach ($areasmetas as $info)
-<div class="modal fade" id="modalshow{{ $info->id_areasmetas }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalshowLabel">AREAS METAS | {{ $info->id_areasmetas }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12 p-3 text-center">
-                        <p><strong>Nombre: </strong>{{ $info->id_areasmetas }}</p>
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-<!-- MODAL SHOW END -->
 
 <!-- MODAL ADD START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">

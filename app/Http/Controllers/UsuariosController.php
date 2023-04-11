@@ -130,4 +130,9 @@ class UsuariosController extends Controller
         $query -> save();
         return redirect('usuarios');
     }
+
+    public function perfil()
+    {
+        return view("Usuarios.perfil");
+    }
 }

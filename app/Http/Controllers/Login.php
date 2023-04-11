@@ -45,12 +45,12 @@ class Login extends Controller
             $request->session()->put('session_id', $consulta[0]->id_usuario);
             $request->session()->put('session_name', $consulta[0]->nombre.' '.$consulta[0]->app.' '.$consulta[0]->apm);
             $request->session()->put('session_apellido', $consulta[0]->app);
+            $request->session()->put('genero', $consulta[0]->gen);
+            $request->session()->put('email', $consulta[0]->email);
+            $request->session()->put('academico', $consulta[0]->academico);
+            $request->session()->put('fn', $consulta[0]->fn);
             $request->session()->put('session_tipo', $consulta[0]->id_tipo);
             $request->session()->put('session_foto', $consulta[0]->foto);
-
-            $session_id = $request->session()->get('session_id');
-            $session_name = $request->session()->get('session_name');
-            $session_idTipo = $request->session()->get('session_tipo');
 
             return redirect('dashboard');
         }
