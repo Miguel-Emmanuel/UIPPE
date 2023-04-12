@@ -13,4 +13,6 @@ class CalendarizarsController extends Controller
         $Programas = Programas::all('id_programa', 'nombre','abreviatura');
         return view('calendario.index', compact('metas'), compact('Programas'));
     }
+
+    
 }
