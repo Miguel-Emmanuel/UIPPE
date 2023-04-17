@@ -89,7 +89,7 @@ $session_tipo = session('session_tipo');
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
-            <h3>Inicio</h3>
+            <h3>Calendario</h3>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
             <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
@@ -114,73 +114,73 @@ $session_tipo = session('session_tipo');
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
                         <div class="col-sm-9">
-                            <input type="number" onkeyup="suma{{ $meta->id_meta }}(this.value)" class="form-control" placeholder="Asignar la cantidad de Enero">
+                            <input type="number" id="sum0{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Enero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Febrero:</label>
                         <div class="col-sm-9">
-                            <input type="number" onkeyup="suma{{ $meta->id_meta }}(this.value)" class="form-control" placeholder="Asignar la cantidad de Febrero">
+                            <input type="number" id="sum1{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Febrero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Marzo:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Marzo">
+                            <input type="number" id="sum2{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Marzo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Abril:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Abril">
+                            <input type="number" id="sum3{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Abril">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Mayo:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Mayo">
+                            <input type="number" id="sum4{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Mayo">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label">Junio:</label>
-                        <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Junio">
+                        <label for="colFormLabel" class="col-sm-6 col-md-3 col-form-label">Junio:</label>
+                        <div class="col-sm-6 col-md-9">
+                            <input type="number" id="sum5{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Junio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Julio:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Julio">
+                            <input type="number" id="sum6{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Julio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Agosto:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Agosto">
+                            <input type="number" id="sum7{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Agosto">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Septiembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Septiembre">
+                            <input type="number" id="sum8{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Septiembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Octubre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Octubre">
+                            <input type="number" id="sum9{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Octubre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Noviembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Noviembre">
+                            <input type="number" id="sum10{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Noviembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Diciembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Diciembre">
+                            <input type="number" id="sum11{{ $meta->id_meta }}" onkeyup="suma{{ $meta->id_meta }}()" class="form-control" placeholder="Asignar la cantidad de Diciembre">
                         </div>
                     </div>
 
@@ -200,12 +200,15 @@ $session_tipo = session('session_tipo');
     };
 
     var sumaT = 0;
-    suma{{ $meta->id_meta }} = (valor) => {
-        if(valor != ""){
-            sumaT += parseInt(valor);
-        }else{
-            sumaT += 0;
+    suma{{ $meta->id_meta }} = () => {
+        sumaT = 0;
+        var input = new Array;
+        for(var i=0; i<12; i++){
+            input.push(document.getElementById("sum"+i+"{{ $meta->id_meta }}").value || 0);
+            sumaT = parseInt(sumaT)+parseInt(input[i]);
         }
+        console.log(sumaT);
+        document.getElementById("sumaTotal{{ $meta->id_meta }}").innerHTML = "";
         document.getElementById("sumaTotal{{ $meta->id_meta }}").innerHTML = sumaT;
     };
 </script>

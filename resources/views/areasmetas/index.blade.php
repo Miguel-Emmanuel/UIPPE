@@ -48,7 +48,7 @@ $session_id = session('session_id');
     </nav>
     <div class="row">
         <div class="col p-4">
-            <h3>AREAS | METAS</h3>
+            <h3>ÁREAS | METAS</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
