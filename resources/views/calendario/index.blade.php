@@ -25,10 +25,9 @@ $session_tipo = session('session_tipo');
                     <!-- Campos en tabla metas -->
                     <tr>
                         <th class="text-center">Clave</th>
-                        <th>Nombre</th>
                         <th>Programa</th>
-                        <th class="text-center">Activo</th>
-                        <th>Registro</th>
+                        <th>Meta</th>
+                        <th class="text-center">Cantidad</th>
                         <th class="text-center" colspan="3">Acciones</th>
                     </tr>
                 </thead>
@@ -40,19 +39,12 @@ $session_tipo = session('session_tipo');
                         <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
                         <td>{{$meta->nombrePA}}</td>
-                        <td class="text-center">
-                            @if($meta -> activo > 0)
-                            <p style="color: green;">Activo</p>
-                            @else
-                            <p style="color: red;">Inactivo</p>
-                            @endif
-                        </td>
                         <td>
-                            <input type="number" class="form-control" id="cantEntrega{{ $meta->id_meta }}" placeholder="Cantidad a entregar:">
+                            <input type="number" onkeyup="mostrar{{ $meta->id_meta }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_meta }}" placeholder="Cantidad a entregar:">
                         </td>
                         <td class="text-center">
                             <!-- Button calendar modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-calendar"></i></button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-calendar"></i></button>
                         </td>
                         <td class="text-center">
                             <!-- Button delete modal -->
@@ -66,23 +58,14 @@ $session_tipo = session('session_tipo');
                     @elseif($meta->activo > 0)
                     <tr>
                         <td class="text-center">{{ $meta -> clave }}</td>
-                        <td>{{ $meta -> nombre }}</td>
-                        <td>{{ $meta -> descripcion }}</td>
-                        <td class="text-center">
-                            @if($meta -> activo > 0)
-                            <p style="color: green;">Activo</p>
-                            @else
-                            <p style="color: red;">Inactivo</p>
-                            @endif
-                        </td>
-                        <td>{{ $meta -> id_registro }}</td>
-                        <td class="text-center">
-                            <!-- Button show modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-eye"></i></button>
+                        <td>{{ $meta -> nombreM }}</td>
+                        <td>{{$meta->nombrePA}}</td>
+                        <td>
+                            <input type="number" onkeyup="mostrar(this.value)" class="form-control" id="cantEntrega{{ $meta->id_meta }}" placeholder="Cantidad a entregar:">
                         </td>
                         <td class="text-center">
-                            <!-- Button edit modal -->
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $meta->id_meta }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <!-- Button calendar modal -->
+                            <button type="button" id="modalshow" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-calendar"></i></button>
                         </td>
                         <td class="text-center">
                             <!-- Button delete modal -->
@@ -117,87 +100,87 @@ $session_tipo = session('session_tipo');
 @endif
 
 
-<!-- MODAL EDIT START -->
+<!-- MODAL MESES START -->
 @foreach ($metas as $meta)
-<div class="modal fade" id="exampleModal{{ $meta->id_meta }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalshow{{ $meta->id_meta }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar entrega por Mes</h1>
-                <h5>/50</h5>
+                <h1 class="modal-title fs-5" id="modalshowLabel">Asignar entrega por Mes</h1>
+                <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_meta }}"></div><div id="res{{ $meta->id_meta }}"></div>
             </div>
             <div class="modal-body">
                 <form action="" method="" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Enero">
+                            <input type="number" onkeyup="suma{{ $meta->id_meta }}(this.value)" class="form-control" placeholder="Asignar la cantidad de Enero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Febrero:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Febrero">
+                            <input type="number" onkeyup="suma{{ $meta->id_meta }}(this.value)" class="form-control" placeholder="Asignar la cantidad de Febrero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Marzo:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Marzo">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Marzo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Abril:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Abril">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Abril">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Mayo:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Mayo">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Mayo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Junio:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Junio">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Junio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Julio:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Julio">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Julio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Agosto:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Agosto">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Agosto">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Septiembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Septiembre">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Septiembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Octubre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Octubre">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Octubre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Noviembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Noviembre">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Noviembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Diciembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="colFormLabel" placeholder="Asignar la cantidad de Diciembre">
+                            <input type="number" class="form-control" placeholder="Asignar la cantidad de Diciembre">
                         </div>
                     </div>
 
@@ -211,9 +194,23 @@ $session_tipo = session('session_tipo');
         </div>
     </div>
 </div>
-@endforeach
-<!-- MODAL EDIT START -->
+<script>
+    mostrar{{ $meta->id_meta }} = (valor) => {
+        document.getElementById("res{{ $meta->id_meta }}").innerHTML = "/ "+valor;
+    };
 
+    var sumaT = 0;
+    suma{{ $meta->id_meta }} = (valor) => {
+        if(valor != ""){
+            sumaT += parseInt(valor);
+        }else{
+            sumaT += 0;
+        }
+        document.getElementById("sumaTotal{{ $meta->id_meta }}").innerHTML = sumaT;
+    };
+</script>
+@endforeach
+<!-- MODAL MESES START -->
 <!-- MODAL DELETE START -->
 @foreach ($metas as $meta)
 <div class="modal fade" id="deleteModal{{ $meta->id_meta }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
