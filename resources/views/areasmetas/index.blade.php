@@ -86,7 +86,7 @@ $session_id = session('session_id');
 </div>
 <!-- MODAL DELETE START -->
 @foreach ($areasmetasd as $areasmeta)
-<div class="modal fade" id="deleteModal{{ $areasmeta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal{{ $areasmeta->areasmeta }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,12 +96,12 @@ $session_id = session('session_id');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('areasmetas.destroy', $areasmeta) }}" method="post">
+                <form action="{{ route('areasmetas.destroy', ['areasmeta' => $areasmeta->areasmeta ])  }}" method="post">
                     @csrf @method('DELETE')
                     <p><strong>Datos del Área - Meta</strong></p>
-                    <p class="text-center"><strong>Programa:</strong> {{ $areasmeta->id_programa }} </p>
-                    <p class="text-center"><strong>Meta:</strong> {{ $areasmeta->meta_id }} </p>
-                    <p class="text-center"><strong>Área:</strong> {{ $areasmeta->area_id }} </p>
+                    <p class="text-center"><strong>Programa:</strong> {{ $areasmeta->pnombre }} </p>
+                    <p class="text-center"><strong>Meta:</strong> {{ $areasmeta->nmeta }} </p>
+                    <p class="text-center"><strong>Área:</strong> {{ $areasmeta->area }} </p>
                     <p><strong>Objetivos:</strong></p>
                     <p>{{ $areasmeta->objetivo }}</p>
             </div>

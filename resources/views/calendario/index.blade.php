@@ -206,6 +206,7 @@ $session_tipo = session('session_tipo');
         for(var i=0; i<12; i++){
             input.push(document.getElementById("sum"+i+"{{ $meta->id_meta }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
+            
         }
         console.log(sumaT);
         document.getElementById("sumaTotal{{ $meta->id_meta }}").innerHTML = "";

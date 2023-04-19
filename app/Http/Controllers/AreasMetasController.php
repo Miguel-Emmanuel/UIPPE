@@ -24,7 +24,15 @@ class AreasMetasController extends Controller
             ->get();
 
 
-        $areasmetasd = AreasMetas::all();
+            $areasmetasd = DB::table('tb_areasmetas')
+            ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
+            ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
+            ->join('tb_areas', 'tb_areasmetas.area_id',  'tb_areas.id_area')
+            ->select('tb_metas.nombre as nmeta', 'tb_metas.id_meta as mid', 'tb_programas.nombre as pnombre', 'tb_areas.nombre as area', 'tb_areasmetas.id_areasmetas as areasmeta',  'tb_areasmetas.objetivo as objetivo')
+            ->get();
+
+
+        // $areasmetasd = AreasMetas::all();
         $metas = Metas::all();
         $programas = Programas::all();
         $areas = Areas::all();
@@ -114,7 +122,9 @@ class AreasMetasController extends Controller
     {
         $id_meta = $request->get('id_metas');
         $id_meta = intval($id_meta);
-        $areas = \DB::select('SELECT areas.* FROM tb_areas AS areas WHERE id_area NOT IN (SELECT area_id FROM tb_areasmetas WHERE area_id AND meta_id = '.$id_meta.')');
+        $areas = \DB::select('SELECT areas.* FROM tb_areas AS areas
+        WHERE id_area NOT IN (SELECT area_id FROM tb_areasmetas WHERE area_id
+        AND meta_id = '.$id_meta.')');
         return view("areasmetas.js_areas")
             ->with(['areas' => $areas]);
     }
