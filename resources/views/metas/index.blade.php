@@ -306,7 +306,7 @@ $session_id = session('session_id');
                 <p><strong>{{ $meta->nombreM }}</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <form action="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}

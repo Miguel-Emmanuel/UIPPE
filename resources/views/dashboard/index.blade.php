@@ -57,7 +57,7 @@ $session_tipo = session('session_tipo');
         <div class="col-xl-6 col-md-6 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
-                    <a href="#">
+                    <a href="perfil">
                         <div class="row no-gutters align-items-center" style="color: cornflowerblue;">
                             <div class="col-12 text-center py-5">
                                 <i class='bx bx-user bx-lg'></i>
@@ -65,6 +65,24 @@ $session_tipo = session('session_tipo');
                             <div class="col-12 text-center">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     <h3>Perfíl</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-6 mb-4 py-2">
+            <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
+                <div class="card-body">
+                    <a href="calendario">
+                        <div class="row no-gutters align-items-center" style="color: coral;">
+                            <div class="col-12 text-center py-5">
+                                <i class='bx bx-calendar bx-lg'></i>
+                            </div>
+                            <div class="col-12 text-center">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    <h3>Calendario</h3>
                                 </div>
                             </div>
                         </div>

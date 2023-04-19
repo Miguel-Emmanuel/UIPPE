@@ -33,8 +33,10 @@
             <h2 class="text-center pb-3">Restablece tu Contraseña</h2>
             <div class="in">
 
-                <form id="recuperar" action="{{route('resetpass')}}" method="GET">
+                <form id="recuperar" action="{{ route('passwordc')}}" method="GET">
                     @csrf
+
+                    <input type="hidden" value="{{$id}}" name="id" id="">
 
                     <label for="pass" class="form-label">&nbsp; <i class="fa-sharp fa-solid fa-key"></i> Rellena los campos:</label>
                     <ul>
