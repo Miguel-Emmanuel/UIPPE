@@ -48,6 +48,8 @@ Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
 Route::name('valida')->post('valida', [Login::class, 'valida']);
 Route::name('registrate')->get('registrate',  [Login::class, 'registrate']);
+Route::name('EditarPerfil')->get('EditarPerfil',[Login::class, 'editView']);
+Route::name('EditPerfil')->put('EditPerfil/{id}', [Login::class, 'edit']);
 //    Login end
 
 //    Recuperar contraseña start

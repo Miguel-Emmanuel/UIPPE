@@ -129,25 +129,35 @@ $session_id = session('session_id');
             <div class="modal-body">
                 <form action="{{ route('areasmetas.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
                     @csrf
+                    @include('components.flash_alerts')
                     <div>
                         <label for="floatingInput">Selecciona un programa:</label>
                         <select class="form-select" name="id_programa" id="programa" data-search="true" data-silent-initial-value-set="true">
-                            <option value="0" selected>--- Selecciona un Programa ---</option>
+                            <option value="null" selected>--- Selecciona un Programa ---</option>
                             @foreach ($programas as $info)
                             <option value="{{$info->id_programa}}">{{$info->abreviatura}}</option>
                             @endforeach
                         </select>
+                        @error('id_programa')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="floatingInput">Selecciona una meta:</label>
                         <select class="form-select" name="id_meta" id="metas" data-search="true" data-silent-initial-value-set="true">
-                            <option selected>--- Selecciona un Programa antes ---</option>
+                            <option value="null" selected>--- Selecciona un Programa antes ---</option>
                         </select>
+                        @error('meta_id')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="floatingInput">Selecciona una área:</label>
                         <select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multimetas">
                         </select>
+                        @error('area_id')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div multiple data-search="true" data-silent-initial-value-set="true" class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" name="objetivo" style="height: 100px"></textarea>
