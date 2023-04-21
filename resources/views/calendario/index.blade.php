@@ -199,6 +199,7 @@ $session_area = session('session_area');
         for(var i=0; i<12; i++){
             input.push(document.getElementById("sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
+            
         }
         console.log(sumaT);
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
