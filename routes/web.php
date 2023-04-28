@@ -48,6 +48,8 @@ Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
 Route::name('valida')->post('valida', [Login::class, 'valida']);
 Route::name('registrate')->get('registrate',  [Login::class, 'registrate']);
+Route::name('EditarPerfil')->get('EditarPerfil',[Login::class, 'editView']);
+Route::name('EditPerfil')->put('EditPerfil/{id}', [Login::class, 'edit']);
 //    Login end
 
 //    Recuperar contraseña start
@@ -113,4 +115,9 @@ Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
 ///////////////////////////////////////////SELECTS////////////////////////////////////////////////////////////////////////
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
+
+//////////////////FILTROS///////////////////
+Route::name('js_buscar')->get('js_buscar', [AreasController::class, 'js_buscar']);
+Route::name('js_defecto')->get('js_defecto', [AreasController::class, 'js_defecto']);
+
 

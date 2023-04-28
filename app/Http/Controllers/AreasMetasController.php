@@ -13,7 +13,7 @@ use App\Models\Programas;
 class AreasMetasController extends Controller
 {
     public function index()
-    {
+{
 
         $areasmetas = DB::table('tb_areasmetas')
             ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
@@ -47,6 +47,21 @@ class AreasMetasController extends Controller
     }
     public function store(Request $request)
     {
+        $rules = [
+            'id_areasmetas' => 'unique',
+            'id_programa' => 'required|min:1',
+            'meta_id' => 'required|min:1',
+            'area_id' => 'required|min:1'
+        ];
+
+        $message = [
+            'id_programa.required' => 'Se requiere seleccionar el programa',
+            'meta_id.required' => 'Se requiere seleccionar la meta',
+            'area_id.required' => 'Se requiere seleccionar al menos 1 área'
+        ];
+
+        $this->validate($request, $rules, $message);
+
         $areas = $request->id_area[0];
         $separador = ',';
         $id_area = explode($separador, $areas);
@@ -70,39 +85,6 @@ class AreasMetasController extends Controller
         return redirect()->route("areasmetas.index");
     }
 
-
-    public function update(Request $request, AreasMetas $areasMetas)
-    {
-        $areasMetas->update(array(
-            'objetivo' => $request->input('objetivo'),
-            'id_programa' => $request->input('id_programa'),
-            'id_registro' => $request->input('id_registro'),
-        ));
-
-        return redirect()->route("areasmetas.index");
-    }
-
-    public function edit(Metas $id, Request $request)
-    {
-        $activo = 1;
-
-        if ($request->input('activo') == '') {
-            $activo = 0;
-        } else if ($request->input('activo') == 'ON') {
-            $activo = 1;
-        }
-
-        $query = AreasMetas::find($id->id_areameta);
-        $query->clave = $request->clave;
-        $query->nombre = trim($request->nombre);
-        $query->descripcion = trim($request->descripcion);
-        $query->unidadmedida = trim($request->unidadmedida);
-        $query->programa_id = $request->programa_id;
-        $query->activo = $activo;
-        $query->save();
-
-        return redirect()->route("areasmetas.index");
-    }
     public function destroy($id)
     {
         $areasmeta = AreasMetas::find($id)->delete();

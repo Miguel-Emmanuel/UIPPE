@@ -82,7 +82,7 @@ class AreasController extends Controller
       $activo = 1;
     }
 
-    
+
     $query->clave = trim($request->clave);
     $query->nombre = trim($request->nombre);
     $query->descripcion = trim($request->descripcion);
@@ -101,5 +101,27 @@ class AreasController extends Controller
         $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('areas');
+    }
+
+    public function js_buscar(Request $request){
+        $busca = $request->get('busca');
+
+$areas = DB::table('tb_areas')
+->orWhere('tb_areas.descripcion', 'LIKE', "%$busca%")
+->orWhere('tb_areas.clave', 'LIKE', "%$busca%")
+->orWhere('tb_areas.nombre', 'LIKE', "%$busca%")
+->select('tb_areas.*')
+->get();
+
+
+
+        return view("areas/js_buscar")
+            ->with(['areas' => $areas]);
+    }
+    public function js_defecto(){
+        $areas = Areas::all();
+
+        return view('areas.index')
+          ->with(['areas' => $areas]);
     }
 }

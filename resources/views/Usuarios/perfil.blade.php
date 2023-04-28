@@ -3,13 +3,13 @@
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');
-$session_apellido = session('session_apellido');
 $session_tipo = session('session_tipo');
 $session_foto = session('session_foto');
 $session_gen = session('genero');
 $session_email = session('email');
 $session_aca = session('academico');
 $session_fn = session('fn');
+$session_area = session('session_area');
 
 ?>
 @if($session_id)
@@ -70,7 +70,7 @@ $session_fn = session('fn');
             </table>
         </div>
         <div class="col-lg-3 col-sm-12 text-center py-3">
-            <button type="text" class="btn btn-primary">Editar</button>
+            <a href="EditarPerfil" type="text" class="btn btn-primary">Editar</a>
         </div>
     </div>
 </div>
