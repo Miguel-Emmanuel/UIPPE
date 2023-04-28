@@ -1,5 +1,6 @@
 @extends('layout.navbar')
 @section('content')
+
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');

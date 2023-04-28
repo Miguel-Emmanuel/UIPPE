@@ -116,3 +116,8 @@ Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
 
+//////////////////FILTROS///////////////////
+Route::name('js_buscar')->get('js_buscar', [AreasController::class, 'js_buscar']);
+Route::name('js_defecto')->get('js_defecto', [AreasController::class, 'js_defecto']);
+
+

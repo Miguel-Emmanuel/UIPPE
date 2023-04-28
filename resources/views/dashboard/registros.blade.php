@@ -5,6 +5,7 @@ $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 ?>
+
 <title>Registros</title>
 <div class="container p-4">
     <nav aria-label="breadcrumb">
