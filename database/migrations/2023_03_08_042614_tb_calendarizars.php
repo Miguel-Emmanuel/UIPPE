@@ -15,9 +15,15 @@ return new class extends Migration
     {
         //
         schema::create('tb_calendarizars', function (Blueprint $table){
-            $table->bigincrements('id_entrega');
-            $table->integer('id_areameta');
-            $table->date('fechaentrega');
+            $table->increments('id_calendario');
+            $table->integer('areameta_id')->unsigned();
+            $table->foreign('areameta_id')->references('id_areasmetas')->on('tb_areasmetas');
+            $table->string('meses');
+            $table->date('fecha');
+            $table->integer('id_registro');
+            // $table->integer('usuario_id')->unsigned();
+            // $table->foreign('usuario_id')->references('id_usuario')->on('tb_usuarios');
+             $table->integer('cantidad');
             $table->boolean('activo');
             $table->timestamps();
 
