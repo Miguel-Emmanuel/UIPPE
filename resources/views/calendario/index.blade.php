@@ -103,80 +103,79 @@ $session_area = session('session_area');
                 <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div><div id="res{{ $meta->id_areasmetas }}"></div>
             </div>
             <div class="modal-body">
-                <form action="" method="" enctype="multipart/form-data">
+                <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data" id="meses{{ $meta->id_areasmetas }}" onsubmit="return true;"> 
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum0{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Enero">
+                            <input type="number" name="enero" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum0{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Enero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Febrero:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum1{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Febrero">
+                            <input type="number" name="febrero" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum1{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Febrero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Marzo:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum2{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Marzo">
+                            <input type="number" name="marzo" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum2{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Marzo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Abril:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum3{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Abril">
+                            <input type="number" name="abril" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum3{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Abril">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Mayo:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum4{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Mayo">
+                            <input type="number" name="mayo" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum4{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Mayo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-6 col-md-3 col-form-label">Junio:</label>
                         <div class="col-sm-6 col-md-9">
-                            <input type="number" id="sum5{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Junio">
+                            <input type="number" name="junio" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum5{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Junio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Julio:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum6{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Julio">
+                            <input type="number" name="julio" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum6{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Julio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Agosto:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum7{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Agosto">
+                            <input type="number" name="agosto" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum7{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Agosto">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Septiembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum8{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Septiembre">
+                            <input type="number" name="septiembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum8{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Septiembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Octubre:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum9{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Octubre">
+                            <input type="number" name="octubre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum9{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Octubre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Noviembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum10{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Noviembre">
+                            <input type="number" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum10{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Noviembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Diciembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" id="sum11{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Diciembre">
+                            <input type="number" name="diciembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum11{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Diciembre">
                         </div>
                     </div>
-
             </div>
             <div class="modal-footer">
                 <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
@@ -188,6 +187,7 @@ $session_area = session('session_area');
     </div>
 </div>
 <script>
+
     mostrar{{ $meta->id_areasmetas }} = (valor) => {
         document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
     };
@@ -197,14 +197,29 @@ $session_area = session('session_area');
         sumaT = 0;
         var input = new Array;
         for(var i=0; i<12; i++){
-            input.push(document.getElementById("sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
+            input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
             
         }
-        console.log(sumaT);
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT;
     };
+
+    var form = document.querySelector("#form{{ $meta->id_areasmetas }}");
+
+    form.addEventListener('submit', () => {
+        var inputAreaMeta = form.createElement("input");
+        inputAreaMeta.setAttribute("name", "areameta_id");
+        var inputRegistro = form.createElement("input");
+        inputRegistro.setAttribute("name", "id_registro");
+        var inputCantidad = form.createElement("input");
+        inputCantidad.setAttribute("name", "cantidad");
+
+        inputAreaMeta.value = "{{ $meta->id_areasmetas }}";
+        inputRegistro.value = "{{ $session_id }}";
+        inputCantidad.value = document.querySelector("#res{{ $meta->id_areasmetas }}").value;
+    });
+
 </script>
 @endforeach
 <!-- MODAL MESES START -->

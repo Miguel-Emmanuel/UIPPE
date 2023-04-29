@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AreasMetas;
 use App\Models\Calendarizars;
+use App\Models\Meses;
 use App\Models\Programas;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,29 @@ class CalendarizarsController extends Controller
 
     public function store(Request $request)
     {
+        dd($request -> all());
         
+            Meses::created(array(
+                'Enero' => $request->input('enero'),
+                'Febrero' => $request->input('febrero'),
+                'Marzo' => $request->input('marzo'),
+                'Abril' => $request->input('abril'),
+                'Mayo' => $request->input('mayo'),
+                'Junio' => $request->input('junio'),
+                'Julio' => $request->input('julio'),
+                'Agosto' => $request->input('agosto'),
+                'Septiembre' => $request->input('septiembre'),
+                'Octubre' => $request->input('octubre'),
+                'Noviembre' => $request->input('noviembre'),
+                'Diciembre' => $request->input('diciembre'),
+            ));
+
+            $meses = \DB::select('SELECT id_meses FROM tb_meses WHERE id_meses = (SELECT LAST_INSERT_ID())');
+
+            Calendarizars::created(array(
+                ''
+            ));
+
+            return redirect('calendario');
     }
 }

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use App\Mail\ReestablecerPassword;
 use App\Models\AreasMetas;
+use App\Models\Calendarizars;
 use Laravel\SerializableClosure\Serializers\Signed;
 
 /*
@@ -68,6 +69,7 @@ Route::resource('metas', MetasController::class);
 Route::resource('tipos', TiposController::class);
 Route::resource('areasmetas', AreasMetasController::class);
 Route::resource('areas-usuarios', AreasUsuariosController::class);
+Route::resource('calendarizars', CalendarizarsController::class);
 //Resources end
 
 Route::name('multi')->get('multi',  [AreasMetasController::class, 'index']);
