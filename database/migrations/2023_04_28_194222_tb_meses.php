@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_meses');
+        schema::dropIfExists('tb_meses');
     }
 };

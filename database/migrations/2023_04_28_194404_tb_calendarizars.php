@@ -13,7 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-        //
         schema::create('tb_calendarizars', function (Blueprint $table){
             $table->increments('id_calendario');
             $table->integer('areameta_id')->unsigned();
@@ -27,7 +26,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->boolean('activo');
             $table->timestamps();
- 
+
         });
     }
 
@@ -38,8 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
         schema::dropIfExists('tb_calendarizars');
-
     }
 };

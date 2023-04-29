@@ -11,10 +11,11 @@ class Calendarizars extends Model
     protected $table = 'tb_calendarizars';
     protected $primaryKey = 'id_calendario';
     protected $fillable = [
+        'id_calendario',
         'areameta_id',
         'meses_id',
         'fecha',
-        'id_registro', // 'usuario_id',
+        'id_registro',
         'cantidad',
         'activo'
     ];
@@ -23,8 +24,8 @@ class Calendarizars extends Model
         return $this->belongsTo(AreasMetas::class,'areameta_id');
     }
 
-    // public function Usuarios() {
-    //     return $this->belongsTo(Usuarios::class,'usuario_id');
-    // }
+    public function Meses() {
+        return $this->belongsTo(Meses::class,'meses_id');
+    }
 
 }

@@ -25,4 +25,9 @@ class Meses extends Model
         'Diciembre',
         'year'
     ];
+
+    public function Calendarizars() {
+        return $this->hasMany(Calendarizars::class, 'meses_id', 'id_meses');
+
+    }
 }
