@@ -7,7 +7,7 @@ $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
 <title>Calendario</title>
-@if($session_id)
+@if($session_id && $session_area != "")
 
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -35,42 +35,40 @@ $session_area = session('session_area');
                 <tbody>
                     <!-- Regitros en tabla metas -->
                     @foreach($areasmetas as $meta)
-                    @if($session_id != 3 && $meta->area == $session_area)
                     <tr>
+                        @if($session_area == $meta->area_id)
+                            <td class="text-center">{{ $meta -> id_areasmetas }}</td>
+                            <td>{{ $meta -> nombrePA }}</td>
+                            <td>{{$meta->nombreM}}</td>
+                            <td>
+                                <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:">
+                            </td>
+                            <td class="text-center">
+                                <!-- Button calendar modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
+                            </td>
+                            <td class="text-center">
+                                <!-- Button delete modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        @elseif($session_area == 0)
                         <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
-                        <td>{{$meta->nombreM}}</td>
-                        <td>
-                            <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:">
-                        </td>
-                        <td class="text-center">
-                            <!-- Button calendar modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
-                        </td>
-                        <td class="text-center">
-                            <!-- Button delete modal -->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+                            <td>{{ $meta -> nombrePA }}</td>
+                            <td>{{$meta->nombreM}}</td>
+                            <td>
+                                <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                            </td>
+                            <td class="text-center">
+                                <!-- Button calendar modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
+                            </td>
+                            <td class="text-center">
+                                <!-- Button delete modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        @else
+                        @endif
                     </tr>
-                    @elseif($meta->area == $session_area)
-                    <tr>
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
-                        <td>{{$meta->nombreM}}</td>
-                        <td>
-                            <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:">
-                        </td>
-                        <td class="text-center">
-                            <!-- Button calendar modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
-                        </td>
-                        <td class="text-center">
-                            <!-- Button delete modal -->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $meta->id_areasmetas }}"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    @else
-                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -86,7 +84,7 @@ $session_area = session('session_area');
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
             <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+            <p>Para ver el contenido debe tener un área asignada</p>
         </div>
     </div>
 </div>
@@ -104,6 +102,7 @@ $session_area = session('session_area');
             </div>
             <div class="modal-body">
                 <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data" id="meses{{ $meta->id_areasmetas }}" onsubmit="return true;"> 
+                {!! csrf_field() !!}
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
                         <div class="col-sm-9">
@@ -179,6 +178,8 @@ $session_area = session('session_area');
             </div>
             <div class="modal-footer">
                 <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                <input class="form-control" type="text" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
+                <input class="form-control" type="text" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
@@ -188,8 +189,15 @@ $session_area = session('session_area');
 </div>
 <script>
 
+    window.addEventListener('load', () => {
+        var canti = document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value;
+        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = canti;
+        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+canti;
+    });
+
     mostrar{{ $meta->id_areasmetas }} = (valor) => {
         document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
+        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = valor;
     };
 
     var sumaT = 0;
@@ -204,21 +212,6 @@ $session_area = session('session_area');
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT;
     };
-
-    var form = document.querySelector("#form{{ $meta->id_areasmetas }}");
-
-    form.addEventListener('submit', () => {
-        var inputAreaMeta = form.createElement("input");
-        inputAreaMeta.setAttribute("name", "areameta_id");
-        var inputRegistro = form.createElement("input");
-        inputRegistro.setAttribute("name", "id_registro");
-        var inputCantidad = form.createElement("input");
-        inputCantidad.setAttribute("name", "cantidad");
-
-        inputAreaMeta.value = "{{ $meta->id_areasmetas }}";
-        inputRegistro.value = "{{ $session_id }}";
-        inputCantidad.value = document.querySelector("#res{{ $meta->id_areasmetas }}").value;
-    });
 
 </script>
 @endforeach

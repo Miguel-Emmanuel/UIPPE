@@ -196,7 +196,10 @@ $session_id = session('session_id');
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
                         <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
                         @foreach ($usuarios as $info)
+                            @if($info -> id_tipo == 3)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
+                            @else
+                            @endif
                         @endforeach
                         </select>
                     </div>

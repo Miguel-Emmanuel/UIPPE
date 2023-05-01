@@ -18,6 +18,7 @@ $session_name = session('session_name');
 $session_apellido = session('session_apellido');
 $session_tipo = session('session_tipo');
 $session_foto = session('session_foto');
+$session_area = session('session_area');
 ?>
 <header class="header" id="header">
     <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
@@ -41,9 +42,15 @@ $session_foto = session('session_foto');
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
+                    @if($session_area != "")
                     <a href="registros" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
+                    @else
+                    @endif
                     <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Reportes</span> </a>
+                    @if($session_area != "")
                     <a href="calendario" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
+                    @else
+                    @endif
                     <a href="perfil" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                     @else
                     @endif

@@ -37,6 +37,7 @@ class Login extends Controller
         $area = AreasUsuarios::where('usuario_id', '=', $consulta[0]->id_usuario)
             ->get();
 
+        
         if (count($consulta)==0 or $consulta[0]->activo == '0') {
             return redirect('login');
         } else {
@@ -50,9 +51,19 @@ class Login extends Controller
             $request->session()->put('academico', $consulta[0]->academico);
             $request->session()->put('fn', $consulta[0]->fn);
             $request->session()->put('session_tipo', $consulta[0]->id_tipo);
-            $request->session()->put('session_foto', $consulta[0]->foto);
-            $request->session()->put('session_area', $area[0] -> area_id);
 
+            if($consulta[0] -> id_tipo == 3){
+                if(count($area) == 0){
+
+                }else{
+                    $request->session()->put('session_area', $area[0] -> area_id);
+                }
+            }else{
+                $request->session()->put('session_area', 0);
+            }
+
+            $request->session()->put('session_foto', $consulta[0]->foto);
+            
             return redirect('dashboard');
         }
     }

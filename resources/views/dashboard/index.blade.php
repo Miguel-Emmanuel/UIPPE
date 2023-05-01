@@ -4,6 +4,7 @@
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
+$session_area = session('session_area');
 ?>
 <title>UIPPE</title>
 @if($session_id)
@@ -18,6 +19,7 @@ $session_tipo = session('session_tipo');
             @else
             @endif
         </div>
+        @if($session_area != "")
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
@@ -36,6 +38,8 @@ $session_tipo = session('session_tipo');
                 </div>
             </div>
         </div>
+        @else
+        @endif
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
@@ -72,24 +76,27 @@ $session_tipo = session('session_tipo');
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 col-md-6 mb-4 py-2">
-            <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
-                <div class="card-body">
-                    <a href="calendario">
-                        <div class="row no-gutters align-items-center" style="color: coral;">
-                            <div class="col-12 text-center py-5">
-                                <i class='bx bx-calendar bx-lg'></i>
-                            </div>
-                            <div class="col-12 text-center">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    <h3>Calendario</h3>
+        @if($session_area != "")
+            <div class="col-xl-6 col-md-6 mb-4 py-2">
+                <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
+                    <div class="card-body">
+                        <a href="calendario">
+                            <div class="row no-gutters align-items-center" style="color: coral;">
+                                <div class="col-12 text-center py-5">
+                                    <i class='bx bx-calendar bx-lg'></i>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                        <h3>Calendario</h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        @else
+        @endif
     </div>
 </div>
 @else
