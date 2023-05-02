@@ -127,6 +127,7 @@ $session_id = session('session_id');
     </div>
 </div>
 
+@include('Usuarios.modales')
 @else
 <div class="container p-4">
     <div class="row">
@@ -140,5 +141,4 @@ $session_id = session('session_id');
     </div>
 </div>
 @endif
-@include('Usuarios.modales')
 @endsection

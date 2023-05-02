@@ -115,11 +115,13 @@ $areas = DB::table('tb_areas')
 
 
 
-        return view("areas/js_buscar")
+        return view("areas.js_buscar")
             ->with(['areas' => $areas]);
     }
     public function js_defecto(){
         $areas = Areas::all();
+     //$areas = Areas::where('id_area',"0")->get();
+
 
         return view('areas.index')
           ->with(['areas' => $areas]);

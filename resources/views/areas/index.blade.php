@@ -17,97 +17,21 @@ $session_id = session('session_id');
         <div class="col p-4">
             <h3>Áreas</h3>
         </div>
-
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Ejemplo: SIPRE" name="busca" id="busca" >
+            <label for="floatingInput">Buscar Registro</label>
+        </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
 
-        <div class="table-responsive" id="resultado">
-            <table class="table" id="lista">
-                <thead>
-                    <tr>
-                        <th class="text-center">Foto</th>
-                        <th>Clave</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Activo</th>
-                        <th colspan="3">Operaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($areas as $info)
-                    @if($session_id != 3)
-                    <tr>
-                        <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
-                        <td>{{ $info->clave}}</td>
-                        <td>{{ $info->nombre}}</td>
-                        <td>{{ $info->descripcion}}</td>
-                        <td>
-                            @if($info -> activo > 0)
-                            <p style="color: green;">Activo</p>
-                            @else
-                            <p style="color: red;">Inactivo</p>
-                            @endif
-                        </td>
-                        <td>
-                            <!-- Button show modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_area }}"><i class="fa-solid fa-eye"></i></button>
-                        </td>
-                        <td>
-                            <!-- Button modif modal -->
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_area }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                        </td>
-                        <td>
-                            <!-- Button delete modal -->
-                            @if($info -> activo > 0)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @else
-                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @endif
-                        </td>
-                    </tr>
-                    @elseif($info -> activo > 0)
-                    <tr>
-                        <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
-                        <td>{{ $info->clave}}</td>
-                        <td>{{ $info->nombre}}</td>
-                        <td>{{ $info->descripcion}}</td>
-                        <td>
-                            @if($info -> activo > 0)
-                            <p style="color: green;">Activo</p>
-                            @else
-                            <p style="color: red;">Inactivo</p>
-                            @endif
-                        </td>
-                        <td>
-                            <!-- Button show modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_area }}"><i class="fa-solid fa-eye"></i></button>
-                        </td>
-                        <td>
-                            <!-- Button modif modal -->
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_area }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                        </td>
-                        <td>
-                            <!-- Button delete modal -->
-                            @if($info -> activo > 0)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @else
-                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @endif
-                        </td>
-                    </tr>
-                    @else
-                    @endif
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 
+@include('areas.modales')
 @else
 <div class="container p-4">
-    <div class="row">
+    <div class="row">en
         <div class="col p-4">
             <h3>Áreas</h3>
         </div>
@@ -118,5 +42,4 @@ $session_id = session('session_id');
     </div>
 </div>
 @endif
-@include('areas.modales')
 @endsection

@@ -104,6 +104,7 @@ $session_id = session('session_id');
         </div>
     </div>
 </div>
+@include('programas.modales')
 
 @else
 <div class="container p-4">
@@ -118,5 +119,4 @@ $session_id = session('session_id');
     </div>
 </div>
 @endif
-@include('programas.modales')
 @endsection
