@@ -16,6 +16,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Calendario</li>
         </ol>
     </nav>
+    
     <div class="row">
         <div class="col p-4">
             <h3>Calendario Meta</h3>

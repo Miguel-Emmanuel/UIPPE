@@ -2,6 +2,7 @@
 @section('content')
 <?php
 $session_id = session('session_id');
+$session_area = session('session_area');
 ?>
 
 <head>
@@ -46,6 +47,7 @@ $session_id = session('session_id');
             <li class="breadcrumb-item" aria-current="page">Áreas-Metas</li>
         </ol>
     </nav>
+    @if($session_area != "")
     <div class="row">
         <div class="col p-4">
             <h3>ÁREAS | METAS</h3>
@@ -83,6 +85,12 @@ $session_id = session('session_id');
             </table>
         </div>
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    @endif
 </div>
 <!-- MODAL DELETE START -->
 @foreach ($areasmetasd as $areasmeta)
