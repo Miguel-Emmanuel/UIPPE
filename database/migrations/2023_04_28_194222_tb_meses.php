@@ -29,6 +29,8 @@ return new class extends Migration
            $table -> integer('Noviembre'); 
            $table -> integer('Diciembre');
            $table -> year('year');
+           $table -> date('fecha');
+           $table -> timestamps();
         });
     }
 

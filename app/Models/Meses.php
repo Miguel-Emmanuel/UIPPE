@@ -23,7 +23,8 @@ class Meses extends Model
         'Octubre',
         'Noviembre',
         'Diciembre',
-        'year'
+        'year',
+        'fecha'
     ];
 
     public function Calendarizars() {

@@ -47,20 +47,7 @@ class AreasMetasController extends Controller
     }
     public function store(Request $request)
     {
-        $rules = [
-            'id_areasmetas' => 'unique',
-            'id_programa' => 'required|min:1',
-            'meta_id' => 'required|min:1',
-            'area_id' => 'required|min:1'
-        ];
-
-        $message = [
-            'id_programa.required' => 'Se requiere seleccionar el programa',
-            'meta_id.required' => 'Se requiere seleccionar la meta',
-            'area_id.required' => 'Se requiere seleccionar al menos 1 área'
-        ];
-
-        $this->validate($request, $rules, $message);
+        
 
         $areas = $request->id_area[0];
         $separador = ',';

@@ -17,9 +17,15 @@ class AreasUsuariosController extends Controller
         ->join('tb_areas','tb_areas.id_area','tb_areasusuarios.area_id')
         ->join('tb_usuarios','tb_usuarios.id_usuario','tb_areasusuarios.usuario_id')
         ->get();
-        $areas = Areas::all();
-        $usuarios = Usuarios::all();
-        return view('areas-usuarios.index', compact('areausuario','areas','usuarios'));
+        
+        $asig = AreasUsuarios::select('tb_areas.clave','tb_areas.nombre','tb_areas.descripcion','tb_areas.activo', ('tb_usuarios.nombre AS nombreU'),'tb_usuarios.app','tb_usuarios.apm', 'tb_usuarios.gen', 'tb_usuarios.fn','tb_usuarios.email' )
+        ->join('tb_areas', 'tb_areasusuarios.area_id',  'tb_areas.id_area')
+        ->join('tb_usuarios','tb_areasusuarios.usuario_id' , 'tb_usuarios.id_usuario')->get();
+
+        return Response()->json(['AreasUsuarios' => $asig], 200);
+        // $areas = Areas::all();
+        // $usuarios = Usuarios::all();
+        // return view('areas-usuarios.index', compact('areausuario','areas','usuarios'));
     }
 
     public function store(Request $request){

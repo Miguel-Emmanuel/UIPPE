@@ -101,7 +101,7 @@ $session_area = session('session_area');
                 <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div><div id="res{{ $meta->id_areasmetas }}"></div>
             </div>
             <div class="modal-body">
-                <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data" id="meses{{ $meta->id_areasmetas }}" onsubmit="return true;"> 
+                <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data"> 
                 {!! csrf_field() !!}
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
