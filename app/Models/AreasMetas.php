@@ -15,7 +15,7 @@ class AreasMetas extends Model
         'meta_id',
         'id_programa',
         'objetivo',
-         'id_registro'
+        'id_registro'
     ];
     public function programas()
     {
@@ -28,5 +28,10 @@ class AreasMetas extends Model
     public function metas()
     {
         return $this->hasMany('App\Models\Metas');
+    }
+
+    public function Calendarizars() {
+        return $this->hasMany(Calendarizars::class, 'areameta_id', 'id_areasmetas');
+
     }
 }

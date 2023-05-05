@@ -13,16 +13,16 @@ class ReestablecerPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $contacto;
+    public $url;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($contacto)
+    public function __construct($url)
     {
-        $this->contacto=$contacto;
+        $this->url=$url;
     }
 
     /**
@@ -45,8 +45,9 @@ class ReestablecerPassword extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.crecuperacion',
+            view: 'mails.crecuperacion'
         );
+            
     }
 
     /**

@@ -2,6 +2,7 @@
 @section('content')
 <?php
 $session_id = session('session_id');
+$session_area = session('session_area');
 ?>
 @if($session_id)
 <title>Metas</title>
@@ -13,6 +14,7 @@ $session_id = session('session_id');
             <li class="breadcrumb-item" aria-current="page">Metas</li>
         </ol>
     </nav>
+    @if($session_area != "")
     <div class="row">
         <div class="col p-4">
             <h3>Metas</h3>
@@ -103,6 +105,12 @@ $session_id = session('session_id');
             </table>
         </div>
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    @endif
 </div>
 
 @else
@@ -306,7 +314,7 @@ $session_id = session('session_id');
                 <p><strong>{{ $meta->nombreM }}</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <form action="{{ route('deleteMeta', ['id' => $meta->id_meta]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}

@@ -4,6 +4,7 @@
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
+$session_area = session('session_area');
 ?>
 <title>Registros</title>
 <div class="container p-4">
@@ -13,6 +14,7 @@ $session_tipo = session('session_tipo');
             <li class="breadcrumb-item">Registros</li>
         </ol>
     </nav>
+    @if($session_area != "")
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
             <h3 class="text-bold">Registros</h3>
@@ -322,5 +324,11 @@ $session_tipo = session('session_tipo');
         </div>
         @endif
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    @endif
 </div>
 @endsection

@@ -9,6 +9,7 @@ use App\Models\Usuarios;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReestablecerPassword;
+use App\Models\AreasUsuarios;
 use Illuminate\Support\Facades\DB;
 
 class Login extends Controller
@@ -24,12 +25,6 @@ class Login extends Controller
         return view('sesiones.register');
     }
 
-    public function recuperar()
-    {
-        //recuperar contrase!!
-        return view('sesiones/recuperacion');
-    }
-
     public function valida(Request $request)
     {
         $email = $request->input('email');
@@ -39,19 +34,36 @@ class Login extends Controller
             ->where('pass', '=', $pass)
             ->get();
 
+        $area = AreasUsuarios::where('usuario_id', '=', $consulta[0]->id_usuario)
+            ->get();
+
+        
         if (count($consulta)==0 or $consulta[0]->activo == '0') {
             return redirect('login');
         } else {
             $request->session()->put('session_id', $consulta[0]->id_usuario);
             $request->session()->put('session_name', $consulta[0]->nombre.' '.$consulta[0]->app.' '.$consulta[0]->apm);
-            $request->session()->put('session_apellido', $consulta[0]->app);
+            $request->session()->put('session_nombre', $consulta[0]->nombre);
+            $request->session()->put('session_app', $consulta[0]->app);
+            $request->session()->put('session_apm', $consulta[0]->apm);
+            $request->session()->put('genero', $consulta[0]->gen);
+            $request->session()->put('email', $consulta[0]->email);
+            $request->session()->put('academico', $consulta[0]->academico);
+            $request->session()->put('fn', $consulta[0]->fn);
             $request->session()->put('session_tipo', $consulta[0]->id_tipo);
+
+            if($consulta[0] -> id_tipo == 3){
+                if(count($area) == 0){
+
+                }else{
+                    $request->session()->put('session_area', $area[0] -> area_id);
+                }
+            }else{
+                $request->session()->put('session_area', 0);
+            }
+
             $request->session()->put('session_foto', $consulta[0]->foto);
-
-            $session_id = $request->session()->get('session_id');
-            $session_name = $request->session()->get('session_name');
-            $session_idTipo = $request->session()->get('session_tipo');
-
+            
             return redirect('dashboard');
         }
     }
@@ -71,94 +83,68 @@ class Login extends Controller
         return redirect('login');
     }
 
-    public function EnviarCorreo(Request $request){
-        $email = $request->input('email');
-        $consulta = Usuarios::where('email', '=', $email)
-            ->get();
-
-            $contacto = Usuarios::select('nombre')->where('email', '=', $email)
-            ->get();
-
-            if (count($consulta) == 0) {
-                session()->flash('Error', 'Credenciales Incorrectas.');
-                return redirect('recuperacion');
-            } else {
-                Mail::to($email)->send(new ReestablecerPassword($contacto));
-                session()->flash('Exito', 'Revise su bandeja de entrada.');
-                return redirect('recuperacion');
-        }
-    }
-
-    public function reset()
-    {
-        //recuperar contrase!!
-        return view('sesiones/reset');
-    }
-    public function resetpass(Request $request)
-    {
-        /*FUERA DE SERVICIO*/
-        /*$email = $request->input('email');
-        $consulta = Usuarios::where('email', '=', $email)->get();
-        $pass1 = $request->input('pass1');
-        $pass2 = $request->input('pass2');
-
-        if (count($consulta) == 0) {
-            session()->flash('Error', 'Credenciales Incorrectas.');
-                return redirect('reset');
-        } else{
-            if($pass1 == $pass2){
-                Usuarios::where('email', $email)->update(array('pass'=>$pass1,));
-                session()->flash('Exito', 'La contraseña se ha reestablecido correctamente.');
-                return redirect('/');
-            }else{
-                session()->flash('Error', 'Las contraseñas no coinciden.');
-                return redirect('reset');
-            }
-            }*/
-    }
-
     public function cuser(){
         $user = Usuarios::all();
         return $user;   
     }
 
-    public function pcorreo(Request $request){
-        /*MULTIPLES DESTINATARIOS*/ 
-        /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com', 'ff_lexus@hotmail.com'];*/
+    public function editView(Request $request)
+    {
+        return view('Usuarios.perfilEdit');
+    }
 
-        /*Mail::send('mails.prueba', compact('data'), function($message) use ($emails){
-            $message->to($emails)
-                ->subject('nose');
-            $message->from('hello@example.com', 'Eduardoh');
-        });*/
+    public function edit(Request $request, Usuarios $id)
+    {
+        $rules = [
+            'email' => 'required',
+            'nombre' => 'required',
+            'app' => 'required',
+            'apm' => 'required',
+            'academico' => 'required',
+        ];
 
+        $message = [
+            'email.required' => 'Es necesario llenar el campo',
+            'nombre.required' => 'Es necesario llenar el campo',
+            'app.required' => 'Es necesario llenar el campo',
+            'apm.required' => 'Es necesario llenar el campo',
+            'academico.required' => 'Es necesario llenar el campo',
+        ];
 
-        /*FORMULARIO*/
-        /*$data = array(
-            'destinatario'=> $request->input('destinatario'),
-            'asunto'=> $request->input('asunto'),
-            'mensaje'=> $request->input('mensaje'),
-        );*/
+        $this->validate($request, $rules, $message);
 
-        /*Mail::send('mails.prueba', compact('data'), function($message) use ($data){
-            $message->to('admiuippe@gmail.com','Admin Uippe')
-                ->subject($data['asunto']);
-            $message->from('hello@example.com', 'Eduardoh');
-        });*/
+        $query = Usuarios::find($id->id_usuario);
 
+        if ($request->file('foto')  !=  '') {
+            $file = $request->file('foto');
+            $foto1 = $file->getClientOriginalName();
+            $dates = date('YmdHis');
+            $foto2 = $dates . $foto1;
+            \Storage::disk('local')->put($foto2, \File::get($file));
+        } else {
+            $foto2 = $query->foto;
+        }
 
-        //return view('mails.prueba', compact('data'));
+        $query -> email = trim($request -> email);
+        $query -> nombre = trim($request -> nombre);
+        $query -> app = trim($request -> app);
+        $query -> apm = trim($request -> apm);
+        $query -> gen = $request -> genero;
+        $query -> fn = $request -> fn;
+        $query -> foto = $foto2;
+        $query -> academico = trim($request -> academico);
+        $query->save();
 
-        
+        $request -> session()->put('email', trim($request -> email));
+        $request -> session()->put('session_nombre', trim($request -> nombre));
+        $request -> session()->put('session_app', trim($request -> app));
+        $request -> session()->put('session_apm', trim($request -> apm));
+        $request -> session()->put('session_name', trim($request -> nombre).' '.trim($request -> app).' '.trim($request -> apm));
+        $request -> session()->put('genero', trim($request -> genero));
+        $request -> session()->put('session_foto', $foto2);
+        $request -> session()->put('fn', trim($request -> fn));
+        $request -> session()->put('academico', trim($request -> academico));
 
-        
-
-        /*Mail::send('mails.prueba', compact('data'), function($message){
-            $message->to('eduholvera@gmail.com', 'Eduardoh')
-                ->subject('nose');
-            $message->from('hello@example.com', 'Eduardo2');
-        });*/
-
-        
+        return redirect('perfil');
     }
 }

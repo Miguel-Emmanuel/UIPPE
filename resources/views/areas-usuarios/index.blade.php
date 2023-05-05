@@ -2,6 +2,7 @@
 @section('content')
 <?php
 $session_id = session('session_id');
+$session_area = session('session_area');
 ?>
 <div class="container p-4">
 <nav aria-label="breadcrumb">
@@ -11,6 +12,7 @@ $session_id = session('session_id');
             <li class="breadcrumb-item" aria-current="page">Áreas-Usuarios</li>
         </ol>
     </nav>
+    @if($session_area != "")
     <div class="row">
         <div class="col p-4">
             <h3>Áreas | Usuarios</h3>
@@ -64,6 +66,12 @@ $session_id = session('session_id');
             </table>
         </div>
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    @endif
 </div>
 
 
@@ -183,7 +191,7 @@ $session_id = session('session_id');
                     {!! csrf_field() !!}
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
+                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
@@ -196,7 +204,10 @@ $session_id = session('session_id');
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
                         <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
                         @foreach ($usuarios as $info)
+                            @if($info -> id_tipo == 3)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
+                            @else
+                            @endif
                         @endforeach
                         </select>
                     </div>
@@ -220,6 +231,7 @@ $session_id = session('session_id');
     </div>
 </div>
 <!-- ADD MODAL END -->
+
 <script>
     $(function() {
         $('#modalmod').modal('show')
