@@ -44,8 +44,42 @@ class GraficosController extends Controller
         $metas=\DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
         $usuarios_b=\DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
         $tipos=\DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
+        $trimestral=\DB::select('SELECT SUM(activo) AS total
+        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01" 
+        GROUP BY MONTH(created_at) ');
+        $meses=\DB::select(' SELECT MONTH(created_at) AS mes
+        FROM tb_metas
+        WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01"
+        GROUP BY MONTH(created_at)
+        ');
+        $eneroactivos=\DB::select('SELECT SUM(activo) AS total
+        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" 
+        GROUP BY Day(created_at) ');
+        $eneroDias=\DB::select('SELECT DAY(created_at) AS dia
+        FROM tb_metas
+        WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" GROUP BY DAY(created_at)');
+        $febreroactivos=\DB::select('SELECT SUM(activo) AS total
+        FROM tb_metas WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" 
+        GROUP BY Day(created_at) ');
+        $febreroDias=\DB::select('SELECT DAY(created_at) AS dia
+        FROM tb_metas
+        WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" GROUP BY DAY(created_at)');
+        $marzoactivos=\DB::select('SELECT SUM(activo) AS total
+        FROM tb_metas WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" 
+        GROUP BY Day(created_at) ');
+        $marzoDias=\DB::select('SELECT DAY(created_at) AS dia
+        FROM tb_metas
+        WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" GROUP BY DAY(created_at)');
         return view ("graficos.graficos")
+        ->with(['meses'=>$meses])
+        ->with(['eneroactivos'=>$eneroactivos])
+        ->with(['eneroDias'=>$eneroDias])
+        ->with(['febreroactivos'=>$febreroactivos])
+        ->with(['febreroDias'=>$febreroDias])
+        ->with(['marzoactivos'=>$marzoactivos])
+        ->with(['marzoDias'=>$marzoDias])
         ->with(['tipos'=>$tipos])
+        ->with(['trimestral'=>$trimestral])
         ->with(['metas'=>$metas])
         ->with(['usuarios_b'=>$usuarios_b])
         ->with(['programas'=>$programas])
