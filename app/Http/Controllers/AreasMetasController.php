@@ -47,8 +47,6 @@ class AreasMetasController extends Controller
     }
     public function store(Request $request)
     {
-        
-
         $areas = $request->id_area[0];
         $separador = ',';
         $id_area = explode($separador, $areas);

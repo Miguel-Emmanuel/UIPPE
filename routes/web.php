@@ -96,6 +96,8 @@ Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
+
+Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController::class, 'update']);
 // Metodos Edit y Delete end
 
 //Graficos controller start

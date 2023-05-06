@@ -5,6 +5,7 @@ $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
 @if($session_id)
+@if($session_area != "")
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -13,7 +14,6 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Áreas</li>
         </ol>
     </nav>
-@if($session_area != "")
     <div class="row">
         <div class="col p-4">
             <h3>Áreas</h3>
@@ -102,14 +102,20 @@ $session_area = session('session_area');
             </table>
         </div>
     </div>
-    @else
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+</div>
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Áreas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
             <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
             <p>Para ver el contenido debe tener un área asignada</p>
         </div>
-    @endif
+    </div>
 </div>
-
+@endif
 @else
 <div class="container p-4">
     <div class="row">
@@ -244,7 +250,7 @@ $session_area = session('session_area');
                     @include('components.flash_alerts')
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
-                    <label for="floatingInput">Clave:</label>
+                        <label for="floatingInput">Clave:</label>
                         @error('clave')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
@@ -281,7 +287,7 @@ $session_area = session('session_area');
             </form>
         </div>
     </div>
-    
+
 </div>
 <!-- ADD MODAL END -->
 <script>
