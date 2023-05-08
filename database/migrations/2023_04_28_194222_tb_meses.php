@@ -16,19 +16,22 @@ return new class extends Migration
         Schema::create('tb_meses', function (Blueprint $table)
         {
            $table -> increments('id_meses');
-           $table -> integer('Enero'); 
-           $table -> integer('Febrero'); 
-           $table -> integer('Marzo'); 
-           $table -> integer('Abril'); 
-           $table -> integer('Mayo'); 
-           $table -> integer('Junio'); 
-           $table -> integer('Julio'); 
-           $table -> integer('Agosto'); 
-           $table -> integer('Septiembre'); 
-           $table -> integer('Octubre'); 
-           $table -> integer('Noviembre'); 
-           $table -> integer('Diciembre');
-           $table -> year('year');
+           $table -> integer('m_enero'); 
+           $table -> integer('m_febrero'); 
+           $table -> integer('m_marzo'); 
+           $table -> integer('m_abril'); 
+           $table -> integer('m_mayo'); 
+           $table -> integer('m_junio'); 
+           $table -> integer('m_julio'); 
+           $table -> integer('m_agosto'); 
+           $table -> integer('m_septiembre'); 
+           $table -> integer('m_octubre'); 
+           $table -> integer('m_noviembre'); 
+           $table -> integer('m_diciembre');
+           $table -> integer('m_cantidad');
+           $table -> year('m_year');
+           $table -> date('m_fecha');
+           $table -> timestamps();
         });
     }
 

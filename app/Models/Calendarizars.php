@@ -14,7 +14,6 @@ class Calendarizars extends Model
         'id_calendario',
         'areameta_id',
         'meses_id',
-        'fecha',
         'id_registro',
         'cantidad',
         'activo'
