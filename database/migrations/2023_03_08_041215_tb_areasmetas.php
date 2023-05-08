@@ -20,7 +20,8 @@ return new class extends Migration
             $table->foreign('area_id')->references('id_area')->on('tb_areas');
             $table->integer('meta_id')->unsigned();
             $table->foreign('meta_id')->references('id_meta')->on('tb_metas');
-            $table->integer('id_programa');
+            $table->integer('id_programa')->unsigned();
+            $table->foreign('id_programa')->references('id_programa')->on('tb_programas');
             $table->string('objetivo');
             $table->integer('id_registro');
             $table->timestamps();

@@ -17,8 +17,8 @@ class AreasSeeder extends Seeder
     {
         $area = new Areas();
         $area->clave= 'ARE1';
-        $area->nombre = 'Secretaría de Vinculación';
-        $area->descripcion = 'Secretaría de Vinculación';
+        $area->nombre = 'Abogado General';
+        $area->descripcion = 'Abogado General';
         $area->foto ='cuervo.png';
         $area->activo = '1';
         $area->id_registro = '1';
@@ -62,8 +62,8 @@ class AreasSeeder extends Seeder
 
         $area = new Areas();
         $area->clave= 'ARE6';
-        $area->nombre = 'Secretaría de Vinculación';
-        $area->descripcion = 'Secretaría de Vinculación';
+        $area->nombre = 'Secretaria de Vinculación';
+        $area->descripcion = 'Secretaria de Vinculación';
         $area->foto ='cuervo.png';
         $area->activo = '1';
         $area->id_registro = '1';
