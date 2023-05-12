@@ -65,7 +65,7 @@ $session_tipo = session('session_tipo');
                 <div class="card border-light mb-3" style="max-width: 34rem;">
                     <div id="contenido6" style="display:none;">
                         <!-- Aquí va el contenido 1 -->
-                        <canvas id="GraficaUsuarioTipo" width="600" height="400"></canvas>
+                        <canvas id="GraficaUsuarioPuesto" width="600" height="400"></canvas>
                         <div id="my-cerrar">
                             <button onclick="location.reload()">Cerrar</button>
                         </div>
@@ -478,26 +478,26 @@ $session_tipo = session('session_tipo');
 
             <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
             <script>
-                new Chart(document.getElementById("GraficaUsuarioTipo"), {
-                    type: 'line',
+                new Chart(document.getElementById("GraficaUsuarioPuesto"), {
+                    type: 'bar',
                     data: {
                         labels: [
 
-                            @foreach($usuarios_b as $usu)
-                            "{{ $usu -> usuarios}}",
+                            @foreach($puesto as $pue)
+                            "{{ $pue -> nombre_usuario }}",
 
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Tipo de usuario",
+                            label: "Puesto",
                             backgroundColor: [
-                                @foreach($usuarios_b as $usu)
+                                @foreach($puesto as $pue)
                                 "#" + Math.floor(Math.random() * 16777215).toString(16),
                                 @endforeach
                             ],
                             data: [
-                                @foreach($tipos as $tipos)
-                                "{{ $tipos -> id}}",
+                                @foreach($puesto as $pue)
+                                "{{ $pue -> id_tipo}}",
 
                                 @endforeach
                             ]
@@ -516,7 +516,7 @@ $session_tipo = session('session_tipo');
                         },
                         title: {
                             display: true,
-                            text: 'Programas y sus metas'
+                            text: 'Usuarios y su Puesto'
                         }
 
                     }

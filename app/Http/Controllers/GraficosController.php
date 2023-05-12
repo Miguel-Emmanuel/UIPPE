@@ -70,8 +70,12 @@ class GraficosController extends Controller
         $marzoDias=\DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" GROUP BY DAY(created_at)');
+         $puesto=\DB::select('SELECT tb_usuarios.nombre AS nombre_usuario, tb_usuarios.id_tipo, tb_tipos.nombre AS nombre_tipo
+         FROM tb_usuarios, tb_tipos
+         WHERE tb_usuarios.id_tipo = tb_tipos.id ');
         return view ("graficos.graficos")
         ->with(['meses'=>$meses])
+        ->with(['puesto'=>$puesto])
         ->with(['eneroactivos'=>$eneroactivos])
         ->with(['eneroDias'=>$eneroDias])
         ->with(['febreroactivos'=>$febreroactivos])
