@@ -115,7 +115,9 @@ Route::name('reset')->get('reset', [CorreosController::class, 'reset'])->middlew
 Route::name('passwordc')->get('passwordc', [CorreosController::class, 'passwordc']);
 
 Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
-
+Route::name('correo')->get('correo', function(){
+   return view('mails.correos');
+});
 ///////////////////////////////////////////SELECTS////////////////////////////////////////////////////////////////////////
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
