@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use App\Mail\ReestablecerPassword;
 use App\Models\AreasMetas;
+use App\Models\Calendarizars;
 use Laravel\SerializableClosure\Serializers\Signed;
 
 /*
@@ -48,6 +49,8 @@ Route::name('login')->get('login', [Login::class, 'login']);
 Route::name('logout')->get('logout', [Login::class, 'logout']);
 Route::name('valida')->post('valida', [Login::class, 'valida']);
 Route::name('registrate')->get('registrate',  [Login::class, 'registrate']);
+Route::name('EditarPerfil')->get('EditarPerfil',[Login::class, 'editView']);
+Route::name('EditPerfil')->put('EditPerfil/{id}', [Login::class, 'edit']);
 //    Login end
 
 //    Recuperar contraseña start
@@ -66,6 +69,7 @@ Route::resource('metas', MetasController::class);
 Route::resource('tipos', TiposController::class);
 Route::resource('areasmetas', AreasMetasController::class);
 Route::resource('areas-usuarios', AreasUsuariosController::class);
+Route::resource('calendarizars', CalendarizarsController::class);
 //Resources end
 
 Route::name('multi')->get('multi',  [AreasMetasController::class, 'index']);
@@ -92,6 +96,8 @@ Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
+
+Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController::class, 'update']);
 // Metodos Edit y Delete end
 
 //Graficos controller start
@@ -107,9 +113,10 @@ Route::name('EnviarCorreo')->get('EnviarCorreo', [CorreosController::class, 'Env
 Route::name('reset')->get('reset', [CorreosController::class, 'reset'])->middleware('signed');
 Route::name('passwordc')->get('passwordc', [CorreosController::class, 'passwordc']);
 
-Route::name('enviados')->get('enviados', [CorreosController::class, 'enviados']);
-Route::name('pcorreo')->get('pcorreo', [CorreosController::class, 'pcorreo']);
-
+Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
+Route::name('correo')->get('correo', function(){
+   return view('mails.correos');
+});
 ///////////////////////////////////////////SELECTS////////////////////////////////////////////////////////////////////////
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);

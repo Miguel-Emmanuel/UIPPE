@@ -40,7 +40,15 @@ class GraficosController extends Controller
         $usuarios_a = \DB::select('SELECT gen, COUNT(*) AS cantidad FROM tb_usuarios GROUP BY gen' );
         $areas = \DB::select('SELECT COUNT(*) AS cantidad FROM tb_areas GROUP BY activo');
         $areas_a=\DB::select('SELECT activo FROM tb_areas GROUP BY activo');
+        $programas=\DB::select('SELECT  abreviatura FROM tb_programas');
+        $metas=\DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
+        $usuarios_b=\DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
+        $tipos=\DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
         return view ("graficos.graficos")
+        ->with(['tipos'=>$tipos])
+        ->with(['metas'=>$metas])
+        ->with(['usuarios_b'=>$usuarios_b])
+        ->with(['programas'=>$programas])
         ->with(['usuarios'=> $usuarios])
         ->with(['areas_a'=>$areas_a])
         ->with(['usuarios_a'=>$usuarios_a])

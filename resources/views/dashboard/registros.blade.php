@@ -4,6 +4,7 @@
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
+$session_area = session('session_area');
 ?>
 <title>Registros</title>
 <div class="container p-4">
@@ -13,6 +14,7 @@ $session_tipo = session('session_tipo');
             <li class="breadcrumb-item">Registros</li>
         </ol>
     </nav>
+    @if($session_area != "")
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
             <h3 class="text-bold">Registros</h3>
@@ -21,14 +23,17 @@ $session_tipo = session('session_tipo');
         @if($session_id) <!-- Contenido para verificar sesión iniciada -->
         @if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3) <!-- Contenido dependiendo del tipo de usuario -->
         <div class="col-md-12">
-            <nav>
-                <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" style="background-color: #0097A7; color: white;">#1 Áreas</button>
-                    <button class="nav-link" id="nav-registroUsuarios-tab" data-bs-toggle="tab" data-bs-target="#nav-registroUsuarios" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" style="background-color: #fd7e14; color: white;">#2 Usuarios</button>
-                    <button class="nav-link" id="nav-Metas-tab" data-bs-toggle="tab" data-bs-target="#nav-Metas" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" style="background-color: #027333; color: white;">#3 Metas</button>
-                    <!-- <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false" disabled>Disabled</button> -->
-                </div>
-            </nav>
+            <ul class="nav nav-pills nav-fill gap-2 p-1 small rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-black); --bs-nav-pills-link-active-bg: var(--bs-white); background-color: cadetblue;">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active rounded-5" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">#1 Áreas</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-5" id="nav-registroUsuarios-tab" data-bs-toggle="tab" data-bs-target="#nav-registroUsuarios" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">#2 Usuarios</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-5" id="nav-Metas-tab" data-bs-toggle="tab" data-bs-target="#nav-Metas" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">3# Metas</button>
+                </li>
+            </ul>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                     <div class="container">
@@ -322,5 +327,11 @@ $session_tipo = session('session_tipo');
         </div>
         @endif
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+        <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+        <p>Para ver el contenido debe tener un área asignada</p>
+    </div>
+    @endif
 </div>
 @endsection

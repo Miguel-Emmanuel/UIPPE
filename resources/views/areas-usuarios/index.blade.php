@@ -2,9 +2,12 @@
 @section('content')
 <?php
 $session_id = session('session_id');
+$session_area = session('session_area');
 ?>
+@if($session_id)
+@if($session_area != "")
 <div class="container p-4">
-<nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
             <li class="breadcrumb-item"><a href="registros">Registros</a></li>
@@ -30,11 +33,11 @@ $session_id = session('session_id');
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($areausuario as $info)
+                    @foreach($asig as $info)
                     <tr>
-                        <td>{{ $info->id_areasusuarios}}</td>
-                        <td>{{ $info->area_id}}</td>
-                        <td>{{ $info->usuario_id}}</td>
+                        <td>{{ $info->id_area}}</td>
+                        <td>{{ $info->nombre}}</td>
+                        <td>{{ $info->nombreU .' '. $info->app .' '. $info->apm}}</td>
                         <td>
                             @if($info -> activo > 0)
                             <p style="color: green;">Activo</p>
@@ -66,10 +69,36 @@ $session_id = session('session_id');
     </div>
 </div>
 
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Áreas - Usuarios</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    </div>
+</div>
 
+@endif
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Áreas - Usuarios</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- ELIMINAR START MODAL -->
-@foreach ($areausuario as $info )
+@foreach ($asig as $info )
 <div class="modal fade" id="deleteModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -80,7 +109,7 @@ $session_id = session('session_id');
             <div class="modal-body text-center">
                 ¿Realmente desea eliminar el registro?
                 <strong>
-                    <p>{{$info -> clave .' | '. $info -> nombre}}</p>
+                    <p>{{$info -> nombre .' | '. $info->nombreU .' '. $info->app .' '. $info->apm}}</p>
                 </strong>
             </div>
             <div class="modal-footer">
@@ -96,7 +125,7 @@ $session_id = session('session_id');
 <!-- ELIMINAR END MODAL -->
 
 <!-- SHOW MODAL START -->
-@foreach ($areausuario as $info)
+@foreach ($asig as $info)
 <div class="modal fade" id="modalshow{{ $info->id_area }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -104,12 +133,28 @@ $session_id = session('session_id');
                 <h1 class="modal-title fs-5" id="modalshowLabel">Detalles | {{ $info -> clave }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="text-center py-3">
-                    <img src="{{ asset('img/post/'.$info->foto) }}" alt="{{ $info -> foto }}">
+            <div class="modal-body d-flex" style="align-items: center; justify-content: center;">
+                <div class="col text-center">
+                    <img src="{{ asset('img/post/'.$info->foto) }}" alt="{{ $info -> foto }}" style="width: 150px;">
                 </div>
-                <p>Nombre: {{$info -> nombre }}</p>
-                <p>Descripción: {{$info -> descripcion}}</p>
+                <div class="col">
+                    <p><strong>Nombre: </strong><br>{{$info -> nombreU .' '. $info->app .' '. $info->apm}}</p>
+                    <p><strong>Correo Electrónico: </strong><br>{{ $info -> email }}</p>
+                    <p><strong>Fecha de nacimiento: </strong><br>{{$info -> fn}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="modal-body row">
+                <h5 class="text-center"><strong>Área</strong></h5>
+                <div class="col-6 text-center">
+                    <p><strong>Clave: </strong><br>{{$info -> clave}}</p>
+                </div>
+                <div class="col-6 text-center">
+                    <p><strong>Nombre: </strong><br>{{ $info -> nombre }}</p>
+                </div>
+                <div class="col-12">
+                <p><strong>Descripción: </strong><br>{{$info -> descripcion}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -119,7 +164,7 @@ $session_id = session('session_id');
 
 
 <!-- EDIT MODAL START -->
-@foreach ($areausuario as $info)
+@foreach ($asig as $info)
 <div class="modal fade" id="exampleModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -183,26 +228,29 @@ $session_id = session('session_id');
                     {!! csrf_field() !!}
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
+                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true">
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <hr class="sidebar-divider">
-                    
+
                     <div>
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
-                        @foreach ($usuarios as $info)
+                        <select multiple data-search="true" data-silent-initial-value-set="true" name="usuario_id[]">
+                            @foreach ($usuarios as $info)
+                            @if($info -> id_tipo == 3)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
-                        @endforeach
+                            @else
+                            @endif
+                            @endforeach
                         </select>
                     </div>
 
                     <hr class="sidebar-divider">
-                    
+
                     <div class="mb-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="activo" role="switch" id="flexSwitchCheckChecked" checked>
@@ -220,6 +268,7 @@ $session_id = session('session_id');
     </div>
 </div>
 <!-- ADD MODAL END -->
+
 <script>
     $(function() {
         $('#modalmod').modal('show')
@@ -239,10 +288,10 @@ $session_id = session('session_id');
 
 <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-    <script type="text/javascript">
-        VirtualSelect.init({
-            ele: 'select'
-        });
-    </script>
-    
+<script type="text/javascript">
+    VirtualSelect.init({
+        ele: 'select'
+    });
+</script>
+
 @endsection

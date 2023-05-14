@@ -2,6 +2,7 @@
 @section('content')
 <?php
 $session_id = session('session_id');
+$session_area = session('session_area');
 ?>
 
 <head>
@@ -38,6 +39,8 @@ $session_id = session('session_id');
         });
     </script>
 </head>
+@if($session_id)
+@if($session_area != "")
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -48,7 +51,7 @@ $session_id = session('session_id');
     </nav>
     <div class="row">
         <div class="col p-4">
-            <h3>AREAS | METAS</h3>
+            <h3>Áreas | Metas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
@@ -84,9 +87,35 @@ $session_id = session('session_id');
         </div>
     </div>
 </div>
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Áreas | Metas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido debe tener un área asignada</p>
+        </div>
+    </div>
+</div>
+@endif
+@else
+<div class="container p-4">
+    <div class="row">
+        <div class="col p-4">
+            <h3>Áreas | Metas</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
+            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
+            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+@endif
 <!-- MODAL DELETE START -->
 @foreach ($areasmetasd as $areasmeta)
-<div class="modal fade" id="deleteModal{{ $areasmeta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal{{ $areasmeta->areasmeta }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,12 +125,12 @@ $session_id = session('session_id');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('areasmetas.destroy', $areasmeta) }}" method="post">
+                <form action="{{ route('areasmetas.destroy', ['areasmeta' => $areasmeta->areasmeta ])  }}" method="post">
                     @csrf @method('DELETE')
                     <p><strong>Datos del Área - Meta</strong></p>
-                    <p class="text-center"><strong>Programa:</strong> {{ $areasmeta->id_programa }} </p>
-                    <p class="text-center"><strong>Meta:</strong> {{ $areasmeta->meta_id }} </p>
-                    <p class="text-center"><strong>Área:</strong> {{ $areasmeta->area_id }} </p>
+                    <p class="text-center"><strong>Programa:</strong> {{ $areasmeta->pnombre }} </p>
+                    <p class="text-center"><strong>Meta:</strong> {{ $areasmeta->nmeta }} </p>
+                    <p class="text-center"><strong>Área:</strong> {{ $areasmeta->area }} </p>
                     <p><strong>Objetivos:</strong></p>
                     <p>{{ $areasmeta->objetivo }}</p>
             </div>
@@ -129,25 +158,35 @@ $session_id = session('session_id');
             <div class="modal-body">
                 <form action="{{ route('areasmetas.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
                     @csrf
+                    @include('components.flash_alerts')
                     <div>
                         <label for="floatingInput">Selecciona un programa:</label>
                         <select class="form-select" name="id_programa" id="programa" data-search="true" data-silent-initial-value-set="true">
-                            <option value="0" selected>--- Selecciona un Programa ---</option>
+                            <option value="null" selected>--- Selecciona un Programa ---</option>
                             @foreach ($programas as $info)
                             <option value="{{$info->id_programa}}">{{$info->abreviatura}}</option>
                             @endforeach
                         </select>
+                        @error('id_programa')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="floatingInput">Selecciona una meta:</label>
                         <select class="form-select" name="id_meta" id="metas" data-search="true" data-silent-initial-value-set="true">
-                            <option selected>--- Selecciona un Programa antes ---</option>
+                            <option value="null" selected>--- Selecciona un Programa antes ---</option>
                         </select>
+                        @error('meta_id')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div>
                         <label for="floatingInput">Selecciona una área:</label>
                         <select multiple data-search="true" data-silent-initial-value-set="true" name="id_area[]" id="multimetas">
                         </select>
+                        @error('area_id')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
                     </div>
                     <div multiple data-search="true" data-silent-initial-value-set="true" class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" name="objetivo" style="height: 100px"></textarea>
