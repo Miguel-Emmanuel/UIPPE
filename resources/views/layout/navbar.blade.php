@@ -50,7 +50,7 @@ $session_area = session('session_area');
                             <a href="calendario" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
                         @endif
                         @if($session_tipo == 1 || $session_tipo == 2)
-                            <a href="correo" class="nav_link"> <i class="bx bx-envelope nav_icon"></i> <span class="nav_name">Correo</span></a>
+                            <a href="enviados" class="nav_link"> <i class="bx bx-envelope nav_icon"></i> <span class="nav_name">Correo</span></a>
                         @endif
                         <a href="perfil" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                     @endif

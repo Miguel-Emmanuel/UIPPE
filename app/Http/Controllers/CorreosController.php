@@ -94,9 +94,11 @@ class CorreosController extends Controller
 
     public function enviados(Request $request){
         $correos = Correos::all();
+        $usuarios = Usuarios::all();
 
-        return view('mails.enviados', compact('correos'));
+        return view('mails.correos', compact('correos', 'usuarios'));
     }
+
     public function pcorreo(Request $request){
         /*MULTIPLES DESTINATARIOS*/ 
         /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com', 'ff_lexus@hotmail.com'];*/
@@ -109,8 +111,13 @@ class CorreosController extends Controller
 
 
         /*FORMULARIO*/
+
+        $iddes= $request->input('destinatario');
+
+        $cordes = Usuarios::where('id_usuario', $iddes)->value('email');
+
         $data = array(
-            'destinatario'=> $request->input('destinatario'),
+            'destinatario'=> $cordes,
             'asunto'=> $request->input('asunto'),
             'mensaje'=> $request->input('mensaje'),
         );
@@ -120,10 +127,10 @@ class CorreosController extends Controller
             $mensaje = $request->input('mensaje');*/
 
         $datos = new Correos;
-        $datos->Destinatario = $request->input('destinatario');
+        $datos->Destinatario = $cordes;
         $datos->Asunto = $request->input('asunto');
         $datos->Contenido = $request->input('mensaje');
-        $datos->Remitente = $request->input('null');
+        $datos->Remitente = $request->input('id');
         $datos->save();
 
 
