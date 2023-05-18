@@ -1,4 +1,7 @@
 @extends('layout.navbar')
+@section('dataTablesCss')
+<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+@endsection
 @section('content')
 <?php
 $session_id = session('session_id');
@@ -35,7 +38,7 @@ $session_area = session('session_area');
                 <p>Meta sin registro eficiente</p>
             </div>
         <div class="table-responsive my-3">
-            <table class="table">
+            <table class="table" id="metas">
                 <thead class="table-group-divider">
                     <!-- Campos en tabla metas -->
                     <tr>
@@ -43,38 +46,39 @@ $session_area = session('session_area');
                         <th>Programa</th>
                         <th>Meta</th>
                         <th class="text-center">Cantidad</th>
-                        <th class="text-center" colspan="3">Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     <!-- Regitros en tabla metas -->
                     @foreach($areasmetas as $meta)
-                    <tr class="table-danger" id="tr{{ $meta -> id_areasmetas }}">
                         @if($session_area == $meta->area_id)
+                        <tr id="tr{{ $meta -> id_areasmetas }}" style="background-color: #dc3545; color: white;">
                             <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
                             <td>
                                 <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                             </td>
+                            <!-- Button calendar modal -->
                             <td class="text-center">
-                                <!-- Button calendar modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
                             </td>
+                        </tr>
                         @elseif($session_area == 0)
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
+                        <tr id="tr{{ $meta -> id_areasmetas }}" style="background-color: #dc3545; color: white;">
+                            <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
                             <td>
                                 <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                             </td>
+                            <!-- Button calendar modal -->
                             <td class="text-center">
-                                <!-- Button calendar modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
                             </td>
-                        @else
+                        </tr>
                         @endif
-                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -197,9 +201,9 @@ $session_area = session('session_area');
                     </div>
             </div>
             <div class="modal-footer">
-                <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
-                <input class="form-control" type="text" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
-                <input class="form-control" type="text" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
+                <input class="form-control" type="hidden" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                <input class="form-control" type="hidden" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
+                <input class="form-control" type="hidden" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
@@ -385,8 +389,20 @@ $session_area = session('session_area');
 @endforeach
 <!-- MODAL DELETE END -->
 
+@section('dataTablesJs')
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
 <script>
-
+    $(document).ready(function () {
+        $('#metas').DataTable({
+            "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
+            ordering: false,
+            info: false,
+        });
+    });
+</script>
+@endsection
+<script>
     //======================================================
     //Para consulta de id_areasmetas con registros en meses
     //======================================================
@@ -408,11 +424,12 @@ $session_area = session('session_area');
         var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
 
         if({{ $areas -> cantidad_c }} == sumaI{{ $areas->id_areasmetas }}){
-            tr.className = "table-success";
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#198754");
         }else if(sumaI{{ $areas->id_areasmetas }} >= Math.floor({{ $areas -> cantidad_c }}/2)){
-            tr.className = "table-warning";
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#ffc107");
+            $("#tr{{$areas -> id_areasmetas}}").css("color","black");
         }else{
-            
+
         }
 
         document.getElementById("sumaTotal{{ $areas->id_areasmetas }}").innerHTML = "";
@@ -420,21 +437,7 @@ $session_area = session('session_area');
     @endforeach
     });
 
-    /*
-    window.addEventListener('load', () => {
-    @foreach($areasmetas as $areasM)
-        
-    @endforeach
-
-    // ======================================================
-    //Para consulta de id_areas metas sin registros en meses
-    //======================================================
-
-    @foreach($areasmetas as $areas)
-    
-    @endforeach
-    });
-    */
 </script>
 
 @endsection
+
