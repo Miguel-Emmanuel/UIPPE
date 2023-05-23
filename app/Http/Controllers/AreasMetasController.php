@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\AreasMetas;
 use App\Models\Metas;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 use App\Models\Programas;
 
@@ -97,4 +98,5 @@ class AreasMetasController extends Controller
         return view("areasmetas.js_areas")
             ->with(['areas' => $areas]);
     }
+
 }

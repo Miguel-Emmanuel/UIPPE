@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Areas;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
+use PDF;
 
 class AreasController extends Controller
 {
@@ -101,5 +102,20 @@ class AreasController extends Controller
         $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('areas');
+    }
+    
+    public function pdf()
+    {
+            
+
+        $areas= Areas::all();
+
+        $pdf = PDF::loadView('Documentos.pdf',['areas'=>$areas]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream(); 
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+    
     }
 }

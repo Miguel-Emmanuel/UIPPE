@@ -19,6 +19,7 @@ $session_area = session('session_area');
             <h3>Áreas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
+            <a href="{{route('pdf')}}"><button type="button" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i>PDF</button>
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">

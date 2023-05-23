@@ -81,6 +81,7 @@ Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);
 
 Route::name('editArea')->put('editArea/{id}', [AreasController::class, 'edit']);
 Route::name('deleteArea')->put('deleteArea/{id}',[AreasController::class, 'destroy']);
+Route::name('pdf')->get('pdf',[AreasController::class, 'pdf']);
 
 Route::name('editUsuario')->put('editUsuario/{id}', [UsuariosController::class, 'edit']);
 Route::name('deleteUsers')->put('deleteUsers/{id}',[UsuariosController::class, 'destroy']);
@@ -102,6 +103,9 @@ Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('a
 Route::name('registros') -> get('registros', [GraficosController::class, 'registros']);
 Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);
+Route::name('rpdf')->get('rpdf',[GraficosController::class, 'rpdf']);
+
+
 //Graficos controller end
 
 //////////////////////////////////////////CORREOS///////////////////////////////////////////////////////////////////////////

@@ -12,6 +12,8 @@ $session_tipo = session('session_tipo');
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
             <li class="breadcrumb-item" aria-current="page">Gráficos</li>
+
+
         </ol>
     </nav>
     @else
@@ -22,7 +24,8 @@ $session_tipo = session('session_tipo');
         </div>
         @if($session_id)
         <div class="col p-4 d-flex justify-content-end">
-            <button type="button" class="btn btn-danger" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-regular fa-file-pdf"></i></button>&nbsp;&nbsp;
+
+
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-regular fa-file-excel"></i></button>
         </div>
         @else
@@ -34,18 +37,21 @@ $session_tipo = session('session_tipo');
         <h5>Graficas de Muestra </h5>
         <div class="container p-1">
             <div id="my-div">
-                <button onclick="mostrarContenido('contenido4')">Areas Activas o Inactivas</button>
+                <button onclick="mostrarContenido('contenido4')">Metas asignadas por areas</button>
                 <button onclick="mostrarContenido('contenido5')">Programas Metas</button>
-                <button onclick="mostrarContenido('contenido6')">Usuarios Tipos</button>
+                <button onclick="mostrarContenido('contenido6')">Usuarios Puestos</button>
+                <button onclick="location.reload()">Cerrar</button>
             </div>
+            
 
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
                 <div class="card border-light mb-3" style="max-width: 34rem;">
                     <div id="contenido4" style="display:none;">
                         <!-- Aquí va el contenido 1 -->
-                        <canvas id="GraficoAreas" width="600" height="400"></canvas>
+                        <canvas id="GraficoMetasAreas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <button onclick="location.reload()">Cerrar</button>
+                            <center><button onclick="generatePDF()">Generar PDF</button></center>
+
                         </div>
                     </div>
                 </div>
@@ -56,7 +62,6 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaProgamasMetas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <button onclick="location.reload()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -67,7 +72,6 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaUsuarioPuesto" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <button onclick="location.reload()">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -80,6 +84,8 @@ $session_tipo = session('session_tipo');
                     <button onclick="mostrarContenido('contenido1')">Febrero</button>
                     <button onclick="mostrarContenido('contenido2')">Marzo</button>
                     <button onclick="mostrarContenido('contenido3')">Trimestral</button>
+                    <button onclick="location.reload()">Cerrar</button>
+
                 </div>
 
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
@@ -88,7 +94,6 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="bar-chart-enero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                                <button onclick="location.reload()">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -99,7 +104,6 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="bar-chart-febrero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                                <button onclick="location.reload()">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +114,6 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="bar-chart-Marzo" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                                <button onclick="location.reload()">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -121,8 +124,7 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="bar-chart-trimestral" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                                <button onclick="location.reload()">Cerrar</button>
-                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,10 +165,9 @@ $session_tipo = session('session_tipo');
                 @endif
             </div>
 
-            -------------------------------------------------Graficas de
-
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha512-OD9Gn6cAUQezuljS6411uRFr84pkrCtw23Hl5TYzmGyD0YcunJIPSBDzrV8EeCiFxGWWvtJOfVo5pOgB++Jsag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
 
 
             <!-- ------------------------Mostar el contenido de las tablas Enero,Febrero,Marzo y Trimestral-------------------------- -->
@@ -381,27 +382,36 @@ $session_tipo = session('session_tipo');
             <!-- -----------------------------------------------Script para modificar la grafica de areas------------------------------------------------ -->
 
             <script>
-                new Chart(document.getElementById("GraficoAreas"), {
+                const bgColor= {
+    id: 'bgColor',
+    beforeDraw:(chart,options) =>{
+        const{ ctx,  width, height} = chart;
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, width, height)
+        ctx.restore();
+    }
+}
+                new Chart(document.getElementById("GraficoMetasAreas"), {
                     type: 'pie',
                     data: {
                         labels: [
 
-                            @foreach($areas_a as $area)
+                            @foreach($areasmetas as $am)
 
-                            "{{ $area  -> activo }}",
+                            "{{ $am -> nombre }}",
 
                             @endforeach
                         ],
                         datasets: [{
-                            label: "El area se encuentra activa o inactiva",
+                            label: "Areas y las metas registradas",
                             backgroundColor: [
-                                @foreach($areas as $area)
+                                @foreach($areasmetas as $am)
                                 "#" + Math.floor(Math.random() * 16777215).toString(16),
                                 @endforeach
                             ],
                             data: [
-                                @foreach($areas as $area)
-                                "{{ $area -> cantidad}}",
+                                @foreach($areasmetas as $am)
+                                "{{ $am -> meta }}",
 
                                 @endforeach
                             ]
@@ -420,12 +430,31 @@ $session_tipo = session('session_tipo');
                         },
                         title: {
                             display: true,
-                            text: 'Areas activas o inactivas'
+                            text: 'Areas y sus metas registradas'
                         }
 
-                    }
+                    },
+                        plugins: [bgColor]
 
                 });
+                const GraficoMetasAreas = new Chart(
+                    document.getElementById('GraficoMetasAreas'),
+                    config
+                );
+
+                function generatePDF() {
+                    const canvas = document.getElementById('GraficoMetasAreas');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF();
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 150, 150);
+
+                    pdf.save("GraficoMetasAreas.pdf")
+
+                }
             </script>
 
             <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
@@ -479,7 +508,7 @@ $session_tipo = session('session_tipo');
             <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
             <script>
                 new Chart(document.getElementById("GraficaUsuarioPuesto"), {
-                    type: 'bar',
+                    type: 'pie',
                     data: {
                         labels: [
 
