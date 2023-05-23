@@ -37,9 +37,9 @@ $session_area = session('session_area');
                 <i class='bx bxs-rectangle text-danger mx-3 my-1'></i>
                 <p>Meta sin registro eficiente</p>
             </div>
-        <div class="table-responsive my-3">
+        <div class="table-responsive my-4">
             <table class="table" id="metas">
-                <thead class="table-group-divider">
+                <thead class="table-light">
                     <!-- Campos en tabla metas -->
                     <tr>
                         <th class="text-center">Clave</th>
@@ -49,7 +49,7 @@ $session_area = session('session_area');
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="table-group-divider">
+                <tbody>
                     <!-- Regitros en tabla metas -->
                     @foreach($areasmetas as $meta)
                         @if($session_area == $meta->area_id)
@@ -398,6 +398,17 @@ $session_area = session('session_area');
             "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
             ordering: false,
             info: false,
+            language:{
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "zeroRecords": "Sin resultados encontrados",
+            }
         });
     });
 </script>
