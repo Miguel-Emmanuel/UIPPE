@@ -97,6 +97,8 @@ Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
+
+Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController::class, 'update']);
 // Metodos Edit y Delete end
 
 //Graficos controller start
@@ -117,7 +119,9 @@ Route::name('reset')->get('reset', [CorreosController::class, 'reset'])->middlew
 Route::name('passwordc')->get('passwordc', [CorreosController::class, 'passwordc']);
 
 Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
-
+Route::name('correo')->get('correo', function(){
+   return view('mails.correos');
+});
 ///////////////////////////////////////////SELECTS////////////////////////////////////////////////////////////////////////
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);

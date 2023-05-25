@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('clave', 30)->nullable();
             $table->text('nombre');
             $table->text('descripcion')->nullable();
-            $table->text('unidadmedida');
+            $table->text('unidadmedida')->nullable();
             $table->integer('programa_id')->unsigned();
             $table->foreign('programa_id')->references('id_programa')->on('tb_programas');
             $table->boolean('activo');

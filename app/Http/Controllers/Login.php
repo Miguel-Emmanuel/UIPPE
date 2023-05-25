@@ -21,7 +21,8 @@ class Login extends Controller
         return view('sesiones/login');
     }
 
-    public function registrate(Request $request){
+    public function registrate(Request $request)
+    {
         return view('sesiones.register');
     }
 
@@ -34,37 +35,36 @@ class Login extends Controller
             ->where('pass', '=', $pass)
             ->get();
 
-        $area = AreasUsuarios::where('usuario_id', '=', $consulta[0]->id_usuario)
-            ->get();
-
-        
-        if (count($consulta)==0 or $consulta[0]->activo == '0') {
+        if (count($consulta) == 0 or $consulta[0]->activo == '0') {
             return redirect('login');
         } else {
-            $request->session()->put('session_id', $consulta[0]->id_usuario);
-            $request->session()->put('session_name', $consulta[0]->nombre.' '.$consulta[0]->app.' '.$consulta[0]->apm);
-            $request->session()->put('session_nombre', $consulta[0]->nombre);
-            $request->session()->put('session_app', $consulta[0]->app);
-            $request->session()->put('session_apm', $consulta[0]->apm);
-            $request->session()->put('genero', $consulta[0]->gen);
-            $request->session()->put('email', $consulta[0]->email);
-            $request->session()->put('academico', $consulta[0]->academico);
-            $request->session()->put('fn', $consulta[0]->fn);
-            $request->session()->put('session_tipo', $consulta[0]->id_tipo);
+                
+            $area = AreasUsuarios::where('usuario_id', '=', $consulta[0]->id_usuario)
+            ->get();
 
-            if($consulta[0] -> id_tipo == 3){
-                if(count($area) == 0){
+            if ($consulta[0]->id_tipo == 3 && count($area) == 0) {
+                return redirect('login');
+            } else {
+                $request->session()->put('session_id', $consulta[0]->id_usuario);
+                $request->session()->put('session_name', $consulta[0]->nombre . ' ' . $consulta[0]->app . ' ' . $consulta[0]->apm);
+                $request->session()->put('session_nombre', $consulta[0]->nombre);
+                $request->session()->put('session_app', $consulta[0]->app);
+                $request->session()->put('session_apm', $consulta[0]->apm);
+                $request->session()->put('genero', $consulta[0]->gen);
+                $request->session()->put('email', $consulta[0]->email);
+                $request->session()->put('academico', $consulta[0]->academico);
+                $request->session()->put('fn', $consulta[0]->fn);
+                $request->session()->put('session_tipo', $consulta[0]->id_tipo);
 
-                }else{
-                    $request->session()->put('session_area', $area[0] -> area_id);
+                if ($consulta[0]->id_tipo != 3) {
+                    $request->session()->put('session_area', 0);
+                } else {
+                    $request->session()->put('session_area', $area[0]->area_id);
                 }
-            }else{
-                $request->session()->put('session_area', 0);
-            }
+                $request->session()->put('session_foto', $consulta[0]->foto);
 
-            $request->session()->put('session_foto', $consulta[0]->foto);
-            
-            return redirect('dashboard');
+                return redirect('dashboard');
+            }
         }
     }
 
@@ -83,9 +83,10 @@ class Login extends Controller
         return redirect('login');
     }
 
-    public function cuser(){
+    public function cuser()
+    {
         $user = Usuarios::all();
-        return $user;   
+        return $user;
     }
 
     public function editView(Request $request)
@@ -125,25 +126,25 @@ class Login extends Controller
             $foto2 = $query->foto;
         }
 
-        $query -> email = trim($request -> email);
-        $query -> nombre = trim($request -> nombre);
-        $query -> app = trim($request -> app);
-        $query -> apm = trim($request -> apm);
-        $query -> gen = $request -> genero;
-        $query -> fn = $request -> fn;
-        $query -> foto = $foto2;
-        $query -> academico = trim($request -> academico);
+        $query->email = trim($request->email);
+        $query->nombre = trim($request->nombre);
+        $query->app = trim($request->app);
+        $query->apm = trim($request->apm);
+        $query->gen = $request->genero;
+        $query->fn = $request->fn;
+        $query->foto = $foto2;
+        $query->academico = trim($request->academico);
         $query->save();
 
-        $request -> session()->put('email', trim($request -> email));
-        $request -> session()->put('session_nombre', trim($request -> nombre));
-        $request -> session()->put('session_app', trim($request -> app));
-        $request -> session()->put('session_apm', trim($request -> apm));
-        $request -> session()->put('session_name', trim($request -> nombre).' '.trim($request -> app).' '.trim($request -> apm));
-        $request -> session()->put('genero', trim($request -> genero));
-        $request -> session()->put('session_foto', $foto2);
-        $request -> session()->put('fn', trim($request -> fn));
-        $request -> session()->put('academico', trim($request -> academico));
+        $request->session()->put('email', trim($request->email));
+        $request->session()->put('session_nombre', trim($request->nombre));
+        $request->session()->put('session_app', trim($request->app));
+        $request->session()->put('session_apm', trim($request->apm));
+        $request->session()->put('session_name', trim($request->nombre) . ' ' . trim($request->app) . ' ' . trim($request->apm));
+        $request->session()->put('genero', trim($request->genero));
+        $request->session()->put('session_foto', $foto2);
+        $request->session()->put('fn', trim($request->fn));
+        $request->session()->put('academico', trim($request->academico));
 
         return redirect('perfil');
     }

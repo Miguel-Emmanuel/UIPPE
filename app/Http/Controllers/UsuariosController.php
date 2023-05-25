@@ -21,7 +21,7 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
 
-         $rules = [
+        $rules = [
             'clave' => 'required',
             'nombre' => 'required',
             'app' => 'required',
@@ -39,7 +39,6 @@ class UsuariosController extends Controller
 
         $this->validate($request, $rules, $message);
         
-
         if ($request->file('foto')  !=  '') {
             $file = $request->file('foto');
             $foto1 = $file->getClientOriginalName();

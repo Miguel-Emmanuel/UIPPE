@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/virtual-select.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
+    @yield('dataTablesCss')
 </head>
 <?php
 $session_id = session('session_id');
@@ -43,17 +44,17 @@ $session_area = session('session_area');
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
-                    @if($session_area != "")
-                    <a href="registros" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
-                    @else
-                    @endif
-                    <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Reportes</span> </a>
-                    @if($session_area != "")
-                    <a href="calendario" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
-                    @else
-                    @endif
-                    <a href="perfil" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
-                    @else
+                        @if($session_area != "")
+                            <a href="registros" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
+                        @endif
+                        <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Reportes</span> </a>
+                        @if($session_area != "")
+                            <a href="calendario" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
+                        @endif
+                        @if($session_tipo == 1 || $session_tipo == 2)
+                            <a href="correo" class="nav_link"> <i class="bx bx-envelope nav_icon"></i> <span class="nav_name">Correo</span></a>
+                        @endif
+                        <a href="perfil" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                     @endif
                 </div>
             </div>
@@ -77,7 +78,8 @@ $session_area = session('session_area');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/3aafa2d207.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
-    <script src="{{ asset('js/menu.js') }}"></script>
+    @yield('dataTablesJs')
+    <script src="{{ asset('js/menu.js') }}"></script>  
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
     <script>
         (function($) {

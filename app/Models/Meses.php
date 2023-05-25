@@ -11,20 +11,21 @@ class Meses extends Model
     protected $table = 'tb_meses';
     protected $primaryKey = 'id_meses';
     protected $fillable = [
-        'Enero',
-        'Febrero',
-        'Marzo',
-        'Abril',
-        'Mayo',
-        'Junio',
-        'Julio',
-        'Agosto',
-        'Septiembre',
-        'Octubre',
-        'Noviembre',
-        'Diciembre',
-        'year',
-        'fecha'
+        'm_enero',
+        'm_febrero',
+        'm_marzo',
+        'm_abril',
+        'm_mayo',
+        'm_junio',
+        'm_julio',
+        'm_agosto',
+        'm_septiembre',
+        'm_octubre',
+        'm_noviembre',
+        'm_diciembre',
+        'm_cantidad',
+        'm_year',
+        'm_fecha'
     ];
 
     public function Calendarizars() {
