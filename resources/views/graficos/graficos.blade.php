@@ -42,7 +42,7 @@ $session_tipo = session('session_tipo');
                 <button onclick="mostrarContenido('contenido6')">Usuarios Puestos</button>
                 <button onclick="location.reload()">Cerrar</button>
             </div>
-            
+
 
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
                 <div class="card border-light mb-3" style="max-width: 34rem;">
@@ -50,9 +50,9 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficoMetasAreas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <center><button onclick="generatePDF()">Generar PDF</button></center>
-
+                            <center><button onclick="generatePDF()" class="image-button">Generar PDF</button></center>
                         </div>
+                        <button class="image-button"></button>
                     </div>
                 </div>
             </div>
@@ -62,6 +62,7 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaProgamasMetas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
+                        <center><button onclick="generatePMPDF()">Generar PDF</button></center>
                         </div>
                     </div>
                 </div>
@@ -72,6 +73,8 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaUsuarioPuesto" width="600" height="400"></canvas>
                         <div id="my-cerrar">
+                        <center><button onclick="generateUPPDF()">Generar PDF</button></center>
+
                         </div>
                     </div>
                 </div>
@@ -92,8 +95,10 @@ $session_tipo = session('session_tipo');
                     <div class="card border-light mb-3" style="max-width: 34rem;">
                         <div id="contenido0" style="display:none;">
                             <!-- Aquí va el contenido 1 -->
-                            <canvas id="bar-chart-enero" width="600" height="400"></canvas>
+                            <canvas id="Enero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
+                            <center><button onclick="generateEPDF()">Generar PDF</button></center>
+
                             </div>
                         </div>
                     </div>
@@ -102,8 +107,10 @@ $session_tipo = session('session_tipo');
                     <div class="card border-light mb-3" style="max-width: 34rem;">
                         <div id="contenido1" style="display:none;">
                             <!-- Aquí va el contenido 1 -->
-                            <canvas id="bar-chart-febrero" width="600" height="400"></canvas>
+                            <canvas id="Febrero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
+                            <center><button onclick="generateFPDF()">Generar PDF</button></center>
+
                             </div>
                         </div>
                     </div>
@@ -112,8 +119,10 @@ $session_tipo = session('session_tipo');
                     <div class="card border-light mb-3" style="max-width: 34rem;">
                         <div id="contenido2" style="display:none;">
                             <!-- Aquí va el contenido 1 -->
-                            <canvas id="bar-chart-Marzo" width="600" height="400"></canvas>
+                            <canvas id="Marzo" width="600" height="400"></canvas>
                             <div id="my-cerrar">
+                            <center><button onclick="generateMPDF()">Generar PDF</button></center>
+
                             </div>
                         </div>
                     </div>
@@ -122,8 +131,9 @@ $session_tipo = session('session_tipo');
                     <div class="card border-light mb-3" style="max-width: 34rem;">
                         <div id="contenido3" style="display:none;">
                             <!-- Aquí va el contenido 1 -->
-                            <canvas id="bar-chart-trimestral" width="600" height="400"></canvas>
+                            <canvas id="Trimestral" width="600" height="400"></canvas>
                             <div id="my-cerrar">
+                            <center><button onclick="generateTPDF()">Generar PDF</button></center>
                             </div>
                         </div>
                     </div>
@@ -178,15 +188,6 @@ $session_tipo = session('session_tipo');
                     document.getElementById('contenido1').style.display = 'none';
                     document.getElementById('contenido2').style.display = 'none';
                     document.getElementById('contenido3').style.display = 'none';
-
-                    // Mostrar el contenido correspondiente al botón presionado
-                    document.getElementById(id).style.display = 'block';
-                }
-            </script>
-            <!-- -----------------------------------------------------Mostrar contenido de graficas Muestra------------------- -->
-            <script>
-                function mostrarContenido(id) {
-                    // Ocultar todos los contenidos
                     document.getElementById('contenido4').style.display = 'none';
                     document.getElementById('contenido5').style.display = 'none';
                     document.getElementById('contenido6').style.display = 'none';
@@ -195,14 +196,30 @@ $session_tipo = session('session_tipo');
                     document.getElementById(id).style.display = 'block';
                 }
             </script>
+            <!-- -----------------------------------------------------Mostrar contenido de graficas Muestra------------------- -->
+
 
 
 
 
 
             <!-- -----------------------------------------------Script para modificar la grafica de trimestral------------------------------------------------ -->
-            <script>
-                new Chart(document.getElementById("bar-chart-trimestral"), {
+            <script> 
+            const bgTColor = {
+                    id: 'bgTColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+                
+                new Chart(document.getElementById("Trimestral"), {
                     type: 'bar',
                     data: {
                         labels: [
@@ -211,7 +228,7 @@ $session_tipo = session('session_tipo');
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Mes de el año",
+                         
                             backgroundColor: [
                                 @foreach($programas as $programa)
                                 '#' + Math.floor(Math.random() * 16777215).toString(16),
@@ -240,23 +257,56 @@ $session_tipo = session('session_tipo');
                             text: 'Metas registradas por mes'
                         }
 
-                    }
+                    },
+                    plugins: [bgTColor],
 
                 });
+
+                const GraficoTrimestral = new Chart(
+                    document.getElementById('Trimestral'),
+                    config
+                );
+
+                function generateTPDF() {
+                    const canvas = document.getElementById('Trimestral');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoTrimestral.pdf")
+
+                }
             </script>
 
             <!-- ------------------------------------------------Script para la grafica de el mes de enero----------------------------------------------------------- -->
             <script>
-                new Chart(document.getElementById("bar-chart-enero"), {
+                const bgsColor = {
+                    id: 'bgsColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+                new Chart(document.getElementById("Enero"), {
                     type: 'bar',
                     data: {
-                        labels: [
+                        labels: [   
                             @foreach($eneroDias as $dias)
-                            "{{ $dias  -> dia }}",
+                            "{{ "Dia: " .$dias  -> dia  }}",
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Programas registrados",
+                           
                             backgroundColor: [
                                 @foreach($eneroDias as $dias)
                                 '#' + Math.floor(Math.random() * 16777215).toString(16),
@@ -285,22 +335,54 @@ $session_tipo = session('session_tipo');
                             text: 'Programas registrados en Enero (Por Dia)'
                         }
 
-                    }
+                    },  
+                    plugins: [bgsColor],
 
                 });
+
+                const GraficoEnero = new Chart(
+                    document.getElementById('Enero'),
+                    config
+                );
+
+                function generateEPDF() {
+                    const canvas = document.getElementById('Enero');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoEnero.pdf")
+
+                }
             </script>
             <!-- ------------------------------------------------Script para la grafica de el mes de febrero----------------------------------------------------------- -->
             <script>
-                new Chart(document.getElementById("bar-chart-febrero"), {
+              const bgFColor = {
+                    id: 'bgFColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+                new Chart(document.getElementById("Febrero"), {
                     type: 'bar',
                     data: {
                         labels: [
                             @foreach($febreroDias as $dias)
-                            "{{ $dias  -> dia }}",
+                            "{{ "Dia". $dias  -> dia }}",
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Programas registrados",
                             backgroundColor: [
                                 @foreach($febreroDias as $dias)
                                 '#' + Math.floor(Math.random() * 16777215).toString(16),
@@ -329,13 +411,46 @@ $session_tipo = session('session_tipo');
                             text: 'Programas registrados en Febrero (Por Dia)'
                         }
 
-                    }
-
+                    },
+                    plugins: [bgFColor],
+                 
                 });
+                const GraficoFebrero = new Chart(
+                    document.getElementById('Febrero'),
+                    config
+                );
+
+                function generateFPDF() {
+                    const canvas = document.getElementById('Febrero');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoFebrero.pdf")
+
+                }
+               
             </script>
             <!-- ------------------------------------------------Script para la grafica de el mes de Marzo----------------------------------------------------------- -->
             <script>
-                new Chart(document.getElementById("bar-chart-Marzo"), {
+                const bgMColor = {
+                    id: 'bgMColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+                new Chart(document.getElementById("Marzo"), {
                     type: 'bar',
                     data: {
                         labels: [
@@ -344,7 +459,7 @@ $session_tipo = session('session_tipo');
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Programas registrados",
+                            
                             backgroundColor: [
                                 @foreach($marzoDias as $dias)
                                 '#' + Math.floor(Math.random() * 16777215).toString(16),
@@ -373,24 +488,48 @@ $session_tipo = session('session_tipo');
                             text: 'Programas registrados en Marzo (Por Dia)'
                         }
 
-                    }
+                    },
+                    plugins: [bgMColor],
 
                 });
+
+                const GraficoMarzo = new Chart(
+                    document.getElementById('Marzo'),
+                    config
+                );
+
+                function generateMPDF() {
+                    const canvas = document.getElementById('Marzo');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoMarzo.pdf")
+
+                }
             </script>
 
 
             <!-- -----------------------------------------------Script para modificar la grafica de areas------------------------------------------------ -->
 
             <script>
-                const bgColor= {
-    id: 'bgColor',
-    beforeDraw:(chart,options) =>{
-        const{ ctx,  width, height} = chart;
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, width, height)
-        ctx.restore();
-    }
-}
+                const bgColor = {
+                    id: 'bgColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
                 new Chart(document.getElementById("GraficoMetasAreas"), {
                     type: 'pie',
                     data: {
@@ -398,12 +537,12 @@ $session_tipo = session('session_tipo');
 
                             @foreach($areasmetas as $am)
 
-                            "{{ $am -> nombre }}",
+                            "{{ $am -> nombre. " | " .$am ->meta. " Metas " }}",
+                            
 
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Areas y las metas registradas",
                             backgroundColor: [
                                 @foreach($areasmetas as $am)
                                 "#" + Math.floor(Math.random() * 16777215).toString(16),
@@ -424,17 +563,9 @@ $session_tipo = session('session_tipo');
                                     beginAtZero: true
                                 }
                             }]
-                        },
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Areas y sus metas registradas'
                         }
-
                     },
-                        plugins: [bgColor]
+                    plugins: [bgColor],
 
                 });
                 const GraficoMetasAreas = new Chart(
@@ -447,10 +578,10 @@ $session_tipo = session('session_tipo');
 
                     const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
 
-                    let pdf = new jsPDF();
+                    let pdf = new jsPDF('landscape');
 
                     pdf.setFontSize(20);
-                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 150, 150);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
 
                     pdf.save("GraficoMetasAreas.pdf")
 
@@ -463,10 +594,8 @@ $session_tipo = session('session_tipo');
                     type: 'bar',
                     data: {
                         labels: [
-
                             @foreach($programas as $programa)
-                            "{{ $programa -> abreviatura}}",
-
+                            "{{ $programa -> abreviatura}}",    
                             @endforeach
                         ],
                         datasets: [{
