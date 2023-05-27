@@ -26,19 +26,75 @@ $session_area = session('session_area');
             <h3>Calendario Meta</h3>
         </div>
             <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
+                <i class='bx bxs-rectangle mx-3 my-1' style="color: #8b67cc;"></i>
+                <p>Registro en meses mayor a la cantidad</p>
+            </div>
+            <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
                 <i class='bx bxs-rectangle text-success mx-3 my-1'></i>
                 <p>Meta completada</p>
             </div>
-            <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
-                <i class='bx bxs-rectangle text-warning mx-3 my-1'></i>
-                <p>Meta por completar</p>
-            </div>
-            <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
-                <i class='bx bxs-rectangle text-danger mx-3 my-1'></i>
-                <p>Meta sin registro eficiente</p>
-            </div>
+        <!-- Tabla de metas completadas -->
         <div class="table-responsive my-4">
-            <table class="table" id="metas">
+            <table class="table" id="metasComp">
+                <thead class="table-light">
+                    <!-- Campos en tabla metas -->
+                    <tr>
+                        <th class="text-center">Clave</th>
+                        <th>Programa</th>
+                        <th>Meta</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Regitros en tabla metas -->
+                    @foreach($areasconMeses as $meta)
+                        @if($session_area == $meta->area_id)
+                            @if($meta->meses_c >= $meta->cantidad_c)
+                            <tr id="tr{{ $meta -> id_areasmetas }}" style="background-color: #dc3545; color: white;">
+                                <td class="text-center">{{ $meta -> id_areasmetas }}</td>
+                                <td>{{ $meta -> nombrePA }}</td>
+                                <td>{{$meta->nombreM}}</td>
+                                <td>
+                                    <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                </td>
+                                <!-- Button calendar modal -->
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
+                                </td>
+                            </tr>
+                            @endif
+                        @elseif($session_area == 0)
+                            @if($meta->meses_c >= $meta->cantidad_c)
+                            <tr id="tr{{ $meta -> id_areasmetas }}" style="background-color: #dc3545; color: white;">
+                                <td class="text-center">{{ $meta -> id_areasmetas }}</td>
+                                <td>{{ $meta -> nombrePA }}</td>
+                                <td>{{$meta->nombreM}}</td>
+                                <td>
+                                    <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                </td>
+                                <!-- Button calendar modal -->
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
+                                </td>
+                            </tr>
+                            @endif
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
+            <i class='bx bxs-rectangle text-warning mx-3 my-1'></i>
+            <p>Meta por completar</p>
+        </div>
+        <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
+            <i class='bx bxs-rectangle text-danger mx-3 my-1'></i>
+            <p>Meta sin registro eficiente</p>
+        </div>
+        <!-- Tabla de metas por completar -->
+        <div class="table-responsive my-4">
+            <table class="table" id="metasSin">
                 <thead class="table-light">
                     <!-- Campos en tabla metas -->
                     <tr>
@@ -205,7 +261,7 @@ $session_area = session('session_area');
                 <input class="form-control" type="hidden" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
                 <input class="form-control" type="hidden" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="save{{ $meta->id_areasmetas }}">Guardar</button>
             </div>
             </form>
         </div>
@@ -225,6 +281,12 @@ $session_area = session('session_area');
         for(var i=0; i<12; i++){
             input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
+        }
+        if(parseInt(sumaT) < document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary disabled";
+        }else if(sumaT >= document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary";
+        }else{
             
         }
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
@@ -325,7 +387,7 @@ $session_area = session('session_area');
                 <input class="form-control" type="text" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
                 <input class="form-control" type="text" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="save{{ $meta->id_areasmetas }}">Guardar</button>
             </div>
             </form>
         </div>
@@ -350,10 +412,18 @@ $session_area = session('session_area');
         for(var i=0; i<12; i++){
             input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
-            
         }
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT;
+
+        if(parseInt(sumaT) < document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary disabled";
+        }else if(sumaT >= document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary";
+        }else{
+            
+        }
+
     };
 
 </script>
@@ -394,7 +464,23 @@ $session_area = session('session_area');
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#metas').DataTable({
+        $('#metasSin').DataTable({
+            "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
+            ordering: false,
+            info: false,
+            language:{
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "zeroRecords": "Sin resultados encontrados",
+            }
+        });
+        $('#metasComp').DataTable({
             "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
             ordering: false,
             info: false,
@@ -420,7 +506,7 @@ $session_area = session('session_area');
     
     window.addEventListener('load', () => {
     @foreach($areasconMeses as $areas)
-        document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").value = {{ $areas -> cantidad_c }};
+        document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").setAttribute('value', '{{ $areas -> cantidad_c }}');
         document.getElementById("cantidad{{ $areas->id_areasmetas }}").value = {{ $areas -> cantidad_c }};
         document.getElementById("res{{ $areas->id_areasmetas }}").innerHTML = "/ "+ {{ $areas -> cantidad_c }};
 
@@ -434,7 +520,9 @@ $session_area = session('session_area');
 
         var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
 
-        if({{ $areas -> cantidad_c }} == sumaI{{ $areas->id_areasmetas }}){
+        if({{ $areas->meses_c }} > {{ $areas->cantidad_c }}){
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#8b67cc");
+        }else if({{ $areas -> cantidad_c }} == sumaI{{ $areas->id_areasmetas }}){
             $("#tr{{$areas -> id_areasmetas}}").css("background-color","#198754");
         }else if(sumaI{{ $areas->id_areasmetas }} >= Math.floor({{ $areas -> cantidad_c }}/2)){
             $("#tr{{$areas -> id_areasmetas}}").css("background-color","#ffc107");

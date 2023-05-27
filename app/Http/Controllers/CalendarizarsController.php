@@ -12,13 +12,18 @@ class CalendarizarsController extends Controller
 {
     public function index()
     {
-        $areasmetas = \DB::table('tb_areasmetas')
-        ->join('tb_metas', 'tb_areasmetas.meta_id', '=', 'tb_metas.id_meta')
-        ->join('tb_programas', 'tb_areasmetas.id_programa', '=', 'tb_programas.id_programa')
-        ->select('tb_areasmetas.id_areasmetas', 'tb_areasmetas.area_id', 'tb_metas.nombre AS nombreM', 'tb_programas.abreviatura AS nombrePA')
-        ->orderBy('tb_areasmetas.id_areasmetas')
-        ->get();
-        $areasconMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre as nombreM, program.abreviatura as nombrePA, calend.meses_id, calend.cantidad as cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre
+        $areasmetas = \DB::SELECT('SELECT tb_areasmetas.id_areasmetas, tb_areasmetas.area_id, tb_metas.nombre AS nombreM, tb_programas.abreviatura AS nombrePA
+        FROM tb_areasmetas
+        JOIN tb_metas ON tb_areasmetas.meta_id = tb_metas.id_meta
+        JOIN tb_programas ON tb_areasmetas.id_programa = tb_programas.id_programa
+        WHERE tb_areasmetas.id_areasmetas NOT IN (SELECT areasM.id_areasmetas 
+        FROM tb_areasmetas AS areasM
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas 
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE meses.m_cantidad >= calend.cantidad)
+        ORDER BY tb_areasmetas.id_areasmetas');
+        
+        $areasconMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre as nombreM, program.abreviatura as nombrePA, calend.meses_id, calend.cantidad as cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad as meses_c
         FROM tb_areasmetas as areasM 
             JOIN tb_metas as metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas as program ON program.id_programa = areasM.id_programa
