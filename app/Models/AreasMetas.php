@@ -29,4 +29,9 @@ class AreasMetas extends Model
     {
         return $this->hasMany('App\Models\Metas');
     }
+
+    public function Calendarizars() {
+        return $this->hasMany(Calendarizars::class, 'areameta_id', 'id_areasmetas');
+
+    }
 }
