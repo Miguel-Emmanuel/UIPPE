@@ -109,15 +109,17 @@ Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos'])
 //////////////////////////////////////////CORREOS///////////////////////////////////////////////////////////////////////////
 Route::name('recuperacion')->get('recuperacion', [CorreosController::class, 'recuperar']);
 Route::name('EnviarCorreo')->get('EnviarCorreo', [CorreosController::class, 'EnviarCorreo2']);
-//Route::name('EnviarCorreo')->get('EnviarCorreo', [CorreosController::class, 'EnviarCorreo']);
 
 Route::name('reset')->get('reset', [CorreosController::class, 'reset'])->middleware('signed');
 Route::name('passwordc')->get('passwordc', [CorreosController::class, 'passwordc']);
 
-Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
+Route::name('correo')->get('enviados', [CorreosController::class, 'enviados']);
+Route::name('pcorreo')->get('pcorreo', [CorreosController::class, 'pcorreo']);
+
+/*Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
 Route::name('correo')->get('correo', function(){
    return view('mails.correos');
-});
+});*/
 ///////////////////////////////////////////SELECTS////////////////////////////////////////////////////////////////////////
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
