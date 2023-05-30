@@ -13,7 +13,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
             <li class="breadcrumb-item"><a href="registros">Registros</a></li>
             <li class="breadcrumb-item" aria-current="page">Áreas</li>
-        </ol>
+        </ol> 
     </nav>
     <div class="row">
         <div class="col p-4">
