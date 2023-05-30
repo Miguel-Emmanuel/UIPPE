@@ -9,10 +9,22 @@ class Calendarizars extends Model
 {
     use HasFactory;
     protected $table = 'tb_calendarizars';
-    protected $primaryKey = 'id_entrega';
+    protected $primaryKey = 'id_calendario';
     protected $fillable = [
-        'id_areameta',
-        'fechaentrega',
+        'id_calendario',
+        'areameta_id',
+        'meses_id',
+        'id_registro',
+        'cantidad',
         'activo'
     ];
+
+    public function AreasMetas() {
+        return $this->belongsTo(AreasMetas::class,'areameta_id');
+    }
+
+    public function Meses() {
+        return $this->belongsTo(Meses::class,'meses_id');
+    }
+
 }

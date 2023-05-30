@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use App\Models\Correos;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReestablecerPassword;
 use Illuminate\Support\Facades\DB;
@@ -91,6 +92,13 @@ class CorreosController extends Controller
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    public function enviados(Request $request){
+        $correos = Correos::all();
+        $usuarios = Usuarios::all();
+
+        return view('mails.correos', compact('correos', 'usuarios'));
+    }
+
     public function pcorreo(Request $request){
         /*MULTIPLES DESTINATARIOS*/ 
         /*$emails = ['eduhuwu@gmail.com', 'eduholvera@gmail.com', 'ff_lexus@hotmail.com'];*/
@@ -103,19 +111,37 @@ class CorreosController extends Controller
 
 
         /*FORMULARIO*/
-        /*$data = array(
-            'destinatario'=> $request->input('destinatario'),
+
+        $iddes= $request->input('destinatario');
+
+        $cordes = Usuarios::where('id_usuario', $iddes)->value('email');
+
+        $data = array(
+            'destinatario'=> $cordes,
             'asunto'=> $request->input('asunto'),
             'mensaje'=> $request->input('mensaje'),
-        );*/
+        );
 
-        /*Mail::send('mails.prueba', compact('data'), function($message) use ($data){
-            $message->to('admiuippe@gmail.com','Admin Uippe')
+        /*$destinatario = $request->input('destinatario');
+            $asunto = $request->input('asunto');
+            $mensaje = $request->input('mensaje');*/
+
+        $datos = new Correos;
+        $datos->Destinatario = $cordes;
+        $datos->Asunto = $request->input('asunto');
+        $datos->Contenido = $request->input('mensaje');
+        $datos->Remitente = $request->input('id');
+        $datos->save();
+
+
+        Mail::send('mails.prueba', compact('data'), function($message) use ($data){
+            $message->to($data['destinatario'],'Admin Uippe')
                 ->subject($data['asunto']);
             $message->from('hello@example.com', 'Eduardoh');
-        });*/
+        });
 
 
+        return redirect('enviados');
         //return view('mails.prueba', compact('data'));
 
 

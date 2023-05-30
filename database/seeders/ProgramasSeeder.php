@@ -33,8 +33,8 @@ class ProgramasSeeder extends Seeder
 
         $programa = new Programas();
         $programa->abreviatura = 'PIDE';
-        $programa->nombre = 'Plan Institucional de Desarrollo';
-        $programa->descripcion = 'Plan Institucional de Desarrollo';
+        $programa->nombre = 'Programa Institucional de Desarrollo';
+        $programa->descripcion = 'Programa Institucional de Desarrollo';
         $programa->activo = '1';
         $programa->id_registro = '1';
         $programa->save();
