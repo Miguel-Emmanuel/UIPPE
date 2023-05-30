@@ -63,7 +63,7 @@ $session_area = session('session_area');
         <div class="col-xl-6 col-md-6 mb-4 py-2">
                 <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                     <div class="card-body">
-                        <a href="correo">
+                        <a href="enviados">
                             <div class="row no-gutters align-items-center" style="color: cadetblue;">
                                 <div class="col-12 text-center py-5">
                                 <i class='bx bx-envelope bx-lg'></i>

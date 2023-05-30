@@ -42,7 +42,8 @@ $session_area = session('session_area');
                         <th class="text-center">Clave</th>
                         <th>Programa</th>
                         <th>Meta</th>
-                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Cantidad Alcanzada</th>
+                        <th class="text-center">Cantidad Establecida</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -55,6 +56,9 @@ $session_area = session('session_area');
                                 <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                                 <td>{{ $meta -> nombrePA }}</td>
                                 <td>{{$meta->nombreM}}</td>
+                                <td>
+                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
+                                </td>
                                 <td>
                                     <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                                 </td>
@@ -70,6 +74,9 @@ $session_area = session('session_area');
                                 <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                                 <td>{{ $meta -> nombrePA }}</td>
                                 <td>{{$meta->nombreM}}</td>
+                                <td>
+                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
+                                </td>
                                 <td>
                                     <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                                 </td>
@@ -101,7 +108,8 @@ $session_area = session('session_area');
                         <th class="text-center">Clave</th>
                         <th>Programa</th>
                         <th>Meta</th>
-                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Cantidad Alcanzada</th>
+                        <th class="text-center">Cantidad Establecida</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -113,6 +121,9 @@ $session_area = session('session_area');
                             <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
+                            <td>
+                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
+                            </td>
                             <td>
                                 <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                             </td>
@@ -126,6 +137,9 @@ $session_area = session('session_area');
                             <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
+                            <td>
+                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
+                            </td>
                             <td>
                                 <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
                             </td>
@@ -518,6 +532,7 @@ $session_area = session('session_area');
             sumaI{{ $areas->id_areasmetas }} = parseInt(sumaI{{ $areas->id_areasmetas }})+parseInt(input{{ $areas->id_areasmetas }}[i]);
         }
 
+        document.querySelector("#cantAlcanzada{{ $areas->id_areasmetas }}").innerHTML = sumaI{{ $areas->id_areasmetas }};
         var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
 
         if({{ $areas->meses_c }} > {{ $areas->cantidad_c }}){

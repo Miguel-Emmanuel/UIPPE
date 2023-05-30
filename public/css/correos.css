@@ -1,0 +1,6 @@
+@media (min-width: 768px) {
+    .form-group input,
+    .form-group select {
+        width: 25%;
+    }
+}
