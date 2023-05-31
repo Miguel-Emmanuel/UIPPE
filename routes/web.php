@@ -74,7 +74,7 @@ Route::resource('calendarizars', CalendarizarsController::class);
 
 Route::name('multi')->get('multi',  [AreasMetasController::class, 'index']);
 Route::name('calendario')->get('calendario', [CalendarizarsController::class, 'index']);
-
+Route::name('entregaMetas')->get('entregaMetas', [CalendarizarsController::class, 'entregasView']);
 // Metodos Edit y Delete start
 Route::name('deleteMeta')->put('deleteMeta/{id}',[MetasController::class, 'destroy']);
 Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);

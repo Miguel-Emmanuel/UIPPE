@@ -39,6 +39,12 @@ class CalendarizarsController extends Controller
         return view('calendario.index', compact('areasmetas', 'areasconMeses', 'areassinMeses'));
     }
 
+    public function entregasView()
+    {
+        
+        return view('calendario.entregas');
+    }
+
     public function store(Request $request)
     {
         $Enero = intval($request->input('enero'));
