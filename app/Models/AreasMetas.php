@@ -34,4 +34,9 @@ class AreasMetas extends Model
         return $this->hasMany(Calendarizars::class, 'areameta_id', 'id_areasmetas');
 
     }
+
+    public function Entregas() {
+        return $this->hasMany(Entregas::class, 'areameta_id', 'id_areasmetas');
+
+    }
 }
