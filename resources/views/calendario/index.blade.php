@@ -23,15 +23,15 @@ $session_area = session('session_area');
     
     <div class="row">
         <div class="col-12 p-4">
-            <h3>Calendario Meta</h3>
+            <h3>Calendario Metas</h3>
         </div>
             <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
                 <i class='bx bxs-rectangle mx-3 my-1' style="color: #8b67cc;"></i>
-                <p>Registro en meses mayor a la cantidad</p>
+                <p>Cantidad alcanzada mayor a la cantidad establecida</p>
             </div>
             <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
                 <i class='bx bxs-rectangle text-success mx-3 my-1'></i>
-                <p>Meta completada</p>
+                <p>Cantidad Propuesta</p>
             </div>
         <!-- Tabla de metas completadas -->
         <div class="table-responsive my-4">
@@ -442,36 +442,7 @@ $session_area = session('session_area');
 
 </script>
 @endforeach
-
 <!-- MODAL MESES START -->
-
-<!-- MODAL DELETE START -->
-@foreach ($areasmetas as $meta)
-<div class="modal fade" id="deleteModal{{ $meta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar registro | {{ $meta->id_areasmetas }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                ¿Realmente desea eliminar el registro?
-                <p><strong>{{ $meta->nombreM }}</strong></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form action="{{ route('deleteMeta', ['id' => $meta->id_areasmetas]) }}" method="POST" enctype="multipart/form-data">
-                    {{ csrf_field('PATCH') }}
-                    {{ method_field('PUT') }}
-                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-<!-- MODAL DELETE END -->
 
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>

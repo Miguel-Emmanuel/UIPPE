@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AreasMetas;
 use App\Models\Calendarizars;
+use App\Models\Entregas;
 use App\Models\Meses;
 use App\Models\Programas;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class CalendarizarsController extends Controller
             JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
         WHERE meses.m_cantidad >= calend.cantidad)
         ORDER BY tb_areasmetas.id_areasmetas');
-        
+
         $areasconMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre as nombreM, program.abreviatura as nombrePA, calend.meses_id, calend.cantidad as cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad as meses_c
         FROM tb_areasmetas as areasM 
             JOIN tb_metas as metas ON metas.id_meta = areasM.meta_id
@@ -41,8 +42,148 @@ class CalendarizarsController extends Controller
 
     public function entregasView()
     {
-        
-        return view('calendario.entregas');
+        // Info que se muestra en TABLAS y que contiene los registros de las metas que ya tiene una CANTIDAD PROPUESTA en cantidad Anual y mensualmente PERO NO HAN CUMPLIDO CON LA ENTREGA
+        $metasTableS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, calend.cantidad AS cantidad_c
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE areasM.id_areasmetas NOT IN (SELECT areasM.id_areasmetas
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_entregas AS entrega ON entrega.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE meses.m_cantidad >= calend.cantidad AND entrega.cantidad >= meses.m_cantidad)
+        ORDER BY areasM.id_areasmetas');
+
+        // Info que se muestra en MODALES y que contiene los registros de las metas que ya tiene una CANTIDAD PROPUESTA en cantidad Anual y mensualmente PERO NO HAN CUMPLIDO CON LA ENTREGA
+        $metasModalS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.unidadmedida AS medida, calend.cantidad AS cantidadProp_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad AS mesesProp_c
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE areasM.id_areasmetas NOT IN (SELECT areasM.id_areasmetas
+            FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_entregas AS entrega ON entrega.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = entrega.meses_id)
+        ORDER BY areasM.id_areasmetas');
+
+        // Info que se muesta en TABLA SUPERIOR y que contiene los registros de las metas que ya tienen REGISTRO DE ENTREGAS EN MESES Anual y mensualmente
+        $metasCompT = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_entregas AS entrega ON entrega.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE meses.m_cantidad >= calend.cantidad AND entrega.cantidad >= meses.m_cantidad
+        ORDER BY areasM.id_areasmetas');
+
+        //Info que se muestra EN MODALES DE LA TABLA SUPERIOR y que contiene la cantidad mensual de las entregas según la meta
+        $metasCompM = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.unidadmedida AS medida, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad AS cantidad_m
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_entregas AS entrega ON entrega.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = entrega.meses_id
+        WHERE meses.m_cantidad >= entrega.cantidad 
+        ORDER BY areasM.id_areasmetas');
+
+        return view('calendario.entregas', compact('metasTableS', 'metasModalS', 'metasCompT', 'metasCompM'));
+    }
+
+    public function entregaN(Request $request)
+    {
+        $Enero = intval($request->input('enero'));
+        $Febrero = intval($request->input('febrero'));
+        $Marzo = intval($request->input('marzo'));
+        $Abril = intval($request->input('abril'));
+        $Mayo = intval($request->input('mayo'));
+        $Junio = intval($request->input('junio'));
+        $Julio = intval($request->input('julio'));
+        $Agosto = intval($request->input('agosto'));
+        $Sep = intval($request->input('septiembre'));
+        $Octubre = intval($request->input('octubre'));
+        $Nov = intval($request->input('noviembre'));
+        $Dic = intval($request->input('diciembre'));
+        $mCantidad = $Enero + $Febrero + $Marzo + $Abril + $Mayo + $Julio + $Junio + $Agosto + $Sep + $Octubre + $Nov + $Dic;
+
+        Meses::create(array(
+            'm_enero' => $Enero,
+            'm_febrero' => $Febrero,
+            'm_marzo' => $Marzo,
+            'm_abril' => $Abril,
+            'm_mayo' => $Mayo,
+            'm_junio' => $Junio,
+            'm_julio' => $Julio,
+            'm_agosto' => $Agosto,
+            'm_septiembre' => $Sep,
+            'm_octubre' => $Octubre,
+            'm_noviembre' => $Nov,
+            'm_diciembre' => $Dic,
+            'm_year' => date("Y"),
+            'm_cantidad' => $mCantidad,
+            'm_fecha' => date("Y-m-d"),
+        ));
+
+        $meses = \DB::select('SELECT LAST_INSERT_ID() as ultimo');
+
+        Entregas::create(array(
+            'areameta_id' => $request->input('area_meta'),
+            'meses_id' => $meses[0]->ultimo,
+            'id_registro' => $request->input('registro'),
+            'cantidad' => $request->input('cantidad'),
+            'activo' => 1
+        ));
+
+        return redirect('entregaMetas');
+    }
+    public function updateEntrega(Entregas $id, Request $request)
+    {
+        $query = Entregas::find($id->areameta_id);
+        $query2 = Meses::find($query->meses_id);
+
+        $Enero = intval(trim($request->enero));
+        $Febrero = intval(trim($request->febrero));
+        $Marzo = intval(trim($request->marzo));
+        $Abril = intval(trim($request->abril));
+        $Mayo = intval(trim($request->mayo));
+        $Junio = intval(trim($request->junio));
+        $Julio = intval(trim($request->julio));
+        $Agosto = intval(trim($request->agosto));
+        $Sep = intval(trim($request->septiembre));
+        $Octubre = intval(trim($request->octubre));
+        $Nov = intval(trim($request->noviembre));
+        $Dic = intval(trim($request->diciembre));
+        $mCantidad = $Enero + $Febrero + $Marzo + $Abril + $Mayo + $Julio + $Junio + $Agosto + $Sep + $Octubre + $Nov + $Dic;
+
+        $query2->m_enero = $Enero;
+        $query2->m_febrero = $Febrero;
+        $query2->m_marzo = $Marzo;
+        $query2->m_abril = $Abril;
+        $query2->m_mayo = $Mayo;
+        $query2->m_junio = $Junio;
+        $query2->m_julio = $Julio;
+        $query2->m_agosto = $Agosto;
+        $query2->m_septiembre = $Sep;
+        $query2->m_octubre = $Octubre;
+        $query2->m_noviembre = $Nov;
+        $query2->m_diciembre = $Dic;
+        $query2->m_cantidad = $mCantidad;
+        $query2->save();
+
+        $query->id_registro = trim($request->registro);
+        $query->cantidad = intval(trim($request->cantidad));
+        $query->save();
+
+        return redirect('entregaMetas');
     }
 
     public function store(Request $request)
@@ -94,13 +235,8 @@ class CalendarizarsController extends Controller
 
     public function update(Calendarizars $id, Request $request)
     {
-        $query = Calendarizars::find($id->id_calendario);
-        
-        
-
-        //dd($query);
+        $query = Calendarizars::find($id->id_areasmetas);
         $query2 = Meses::find($query->meses_id);
-        //dd($query2);
 
         $Enero = intval(trim($request->enero));
         $Febrero = intval(trim($request->febrero));
