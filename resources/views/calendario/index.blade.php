@@ -33,6 +33,9 @@ $session_area = session('session_area');
                 <i class='bx bxs-rectangle text-success mx-3 my-1'></i>
                 <p>Cantidad Propuesta</p>
             </div>
+            <div class="col p-4 d-flex justify-content-end">
+                <a class="btn btn-success" href="{{ route('entregaMetas') }}">Entrega Metas</a>
+            </div>
         <!-- Tabla de metas completadas -->
         <div class="table-responsive my-4">
             <table class="table" id="metasComp">

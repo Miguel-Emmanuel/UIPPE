@@ -25,7 +25,8 @@ $session_area = session('session_area');
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
-            <li class="breadcrumb-item" aria-current="page">Calendario</li>
+            <li class="breadcrumb-item"><a href="{{ route('calendario') }}">Calendario</a></li>
+            <li class="breadcrumb-item" aria-current="page">Entrega Metas</li>
         </ol>
     </nav>
     
