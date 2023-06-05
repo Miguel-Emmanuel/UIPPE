@@ -6,6 +6,7 @@ $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
+@if($session_area == 0)
 <title>Registros</title>
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -14,7 +15,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item">Registros</li>
         </ol>
     </nav>
-    @if($session_area != "")
+    
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
             <h3 class="text-bold">Registros</h3>
@@ -328,10 +329,21 @@ $session_area = session('session_area');
         @endif
     </div>
     @else
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-        <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-        <p>Para ver el contenido debe tener un área asignada</p>
-    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        var url =  window.location.href;
+        url = url.charAt(url.length -1);
+        var id = "{{ $session_area }}";
+        var tipo = "{{ $session_tipo }}";
+
+        if(tipo == "5"){
+            window.location.replace("{{ route('dashboard')}}");
+        }else if(url != id){
+            window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
+        }
+    });
+</script>
     @endif
 </div>
+
 @endsection

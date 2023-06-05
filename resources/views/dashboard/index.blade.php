@@ -19,11 +19,11 @@ $session_area = session('session_area');
             @else
             @endif
         </div>
-        @if($session_area != "")
+        @if($session_tipo != 5)
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
-                    <a href="registros">
+                    <a href="{{ route('registrosA', ['id' => $session_area]) }}">
                         <div class="row no-gutters align-items-center" style="color: yellowgreen;">
                             <div class="col-12 text-center py-5">
                                 <i class='bx bxs-note bx-lg'></i>
@@ -38,7 +38,6 @@ $session_area = session('session_area');
                 </div>
             </div>
         </div>
-        @else
         @endif
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
@@ -78,7 +77,7 @@ $session_area = session('session_area');
                 </div>
             </div>
         @endif
-        @if($session_area != "")
+        @if($session_tipo != 5)
             <div class="col-xl-6 col-md-6 mb-4 py-2">
                 <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                     <div class="card-body">

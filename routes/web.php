@@ -103,6 +103,7 @@ Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController
 // Metodos Edit y Delete end
 
 //Graficos controller start
+Route::name('registrosA') -> get('registrosA/{id}', [GraficosController::class, 'registrosArea']);
 Route::name('registros') -> get('registros', [GraficosController::class, 'registros']);
 Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);

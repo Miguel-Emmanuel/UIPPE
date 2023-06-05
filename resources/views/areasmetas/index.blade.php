@@ -40,7 +40,7 @@ $session_area = session('session_area');
     </script>
 </head>
 @if($session_id)
-@if($session_area != "")
+@if($session_area == 0)
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -88,17 +88,9 @@ $session_area = session('session_area');
     </div>
 </div>
 @else
-<div class="container p-4">
-    <div class="row">
-        <div class="col p-4">
-            <h3>Áreas | Metas</h3>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido debe tener un área asignada</p>
-        </div>
-    </div>
-</div>
+<script>
+    window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
+</script>
 @endif
 @else
 <div class="container p-4">

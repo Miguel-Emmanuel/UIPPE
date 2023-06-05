@@ -5,12 +5,12 @@ $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
 @if($session_id)
-@if($session_area != "")
+@if($session_area == 0)
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="registros">Registros</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('registrosA', ['id' => $session_area]) }}">Registros</a></li>
             <li class="breadcrumb-item" aria-current="page">Áreas</li>
         </ol>
     </nav>
@@ -35,7 +35,7 @@ $session_area = session('session_area');
                 </thead>
                 <tbody>
                     @foreach($areas as $info)
-                    @if($session_id != 3)
+                    @if($session_area === 0)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->clave}}</td>
@@ -65,7 +65,7 @@ $session_area = session('session_area');
                             @endif
                         </td>
                     </tr>
-                    @elseif($info -> activo > 0)
+                    @elseif($session_area === $info->id_area)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->clave}}</td>
@@ -95,7 +95,6 @@ $session_area = session('session_area');
                             @endif
                         </td>
                     </tr>
-                    @else
                     @endif
                     @endforeach
                 </tbody>
@@ -104,17 +103,9 @@ $session_area = session('session_area');
     </div>
 </div>
 @else
-<div class="container p-4">
-    <div class="row">
-        <div class="col p-4">
-            <h3>Áreas</h3>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido debe tener un área asignada</p>
-        </div>
-    </div>
-</div>
+<script>
+    window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
+</script>
 @endif
 @else
 <div class="container p-4">

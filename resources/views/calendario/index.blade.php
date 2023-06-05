@@ -11,7 +11,7 @@ $session_area = session('session_area');
 ?>
 <title>Calendario</title>
 @if($session_id)
-@if($session_area != "")
+@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)
 
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -93,11 +93,11 @@ $session_area = session('session_area');
         </div>
         <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
             <i class='bx bxs-rectangle text-warning mx-3 my-1'></i>
-            <p>Meta por completar</p>
+            <p>Cantidad por establecer</p>
         </div>
         <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
             <i class='bx bxs-rectangle text-danger mx-3 my-1'></i>
-            <p>Meta sin registro eficiente</p>
+            <p>Cantidad sin registro eficiente</p>
         </div>
         <!-- Tabla de metas por completar -->
         <div class="table-responsive my-4">
@@ -155,19 +155,10 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-
 @else
-<div class="container p-4">
-    <div class="row">
-        <div class="col p-4">
-            <h3>Calendario</h3>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido debe tener un área asignada</p>
-        </div>
-    </div>
-</div>
+<script>
+        window.location.replace("{{ route('dashboard')}}");
+</script>
 @endif
 @else
 <div class="container p-4">
@@ -354,8 +345,8 @@ $session_area = session('session_area');
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-6 col-md-3 col-form-label">Junio:</label>
-                        <div class="col-sm-6 col-md-9">
+                        <label for="colFormLabel" class="col-sm-3 col-form-label">Junio:</label>
+                        <div class="col-sm-9">
                             <input type="number" name="junio" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum5{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Junio">
                         </div>
                     </div>

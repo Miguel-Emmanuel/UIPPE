@@ -19,7 +19,7 @@ $session_area = session('session_area');
 ?>
 <title>Entrega Metas</title>
 @if($session_id)
-@if($session_area != "")
+@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)
 
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -464,17 +464,9 @@ $session_area = session('session_area');
 <!-- Modales CON registros de entrega END -->
 
 @else
-<div class="container p-4">
-    <div class="row">
-        <div class="col p-4">
-            <h3>Entrega Metas</h3>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido debe tener un área asignada</p>
-        </div>
-    </div>
-</div>
+<script>
+        window.location.replace("{{ route('dashboard')}}");
+</script>
 @endif
 @else
 <div class="container p-4">

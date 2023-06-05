@@ -33,6 +33,23 @@ class GraficosController extends Controller
             ->with(['areametas' => $areametas]);
     }
 
+    public function registrosArea($id)
+    {
+        $area_2 = \DB::SELECT('SELECT * FROM tb_areas WHERE id_area = '.$id);
+        if(count($area_2) <= 0){
+            return redirect('registros');
+        }else{
+            $area2 = Areas::find($id);
+        }
+        $area = Areas::find($id);
+        $AreasUsuarios = \DB::select('SELECT COUNT(*) as AreasUsuarios FROM tb_areasusuarios WHERE area_id = '.$id);
+        $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = '.$id);
+        return view('dashboard.registrosA')
+            ->with(['areas' => $area])
+            ->with(['areasusuarios' => $AreasUsuarios])
+            ->with(['areametas' => $areametas]);
+    }
+
 
     public function graficos()
     {
