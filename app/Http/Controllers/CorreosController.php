@@ -85,7 +85,7 @@ class CorreosController extends Controller
                 return redirect('/');
             }else{
                 session()->flash('Error', 'Las contraseñas no coinciden.');
-                return redirect('reset');
+                return redirect()->route('reset');   
             }
     }
 
@@ -137,7 +137,7 @@ class CorreosController extends Controller
         Mail::send('mails.prueba', compact('data'), function($message) use ($data){
             $message->to($data['destinatario'],'Admin Uippe')
                 ->subject($data['asunto']);
-            $message->from('hello@example.com', 'Eduardoh');
+            $message->from('hello@example.com', 'Soporte UIPPE');
         });
 
 
@@ -153,4 +153,9 @@ class CorreosController extends Controller
 
         
     }
+    public function prueba(Request $request){
+        return view('mails/prueba');
+    }
 }
+
+
