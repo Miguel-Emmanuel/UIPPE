@@ -18,4 +18,13 @@ class Areas extends Model
         'activo',
          'id_registro'
     ];
+      /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
+     public function areameta() {
+        return $this->hasOne(AreasMetas::class, 'id', 'programa_id');
+
+    }
+
 }

@@ -11,8 +11,8 @@ class AreasUsuarios extends Model
     protected $table = 'tb_areasusuarios';
     protected $primaryKey = 'id_areasusuarios';
     protected $fillable = [
-        'id_area',
-        'id_usuario',
+        'area_id',
+        'usuario_id',
         'activo',
         'id_registro'
     ];

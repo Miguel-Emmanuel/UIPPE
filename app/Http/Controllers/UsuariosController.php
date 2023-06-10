@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
 use App\Models\Tipos;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
@@ -19,6 +20,25 @@ class UsuariosController extends Controller
    
     public function store(Request $request)
     {
+
+        $rules = [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'app' => 'required',
+            'apm' => 'required',
+            'email' => 'required'
+        ];
+
+        $message = [
+            'clave.required' => 'Las credenciales son invalidas',
+            'nombre.required' => 'Las credenciales son invalidas',
+            'app.required' => 'Las credenciales son invalidas',
+            'apm.required' => 'Las credenciales son invalidas',
+            'email.required' => 'Las credenciales son invalidas'
+        ];
+
+        $this->validate($request, $rules, $message);
+        
         if ($request->file('foto')  !=  '') {
             $file = $request->file('foto');
             $foto1 = $file->getClientOriginalName();
@@ -43,12 +63,11 @@ class UsuariosController extends Controller
             'pass' => "123123", //$request->input('pass'),
             'id_tipo' => $request->input('id_tipo'),
             'activo' => 1,
-            'id_registro' => 1 //$request->input('id_registro'),
+            'id_registro' => $request->input('registro'),
         ));
 
         return redirect('usuarios');
     }
-
 
     public function show($id)
     {
@@ -96,16 +115,23 @@ class UsuariosController extends Controller
         $query->email = trim($request->email);
         $query->id_tipo = $request->id_tipo;
         $query->activo = $activo;
+        $query->id_registro = trim($request->registro);
         $query->save();
 
         return redirect('usuarios');
     }
 
-    public function destroy(Usuarios $id)
+    public function destroy(Usuarios $id, Request $request)
     {
         $query = Usuarios::find($id->id_usuario);
         $query -> activo = 0;
+        $query -> id_registro = trim($request->registro);
         $query -> save();
         return redirect('usuarios');
+    }
+
+    public function perfil()
+    {
+        return view("Usuarios.perfil");
     }
 }

@@ -61,7 +61,11 @@ a {
 }
 
 .header_img img {
-    width: 40px
+    width: 40px;
+}
+
+.header_text{
+    margin-left: auto;
 }
 
 .l-navbar {
@@ -76,7 +80,7 @@ a {
     z-index: var(--z-fixed)
 }
 
-.nav {
+.navSidebar {
     height: 100%;
     display: flex;
     flex-direction: column;

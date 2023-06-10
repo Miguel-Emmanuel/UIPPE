@@ -7,27 +7,24 @@
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET NAMES utf8 */;
 
+/*!40101 SET SQL_MODE=''*/;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`laravel` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
---
--- Base de datos: `laravel`
---
+USE `laravel`;
 
--- --------------------------------------------------------
+/*Table structure for table `failed_jobs` */
 
---
--- Estructura de tabla para la tabla `failed_jobs`
---
+DROP TABLE IF EXISTS `failed_jobs`;
 
 CREATE TABLE `failed_jobs` (
+<<<<<<< HEAD
   `id` BIGINT(20) UNSIGNED NOT NULL,
   `uuid` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `connection` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -36,73 +33,93 @@ CREATE TABLE `failed_jobs` (
   `exception` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+=======
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+>>>>>>> dev_josh
 
--- --------------------------------------------------------
+/*Data for the table `failed_jobs` */
 
---
--- Estructura de tabla para la tabla `migrations`
---
+/*Table structure for table `migrations` */
+
+DROP TABLE IF EXISTS `migrations`;
 
 CREATE TABLE `migrations` (
+<<<<<<< HEAD
   `id` INT(10) UNSIGNED NOT NULL,
   `migration` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+=======
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+>>>>>>> dev_josh
 
---
--- Volcado de datos para la tabla `migrations`
---
+/*Data for the table `migrations` */
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2023_03_04_000248_tb_tipos', 1),
-(6, '2023_03_04_000541_tb_usuarios', 1),
-(7, '2023_03_08_035611_tb_areas', 1),
-(8, '2023_03_08_040229_tb_programas', 1),
-(9, '2023_03_08_040306_tb_metas', 1),
-(10, '2023_03_08_040814_tb_areasusuarios', 1),
-(11, '2023_03_08_041215_tb_areasmetas', 1),
-(12, '2023_03_08_042614_tb_calendarizars', 1);
+insert  into `migrations`(`id`,`migration`,`batch`) values 
+(1,'2014_10_12_000000_create_users_table',1),
+(2,'2014_10_12_100000_create_password_resets_table',1),
+(3,'2019_08_19_000000_create_failed_jobs_table',1),
+(4,'2019_12_14_000001_create_personal_access_tokens_table',1),
+(5,'2023_03_04_000248_tb_tipos',1),
+(6,'2023_03_04_000541_tb_usuarios',1),
+(7,'2023_03_08_035611_tb_areas',1),
+(8,'2023_03_08_040229_tb_programas',1),
+(9,'2023_03_08_040306_tb_metas',1),
+(10,'2023_03_08_040814_tb_areasusuarios',1),
+(11,'2023_03_08_041215_tb_areasmetas',1),
+(12,'2023_03_08_042614_tb_calendarizars',1);
 
--- --------------------------------------------------------
+/*Table structure for table `password_resets` */
 
---
--- Estructura de tabla para la tabla `password_resets`
---
+DROP TABLE IF EXISTS `password_resets`;
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+/*Data for the table `password_resets` */
 
---
--- Estructura de tabla para la tabla `personal_access_tokens`
---
+/*Table structure for table `personal_access_tokens` */
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+/*Data for the table `personal_access_tokens` */
 
---
--- Estructura de tabla para la tabla `tb_areas`
---
+/*Table structure for table `tb_areas` */
+
+DROP TABLE IF EXISTS `tb_areas`;
 
 CREATE TABLE `tb_areas` (
   `id_area` int(10) UNSIGNED NOT NULL,
@@ -113,12 +130,11 @@ CREATE TABLE `tb_areas` (
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_area`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tb_areas`
---
+/*Data for the table `tb_areas` */
 
 INSERT INTO `tb_areas` (`id_area`, `clave`, `nombre`, `descripcion`, `foto`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
 (1, '1', 'ABOGADO GENERAL', 'ABOGADO GENERAL', 'cuervo.png', 0, 1, '2023-03-01 07:24:52', '2023-03-07 08:47:50'),
@@ -144,76 +160,86 @@ INSERT INTO `tb_areas` (`id_area`, `clave`, `nombre`, `descripcion`, `foto`, `ac
 (21, '21', 'SUBBDIRECCION DE FINANZAS', 'SUBBDIRECCION DE FINANZAS', 'cuervo.png', 0, 21, '2023-03-01 07:45:55', '2023-03-01 07:45:57'),
 (22, '22', 'HOLIS', 'GRACIAS', 'cuervo.png', 0, 1, '2023-03-07 08:30:54', '2023-03-07 10:53:28');
 
--- --------------------------------------------------------
+/*Table structure for table `tb_areasmetas` */
 
---
--- Estructura de tabla para la tabla `tb_areasmetas`
---
+DROP TABLE IF EXISTS `tb_areasmetas`;
 
 CREATE TABLE `tb_areasmetas` (
-  `id_areasmetas` int(10) UNSIGNED NOT NULL,
-  `area_id` int(10) UNSIGNED NOT NULL,
-  `meta_id` int(10) UNSIGNED NOT NULL,
+  `id_areasmetas` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `area_id` int(10) unsigned NOT NULL,
+  `meta_id` int(10) unsigned NOT NULL,
   `id_programa` int(11) NOT NULL,
   `objetivo` int(11) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_areasmetas`),
+  KEY `tb_areasmetas_area_id_foreign` (`area_id`),
+  KEY `tb_areasmetas_meta_id_foreign` (`meta_id`),
+  CONSTRAINT `tb_areasmetas_area_id_foreign` FOREIGN KEY (`area_id`) REFERENCES `tb_areas` (`id_area`),
+  CONSTRAINT `tb_areasmetas_meta_id_foreign` FOREIGN KEY (`meta_id`) REFERENCES `tb_metas` (`id_meta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+/*Data for the table `tb_areasmetas` */
 
---
--- Estructura de tabla para la tabla `tb_areasusuarios`
---
+/*Table structure for table `tb_areasusuarios` */
+
+DROP TABLE IF EXISTS `tb_areasusuarios`;
 
 CREATE TABLE `tb_areasusuarios` (
-  `id_areasusuarios` int(10) UNSIGNED NOT NULL,
-  `area_id` int(10) UNSIGNED NOT NULL,
-  `usuario_id` int(10) UNSIGNED NOT NULL,
+  `id_areasusuarios` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `area_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_areasusuarios`),
+  KEY `tb_areasusuarios_area_id_foreign` (`area_id`),
+  KEY `tb_areasusuarios_usuario_id_foreign` (`usuario_id`),
+  CONSTRAINT `tb_areasusuarios_area_id_foreign` FOREIGN KEY (`area_id`) REFERENCES `tb_areas` (`id_area`),
+  CONSTRAINT `tb_areasusuarios_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `tb_usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+/*Data for the table `tb_areasusuarios` */
 
---
--- Estructura de tabla para la tabla `tb_calendarizars`
---
+/*Table structure for table `tb_calendarizars` */
+
+DROP TABLE IF EXISTS `tb_calendarizars`;
 
 CREATE TABLE `tb_calendarizars` (
-  `id_entrega` bigint(20) UNSIGNED NOT NULL,
+  `id_entrega` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `id_areameta` int(11) NOT NULL,
   `fechaentrega` date NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_entrega`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+/*Data for the table `tb_calendarizars` */
 
---
--- Estructura de tabla para la tabla `tb_metas`
---
+/*Table structure for table `tb_metas` */
+
+DROP TABLE IF EXISTS `tb_metas`;
 
 CREATE TABLE `tb_metas` (
-  `id_meta` int(10) UNSIGNED NOT NULL,
-  `clave` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nombre` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `unidadmedida` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `programa_id` int(10) UNSIGNED NOT NULL,
+  `id_meta` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `clave` varchar(30) DEFAULT NULL,
+  `nombre` text NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `unidadmedida` text NOT NULL,
+  `programa_id` int(10) unsigned NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_meta`),
+  KEY `tb_metas_programa_id_foreign` (`programa_id`),
+  CONSTRAINT `tb_metas_programa_id_foreign` FOREIGN KEY (`programa_id`) REFERENCES `tb_programas` (`id_programa`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tb_metas`
---
+/*Data for the table `tb_metas` */
 
 INSERT INTO `tb_metas` (`id_meta`, `clave`, `nombre`, `descripcion`, `unidadmedida`, `programa_id`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
 (1, '1', 'Fomentar que los estudiantes egresen de sus estudios de tipo superior en el ciclo escolar', '', 'Egresado', 1, 1, 1, '2023-03-08 11:14:25', '2023-03-08 11:39:05'),
@@ -269,11 +295,9 @@ INSERT INTO `tb_metas` (`id_meta`, `clave`, `nombre`, `descripcion`, `unidadmedi
 (51, '51', 'Legislación Universitaria Publicado', NULL, 'Documento', 2, 1, 1, '2023-03-08 12:04:04', '2023-03-08 12:04:04'),
 (52, '52', 'Otorgamiento de Becas', NULL, 'Estudiante Becado', 2, 1, 1, '2023-03-08 12:04:44', '2023-03-08 12:04:44');
 
--- --------------------------------------------------------
+/*Table structure for table `tb_programas` */
 
---
--- Estructura de tabla para la tabla `tb_programas`
---
+DROP TABLE IF EXISTS `tb_programas`;
 
 CREATE TABLE `tb_programas` (
   `id_programa` int(10) UNSIGNED NOT NULL,
@@ -283,12 +307,11 @@ CREATE TABLE `tb_programas` (
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_programa`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tb_programas`
---
+/*Data for the table `tb_programas` */
 
 INSERT INTO `tb_programas` (`id_programa`, `abreviatura`, `nombre`, `descripcion`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
 (1, 'SIPREP', 'SISTEMA DE PLANEACION Y PRESUPUESTO', 'ENCARGADO DEL PRESUPUESTO', 1, 1, '2023-03-01 07:18:09', '2023-03-07 13:25:01'),
@@ -296,26 +319,23 @@ INSERT INTO `tb_programas` (`id_programa`, `abreviatura`, `nombre`, `descripcion
 (3, 'PIDE', 'PLATAFORMA DE INTERINOS DOCENTES DE EXTREMADURA', 'Referencia a Programa Intensivo de Dirección de Empresas de forma abreviada', 1, 3, '2023-03-01 07:22:12', '2023-03-07 13:26:24'),
 (4, 'PROPIAS', 'UTVT', 'PROGRMA DE LA UTVT\r\n', 0, 4, '2023-03-01 07:23:20', '2023-03-01 07:23:23');
 
--- --------------------------------------------------------
+/*Table structure for table `tb_tipos` */
 
---
--- Estructura de tabla para la tabla `tb_tipos`
---
+DROP TABLE IF EXISTS `tb_tipos`;
 
 CREATE TABLE `tb_tipos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `clave` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `clave` varchar(30) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` text DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tb_tipos`
---
+/*Data for the table `tb_tipos` */
 
 INSERT INTO `tb_tipos` (`id`, `clave`, `nombre`, `descripcion`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
 (1, 'TIP1', 'Administardor', 'Contiene todos los permisos sobre el sistema', 0, 1, '2023-03-04 06:17:17', '2023-03-07 13:37:47'),
@@ -323,34 +343,34 @@ INSERT INTO `tb_tipos` (`id`, `clave`, `nombre`, `descripcion`, `activo`, `id_re
 (3, 'TIP3', 'Secretaria', 'No posee los permisos que le director', 1, 1, '2023-03-07 04:59:01', '2023-03-07 04:59:01'),
 (4, 'TIP4', 'Invitado', 'No tiene la mayoría de permisos', 0, 1, '2023-03-07 13:38:42', '2023-03-07 13:40:39');
 
--- --------------------------------------------------------
+/*Table structure for table `tb_usuarios` */
 
---
--- Estructura de tabla para la tabla `tb_usuarios`
---
+DROP TABLE IF EXISTS `tb_usuarios`;
 
 CREATE TABLE `tb_usuarios` (
-  `id_usuario` int(10) UNSIGNED NOT NULL,
-  `clave` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `app` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apm` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gen` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `clave` varchar(30) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `app` varchar(50) NOT NULL,
+  `apm` varchar(50) NOT NULL,
+  `gen` varchar(15) NOT NULL,
   `fn` date NOT NULL,
-  `academico` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `foto` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_tipo` int(10) UNSIGNED NOT NULL,
+  `academico` text NOT NULL,
+  `foto` text DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `pass` varchar(255) NOT NULL,
+  `id_tipo` int(10) unsigned NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `id_registro` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `tb_usuarios_email_unique` (`email`),
+  KEY `tb_usuarios_id_tipo_foreign` (`id_tipo`),
+  CONSTRAINT `tb_usuarios_id_tipo_foreign` FOREIGN KEY (`id_tipo`) REFERENCES `tb_tipos` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tb_usuarios`
---
+/*Data for the table `tb_usuarios` */
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `clave`, `nombre`, `app`, `apm`, `gen`, `fn`, `academico`, `foto`, `email`, `pass`, `id_tipo`, `activo`, `id_registro`, `created_at`, `updated_at`) VALUES
 (1, 'USR1', 'Jimena', 'Diaz', 'De Los Santos', 'F', '2003-02-24', 'TSU Area desarrollo de software multiplataforma', 'cuervo.png', 'al222110707@gmail.com', '123456', 1, 1, 1, '2023-03-04 06:18:34', '2023-03-07 14:18:26'),
@@ -359,26 +379,24 @@ INSERT INTO `tb_usuarios` (`id_usuario`, `clave`, `nombre`, `app`, `apm`, `gen`,
 (4, 'USR4', 'Leopoldo', 'Diaz', 'De Los Santos', 'M', '2003-06-05', 'TSU Desarrollo de software multiplataforma', '20230306214257rectoria.jpeg', 'leo@gmail.com', '123123', 3, 1, 1, '2023-03-07 07:58:42', '2023-03-07 09:42:57'),
 (5, 'URS5', 'Francis', 'Carney', 'Jacobs', 'M', '1991-08-01', 'TSU Desarrollo de software multiplataforma', 'cuervo.png', 'suvikubyt@mailinator.com', '123123', 1, 1, 1, '2023-03-07 09:26:09', '2023-03-07 09:26:09');
 
--- --------------------------------------------------------
+/*Table structure for table `users` */
 
---
--- Estructura de tabla para la tabla `users`
---
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Índices para tablas volcadas
---
+/*Data for the table `users` */
 
 --
 -- Indices de la tabla `failed_jobs`
