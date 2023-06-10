@@ -75,7 +75,7 @@
                 </strong>
             </div>
             <div class="modal-footer">
-                <a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">
+                {{--<a href="{{ route('deleteArea', ['id' => $info->id_area]) }}">--}}
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
                 </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -119,7 +119,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('editArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">
+                {{--<form action="{{ route('editArea', ['id' => $info->id_area]) }}" method="POST" enctype="multipart/form-data">--}}
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -175,7 +175,7 @@
 
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
+                        <select name="id_area" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
@@ -185,23 +185,24 @@
                     <hr class="sidebar-divider">
                     
                     <div>
-                        <label for="floatingInput">Selecciona uno o varios usuarios:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
-                        @foreach ($usuarios as $info)
-                            <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
-                        @endforeach
-                        </select>
-                    </div>
-
+                            <label for="floatingInput">Selecciona uno o varios usuarios:</label>
+                            <select data-search="true" data-silent-initial-value-set="true"  name="id_usuario[]" multiple>
+                            @foreach ($usuarios as $info)
+                                <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                            
                     <hr class="sidebar-divider">
                     
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" name="activo" role="switch" id="flexSwitchCheckChecked" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
                     </div>
             </div>
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <input type="submit" href="usuarios/store" class="btn btn-success" value="Enviar" />

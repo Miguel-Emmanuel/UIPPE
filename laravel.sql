@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+`tb_areasusuarios``tb_usuarios`-- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` BIGINT(20) UNSIGNED NOT NULL,
+  `uuid` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -44,10 +44,10 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` INT(10) UNSIGNED NOT NULL,
+  `migration` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` INT(11) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `migrations`

@@ -14,6 +14,6 @@ class AreasUsuarios extends Model
         'id_area',
         'id_usuario',
         'activo',
-         'id_registro'
+        'id_registro'
     ];
 }
