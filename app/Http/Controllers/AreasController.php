@@ -6,6 +6,10 @@ use App\Models\Areas;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AreasExport;
+
+
 
 class AreasController extends Controller
 {
@@ -118,4 +122,9 @@ class AreasController extends Controller
 
     
     }
+    public function export() 
+    {
+        return Excel::download(new AreasExport, 'areas.xlsx');
+    }
+    
 }

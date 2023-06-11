@@ -26,7 +26,7 @@
    
     <table>
         <thead>
-            <center><h1>Areas registradas en el sistema</h1></center>
+            <center><h1>Usuarios registradas en el sistema</h1></center>
             <br>
             <b>Fecha: @php echo date('d/m/Y'); @endphp</b>
 
@@ -36,20 +36,25 @@
     <table>    
         <thead>
             <tr>
-                <td>Foto</td>
+            <td>Foto</td>
                 <td>Clave</td>
                 <td>Nombre</td>
-                <td>Descripcion</td>
+                <td>Genero</td>
+                <td>Academico</td>
+                <td>Email</td>
 
             </tr>
         </thead>
-        @foreach($areas as $a )
+        @foreach($usuarios as $u )
         <tr>
-            <td>    <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('img/post/'.$a->foto))) }}"  width="100px" height="50px" >
 </td>
-            <td>{{ $a->clave}}</td>
-            <td>{{ $a->nombre}}</td>
-            <td>{{ $a->descripcion}}</td>
+<td>    <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('img/post/'.$u->foto))) }}"  width="100px" height="50px" >
+</td>
+            <td>{{ $u->clave}}</td>
+            <td>{{ $u->nombre. " ". "$u->app". " " . "$u->apm" }}</td>
+            <td>{{ $u->gen}}</td>
+            <td>{{ $u->academico}}</td>
+            <td>{{ $u->email}}</td>
 
         </tr>
         @endforeach

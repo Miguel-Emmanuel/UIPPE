@@ -50,9 +50,8 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficoMetasAreas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <center><button onclick="generatePDF()" class="image-button">Generar PDF</button></center>
+                            <center><button onclick="generatePDF()">Generar PDF</button></center>
                         </div>
-                        <button class="image-button"></button>
                     </div>
                 </div>
             </div>
@@ -220,25 +219,25 @@ $session_tipo = session('session_tipo');
                 }
                 
                 new Chart(document.getElementById("Trimestral"), {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: [
-                            @foreach($meses as $meses)
-                            "{{ $meses  -> mes }}",
-                            @endforeach
+                           "Enero" , 
+                           "Febrero", 
+                           "Marzo"
                         ],
                         datasets: [{
                          
-                            backgroundColor: [
-                                @foreach($programas as $programa)
-                                '#' + Math.floor(Math.random() * 16777215).toString(16),
-                                @endforeach
+                            borderColor: [
+                                'rgb(0,99,0)',
                             ],
                             data: [
                                 @foreach($trimestral as $trimestral)
                                 "{{ $trimestral  -> total }}",
                                 @endforeach
-                            ]
+                            ],
+                            tension: 0.1,
+                            fill:false
                         }]
                     },
                     options: {
@@ -379,7 +378,7 @@ $session_tipo = session('session_tipo');
                     data: {
                         labels: [
                             @foreach($febreroDias as $dias)
-                            "{{ "Dia". $dias  -> dia }}",
+                            "{{ "Dia: ". $dias  -> dia }}",
                             @endforeach
                         ],
                         datasets: [{
@@ -455,7 +454,7 @@ $session_tipo = session('session_tipo');
                     data: {
                         labels: [
                             @foreach($marzoDias as $dias)
-                            "{{ $dias  -> dia }}",
+                            "{{ "Dia: " . $dias  -> dia }}",
                             @endforeach
                         ],
                         datasets: [{
@@ -595,7 +594,7 @@ $session_tipo = session('session_tipo');
                     data: {
                         labels: [
                             @foreach($programas as $programa)
-                            "{{ $programa -> abreviatura}}",    
+                            "{{ $programa -> abreviatura }}",    
                             @endforeach
                         ],
                         datasets: [{
@@ -634,20 +633,33 @@ $session_tipo = session('session_tipo');
                 });
             </script>
 
-            <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
+            <!-- -----------------------------------------------Script para modificar la grafica de Usuarios|Puestos----------------------------------------------- -->
             <script>
+                   const bgUPColor = {
+                    id: 'bgUPColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
                 new Chart(document.getElementById("GraficaUsuarioPuesto"), {
                     type: 'pie',
                     data: {
                         labels: [
 
                             @foreach($puesto as $pue)
-                            "{{ $pue -> nombre_usuario }}",
+                            "{{ $pue -> nombre . "|" . " Total: " .$pue -> id_tipo    }}",
 
                             @endforeach
                         ],
                         datasets: [{
-                            label: "Puesto",
+                          
                             backgroundColor: [
                                 @foreach($puesto as $pue)
                                 "#" + Math.floor(Math.random() * 16777215).toString(16),
@@ -668,18 +680,32 @@ $session_tipo = session('session_tipo');
                                     beginAtZero: true
                                 }
                             }]
-                        },
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Usuarios y su Puesto'
                         }
-
-                    }
+                    },
+                    plugins: [bgTColor],
 
                 });
+
+
+
+                const GraficoUsuarioPuesto = new Chart(
+                    document.getElementById('GraficaUsuarioPuesto'),
+                    config
+                );
+
+                function generateUPPDF() {
+                    const canvas = document.getElementById('GraficaUsuarioPuesto');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficaUsuarioPuesto.pdf")
+
+                }
             </script>
 
 
