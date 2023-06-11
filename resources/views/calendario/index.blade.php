@@ -45,8 +45,8 @@ $session_area = session('session_area');
                         <th class="text-center">Clave</th>
                         <th>Programa</th>
                         <th>Meta</th>
-                        <th class="text-center">Cantidad Alcanzada</th>
-                        <th class="text-center">Cantidad Establecida</th>
+                        <th class="text-center">Registro</th>
+                        <th class="text-center">Cantidad Propuesta Anual</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -59,11 +59,9 @@ $session_area = session('session_area');
                                 <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                                 <td>{{ $meta -> nombrePA }}</td>
                                 <td>{{$meta->nombreM}}</td>
+                                <td class="text-center">{{ $meta -> cantidad_c }}</td>
                                 <td>
-                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
-                                </td>
-                                <td>
-                                    <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                    <p class="text-center" id="cantEntrega{{ $meta->id_areasmetas }}">0</p>
                                 </td>
                                 <!-- Button calendar modal -->
                                 <td class="text-center">
@@ -77,11 +75,9 @@ $session_area = session('session_area');
                                 <td class="text-center">{{ $meta -> id_areasmetas }}</td>
                                 <td>{{ $meta -> nombrePA }}</td>
                                 <td>{{$meta->nombreM}}</td>
+                                <td class="text-center">{{ $meta -> cantidad_c }}</td>
                                 <td>
-                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
-                                </td>
-                                <td>
-                                    <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                    <p class="text-center" id="cantEntrega{{ $meta->id_areasmetas }}">0</p>
                                 </td>
                                 <!-- Button calendar modal -->
                                 <td class="text-center">
@@ -111,8 +107,7 @@ $session_area = session('session_area');
                         <th class="text-center">Clave</th>
                         <th>Programa</th>
                         <th>Meta</th>
-                        <th class="text-center">Cantidad Alcanzada</th>
-                        <th class="text-center">Cantidad Establecida</th>
+                        <th class="text-center">Cantidad Propuesta Anual</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -125,10 +120,7 @@ $session_area = session('session_area');
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
                             <td>
-                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
-                            </td>
-                            <td>
-                                <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                <p class="text-center" id="cantEntrega{{ $meta->id_areasmetas }}">0</p>
                             </td>
                             <!-- Button calendar modal -->
                             <td class="text-center">
@@ -141,10 +133,7 @@ $session_area = session('session_area');
                             <td>{{ $meta -> nombrePA }}</td>
                             <td>{{$meta->nombreM}}</td>
                             <td>
-                                <div class="text-center" id="cantAlcanzada{{ $meta->id_areasmetas }}">0</div>
-                            </td>
-                            <td>
-                                <input type="number" onkeyup="mostrar{{ $meta->id_areasmetas }}(this.value)" class="form-control" id="cantEntrega{{ $meta->id_areasmetas }}" placeholder="Cantidad a entregar:" value="50">
+                                <p class="text-center" id="cantEntrega{{ $meta->id_areasmetas }}">0</p>
                             </td>
                             <!-- Button calendar modal -->
                             <td class="text-center">
@@ -185,7 +174,7 @@ $session_area = session('session_area');
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalshowLabel">Asignar entrega por Mes</h1>
-                <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div><div id="res{{ $meta->id_areasmetas }}"></div>
+                <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div>
             </div>
             <div class="modal-body">
                 <form action="{{ route('calendUpdate', ['id' => $meta->id_areasmetas]) }}" method="POST" enctype="multipart/form-data"> 
@@ -277,11 +266,6 @@ $session_area = session('session_area');
 </div>
 <script>
 
-    mostrar{{ $meta->id_areasmetas }} = (valor) => {
-        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
-        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = valor;
-    };
-
     var sumaT = 0;
     suma{{ $meta->id_areasmetas }} = () => {
         sumaT = 0;
@@ -290,14 +274,15 @@ $session_area = session('session_area');
             input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
         }
-        if(parseInt(sumaT) < document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+        if(parseInt(sumaT) < {{ $meta -> cantidad_c }}){
             document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary disabled";
-        }else if(sumaT >= document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
+        }else if(sumaT >= {{ $meta -> cantidad_c }}){
             document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary";
         }else{
             
         }
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
+        document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").innerHTML = sumaT;
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT;
     };
 
@@ -312,7 +297,7 @@ $session_area = session('session_area');
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalshowLabel">Asignar entrega por Mes</h1>
-                <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div><div id="res{{ $meta->id_areasmetas }}"></div>
+                <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div>
             </div>
             <div class="modal-body">
                 <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data"> 
@@ -405,13 +390,7 @@ $session_area = session('session_area');
     window.addEventListener('load', () => {
         var canti = document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value;
         document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = canti;
-        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+canti;
     });
-
-    mostrar{{ $meta->id_areasmetas }} = (valor) => {
-        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
-        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = valor;
-    };
 
     var sumaT = 0;
     suma{{ $meta->id_areasmetas }} = () => {
@@ -487,7 +466,7 @@ $session_area = session('session_area');
     @foreach($areasconMeses as $areas)
         document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").setAttribute('value', '{{ $areas -> cantidad_c }}');
         document.getElementById("cantidad{{ $areas->id_areasmetas }}").value = {{ $areas -> cantidad_c }};
-        document.getElementById("res{{ $areas->id_areasmetas }}").innerHTML = "/ "+ {{ $areas -> cantidad_c }};
+        document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").innerHTML = "{{ $areas -> cantidad_c }}";
 
         var sumaI{{ $areas->id_areasmetas }} = 0;
         var input{{ $areas->id_areasmetas }} = new Array;
@@ -497,7 +476,6 @@ $session_area = session('session_area');
             sumaI{{ $areas->id_areasmetas }} = parseInt(sumaI{{ $areas->id_areasmetas }})+parseInt(input{{ $areas->id_areasmetas }}[i]);
         }
 
-        document.querySelector("#cantAlcanzada{{ $areas->id_areasmetas }}").innerHTML = sumaI{{ $areas->id_areasmetas }};
         var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
 
         if({{ $areas->meses_c }} > {{ $areas->cantidad_c }}){
