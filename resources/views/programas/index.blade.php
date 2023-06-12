@@ -13,12 +13,15 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Programas</li>
         </ol>
     </nav>
-    @if($session_area != "")
+    @if($session_area == 0)
     <div class="row">
         <div class="col p-4">
             <h3>Programas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
+        <a href="{{route('pdfp')}}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
+            <a class="btn btn-success float-end" href="{{ route('programas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
+           
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -106,10 +109,9 @@ $session_area = session('session_area');
         </div>
     </div>
     @else
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
-            <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido debe tener un área asignada</p>
-        </div>
+    <script>
+        window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
+    </script>
     @endif
 </div>
 

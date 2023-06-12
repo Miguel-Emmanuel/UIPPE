@@ -4,3 +4,26 @@
         width: 25%;
     }
 }
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+.divp{
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 30%;
+}
+
+.hed{
+    height: 90px;
+    background-color: #367E18;
+}
+
+.logo{
+    height: 120px;
+    background-image: url("https://res.cloudinary.com/ddl1sa2yp/image/upload/v1685926452/samples/cloudinary-logo-vector.svg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    border: 3px solid #367E18;
+    background-position: center;
+}

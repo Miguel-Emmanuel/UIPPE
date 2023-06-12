@@ -1,0 +1,15 @@
+
+table {
+    border: 1px solid #FFFFFF;
+    background-color: #FFFFFF;
+  }
+
+  tr, td {
+    border: 1px solid #000;
+    padding: 10px;
+  }
+
+  tr:first-child {
+    background-color: #FFFFFF;
+  }
+

@@ -56,7 +56,7 @@ class Login extends Controller
                 $request->session()->put('fn', $consulta[0]->fn);
                 $request->session()->put('session_tipo', $consulta[0]->id_tipo);
 
-                if ($consulta[0]->id_tipo != 3) {
+                if ($consulta[0]->id_tipo != 3 && $consulta[0]->id_tipo != 4 && $consulta[0]->id_tipo != 5) {
                     $request->session()->put('session_area', 0);
                 } else {
                     $request->session()->put('session_area', $area[0]->area_id);

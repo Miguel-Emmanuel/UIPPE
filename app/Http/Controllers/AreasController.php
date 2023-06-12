@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Areas;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AreasExport;
+
+
 
 class AreasController extends Controller
 {
@@ -103,25 +108,23 @@ class AreasController extends Controller
         return redirect('areas');
     }
 
-    public function js_buscar(Request $request){
-        $busca = $request->get('busca');
-
-$areas = DB::table('tb_areas')
-->orWhere('tb_areas.descripcion', 'LIKE', "%$busca%")
-->orWhere('tb_areas.clave', 'LIKE', "%$busca%")
-->orWhere('tb_areas.nombre', 'LIKE', "%$busca%")
-->select('tb_areas.*')
-->get();
+    public function pdf()
+    {
 
 
+        $areas= Areas::all();
 
-        return view("areas/js_buscar")
-            ->with(['areas' => $areas]);
+        $pdf = PDF::loadView('Documentos.pdf',['areas'=>$areas]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream();
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+
     }
-    public function js_defecto(){
-        $areas = Areas::all();
-
-        return view('areas.index')
-          ->with(['areas' => $areas]);
+    public function export()
+    {
+        return Excel::download(new AreasExport, 'areas.xlsx');
     }
+
 }

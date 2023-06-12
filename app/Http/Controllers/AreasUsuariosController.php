@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Schema;
 use PhpParser\Node\Expr\FuncCall;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AreasUsExport;
+
 
 class AreasUsuariosController extends Controller
 {
@@ -55,6 +59,29 @@ class AreasUsuariosController extends Controller
 
         return redirect('areas-usuarios');
 
+    }
+
+
+    public function pdfau()
+    {
+            
+
+        $areausuario = AreasUsuarios::select('tb_areasusuarios.id_areasusuarios','tb_areas.nombre as area_id', 'tb_usuarios.nombre as usuario_id', 'tb_areasusuarios.activo' )
+        ->join('tb_areas','tb_areas.id_area','tb_areasusuarios.area_id')
+        ->join('tb_usuarios','tb_usuarios.id_usuario','tb_areasusuarios.usuario_id')
+        ->get();
+
+        $pdf = PDF::loadView('Documentos.pdfau',['areausuario'=>$areausuario]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream(); 
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+    
+    }
+    public function export() 
+    {
+        return Excel::download(new AreasUsExport, 'AreasUsuarios.xlsx');
     }
 }
 
