@@ -128,6 +128,8 @@ Route::name('passwordc')->get('passwordc', [CorreosController::class, 'passwordc
 Route::name('correo')->get('enviados', [CorreosController::class, 'enviados']);
 Route::name('pcorreo')->get('pcorreo', [CorreosController::class, 'pcorreo']);
 
+Route::name('prueba')->get('prueba', [CorreosController::class, 'prueba']);
+
 /*Route::name('pcorreo')->get('pcorreo', [Login::class, 'pcorreo']);
 Route::name('correo')->get('correo', function(){
    return view('mails.correos');
