@@ -54,7 +54,9 @@ $session_area = session('session_area');
             <h3>Áreas | Metas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
-            <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
+            <a href="{{route('pdfam')}}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
+                <a class="btn btn-success float-end" href="{{ route('areasmetas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
+                <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
             <table class="table mt-3">

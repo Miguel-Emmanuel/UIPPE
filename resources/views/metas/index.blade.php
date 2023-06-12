@@ -20,6 +20,9 @@ $session_area = session('session_area');
             <h3>Metas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
+        <a href="{{route('pdfm')}}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
+            <a class="btn btn-success float-end" href="{{ route('metas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
+           
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">

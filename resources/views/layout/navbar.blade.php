@@ -40,6 +40,7 @@ $session_area = session('session_area');
         <nav class="navSidebar">
             <div>
                 <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
+                <!-- bx bx-home-alt-2 logo de home  -->
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)

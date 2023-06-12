@@ -13,12 +13,18 @@ use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ProgramasController;
 use App\Http\Controllers\TiposController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use App\Mail\ReestablecerPassword;
+use App\Models\Areas;
 use App\Models\AreasMetas;
+use App\Models\AreasUsuarios;
 use App\Models\Calendarizars;
+use App\Models\Metas;
+use App\Models\Programas;
+use App\Models\Usuarios;
 use Laravel\SerializableClosure\Serializers\Signed;
 
 /*
@@ -107,6 +113,9 @@ Route::name('registrosA') -> get('registrosA/{id}', [GraficosController::class, 
 Route::name('registros') -> get('registros', [GraficosController::class, 'registros']);
 Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);
+Route::name('rpdf')->get('rpdf',[GraficosController::class, 'rpdf']);
+
+
 //Graficos controller end
 
 //////////////////////////////////////////CORREOS///////////////////////////////////////////////////////////////////////////
@@ -127,3 +136,52 @@ Route::name('correo')->get('correo', function(){
 Route::name('js_metas')->get('js_metas', [AreasMetasController::class, 'js_metas']);
 Route::name('js_areas')->get('js_areas', [AreasMetasController::class, 'js_areas']);
 
+
+
+//----------------------------Documentos Excel-----------------
+Route::controller(UserController::class)->group(function(){
+   Route::get('users', 'index');
+   Route::get('users-export', 'export')->name('users.export');
+   Route::post('users-import', 'import')->name('users.import');
+});
+
+
+Route::controller(AreasController::class)->group(function(){
+Route::name('areas.export')->get('areas-export','export');
+});
+
+Route::controller(AreasMetasController::class)->group(function(){
+   Route::name('areasmetas.export')->get('areasmetas-export','export');
+   });
+
+   Route::controller(TiposController::class)->group(function(){
+      Route::name('tipos.export')->get('tipos-export','export');
+      });
+      Route::controller(UsuariosController::class)->group(function(){
+         Route::name('usuarios.export')->get('usuarios-export','export');
+         });
+
+         Route::controller(AreasUsuariosController::class)->group(function(){
+            Route::name('areasusuarios.export')->get('areasusuarios-export','export');
+            });
+
+            Route::controller(ProgramasController::class)->group(function(){
+               Route::name('programas.export')->get('programas-export','export');
+               });
+
+               Route::controller(MetasController::class)->group(function(){
+                  Route::name('metas.export')->get('metas-export','export');
+                  });
+
+
+
+
+
+//----------------------------Documentos PDF-----------------------------------
+Route::name('pdf')->get('pdf',[AreasController::class, 'pdf']);
+Route::name('pdfam')->get('pdfam',[AreasMetasController::class, 'pdfam']);
+Route::name('pdft')->get('pdft',[TiposController::class, 'pdft']);
+Route::name('pdfu')->get('pdfu',[UsuariosController::class, 'pdfu']);
+Route::name('pdfau')->get('pdfau',[AreasUsuariosController::class, 'pdfau']);
+Route::name('pdfp')->get('pdfp',[ProgramasController::class, 'pdfp']);
+Route::name('pdfm')->get('pdfm',[MetasController::class, 'pdfm']);

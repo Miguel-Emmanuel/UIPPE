@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Programas;
 use Illuminate\Http\Request;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProgramasExport;
 
 class ProgramasController extends Controller
 {
@@ -78,5 +81,23 @@ class ProgramasController extends Controller
         $query -> id_registro = trim($request->registro);
         $query->save();
         return redirect('programas');
+    }
+    public function pdfp()
+    {
+            
+
+        $programas= Programas::all();
+
+        $pdf = PDF::loadView('Documentos.pdfp',['programas'=>$programas]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream(); 
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+    
+    }
+    public function export() 
+    {
+        return Excel::download(new ProgramasExport, 'programas.xlsx');
     }
 }

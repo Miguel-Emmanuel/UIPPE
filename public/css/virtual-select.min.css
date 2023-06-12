@@ -668,3 +668,38 @@
 .pop-comp-disable-events {
     pointer-events: none;
 }
+
+#my-div button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#my-cerrar button {
+    background-color: rgb(225, 16, 16);
+    border: no;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.image-button {
+  background-image: url('/public/logo/PDF.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100px; /* ajusta el ancho deseado */
+  height: 100px; /* ajusta la altura deseada */
+  border: none; /* opcional: eliminar el borde del botón */
+}
