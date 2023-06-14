@@ -1118,6 +1118,22 @@ class UsuariosSeeder extends Seeder
         $usuario->activo = '1';
         $usuario->id_registro = '1';
         $usuario->save();
+
+        $usuario= new Usuarios();
+        $usuario->clave = 'URS70';
+        $usuario->nombre = 'Admin';
+        $usuario->app = 'Sistemas';
+        $usuario->apm = 'UTVT';
+        $usuario->gen = '';
+        $usuario->fn = '2000-01-01';
+        $usuario->academico = 'TSU Área Dasarrollo de Software Multiplataforma';
+        $usuario->foto = 'cuervo.png';
+        $usuario->email = 'admiuippe@gmail.com';
+        $usuario->pass = '123456';
+        $usuario->id_tipo = '2';
+        $usuario->activo = '1';
+        $usuario->id_registro = '1';
+        $usuario->save();
       }
     }
 

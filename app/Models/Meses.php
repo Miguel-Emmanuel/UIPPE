@@ -32,4 +32,9 @@ class Meses extends Model
         return $this->hasMany(Calendarizars::class, 'meses_id', 'id_meses');
 
     }
+
+    public function Entregas() {
+        return $this->hasMany(Entregas::class, 'meses_id', 'id_meses');
+
+    }
 }

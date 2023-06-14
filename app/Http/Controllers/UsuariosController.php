@@ -6,6 +6,9 @@ use App\Models\Usuarios;
 use App\Models\Tipos;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsuariosExport;
 
 class UsuariosController extends Controller
 {
@@ -134,4 +137,24 @@ class UsuariosController extends Controller
     {
         return view("Usuarios.perfil");
     }
+
+    public function pdfu()
+    {
+            
+
+        $usuarios= Usuarios::all();
+
+        $pdf = PDF::loadView('Documentos.pdfu',['usuarios'=>$usuarios]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream(); 
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+    
+    }
+    public function export() 
+    {
+        return Excel::download(new UsuariosExport, 'usuarios.xlsx');
+    }
+
 }

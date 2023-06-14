@@ -40,25 +40,28 @@ $session_area = session('session_area');
         <nav class="navSidebar">
             <div>
                 <a href="/dashboard" class="nav_logo"><i class='bx bxs-calendar nav_logo-icon'></i><span class="nav_logo-name">UIPPE</span></a>
+                <!-- bx bx-home-alt-2 logo de home  -->
                 <!-- <a href="#" class="nav_logo"><img src="{{ asset('logos/uippelogo.png') }}" alt="UIPPE" style="height: 70px;"></a> -->
                 <div class="nav_list">
                     @if($session_id)
-                        @if($session_area != "")
-                            <a href="registros" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
-                        @endif
+                        @if($session_tipo == 5)
                         <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Reportes</span> </a>
-                        @if($session_area != "")
-                            <a href="calendario" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
+                        <a href="{{ route('EditarPerfil') }}" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                         @endif
-                        @if($session_tipo == 1 || $session_tipo == 2)
-                            <a href="enviados" class="nav_link"> <i class="bx bx-envelope nav_icon"></i> <span class="nav_name">Correo</span></a>
+                        @if($session_tipo != 5)
+                            <a href="{{ route('registrosA', ['id' => $session_area]) }}" class="nav_link"> <i class='bx bxs-edit'></i></i> <span class="nav_name">Registros</span> </a>
+                            <a href="graficos" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Reportes</span> </a>
+                            <a href="{{ route('calendario') }}" class="nav_link"> <i class='bx bx-calendar nav_icon'></i> <span class="nav_name">Calendario</span> </a>
+                            @if($session_tipo == 1 || $session_tipo == 2)
+                            <a href="{{ route('correo') }}" class="nav_link"> <i class="bx bx-envelope nav_icon"></i> <span class="nav_name">Correo</span></a>
+                            @endif
+                            <a href="{{ route('EditarPerfil') }}" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                         @endif
-                        <a href="perfil" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Perfíl</span> </a>
                     @endif
                 </div>
             </div>
             @if($session_id)
-            <a href="logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Cerrar Sesión</span> </a>
+            <a href="{{ route('logout') }}" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Cerrar Sesión</span> </a>
             @else
             <a href="login" class="nav_link"> <i class='bx bx-log-in nav_icon'></i> <span class="nav_name">Iniciar Sesión</span> </a>
             @endif

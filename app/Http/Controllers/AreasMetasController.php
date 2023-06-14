@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\AreasMetas;
 use App\Models\Metas;
 use Illuminate\Support\Facades\DB;
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AreasMetasExport;
 
 use App\Models\Programas;
 
@@ -95,4 +98,33 @@ class AreasMetasController extends Controller
         return view("areasmetas.js_areas")
             ->with(['areas' => $areas]);
     }
+    public function pdfam()
+    {
+
+
+        $areasmetas = DB::table('tb_areasmetas')
+        ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
+        ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
+        ->join('tb_areas', 'tb_areasmetas.area_id',  'tb_areas.id_area')
+        ->select('tb_metas.nombre as nmeta', 'tb_metas.id_meta as mid', 'tb_programas.nombre as pnombre', 'tb_areas.nombre as area', 'tb_areasmetas.id_areasmetas', 'tb_areasmetas.objetivo as objetivo')
+        ->orderBy('tb_areasmetas.id_areasmetas', 'asc')
+        ->get();
+
+
+        $pdf = PDF::loadView('Documentos.pdfam',['areasmetas'=>$areasmetas]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream();
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new AreasMetasExport, 'areasmetas.xlsx');
+    }
+
+
 }

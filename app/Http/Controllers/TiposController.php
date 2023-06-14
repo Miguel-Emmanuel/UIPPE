@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Tipos;
 
 use Illuminate\Http\Request;
-
+use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TiposExport;
 class TiposController extends Controller
 {
     public function index()
@@ -80,4 +82,26 @@ class TiposController extends Controller
         $query -> save();
         return redirect('tipos');
     }
+
+    public function pdft()
+    {
+            
+
+        $tipos= Tipos::all();
+
+
+        $pdf = PDF::loadView('Documentos.pdft',['tipos'=>$tipos]);
+        //----------Visualizar el PDF ------------------
+       return $pdf->stream(); 
+       // ------Descargar el PDF------
+       //return $pdf->download('___libros.pdf');
+
+    
+    }
+
+    public function export() 
+    {
+        return Excel::download(new TiposExport, 'Tipos.xlsx');
+    }
+
 }
