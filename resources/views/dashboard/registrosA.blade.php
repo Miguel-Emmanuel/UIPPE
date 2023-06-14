@@ -56,57 +56,85 @@ $session_area = session('session_area');
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-registroUsuarios" role="tabpanel" aria-labelledby="nav-registroUsuarios-tab" tabindex="0">
-                    <div class="container">
-                        <div class="row justify-content-md-center mb-5 my-4">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
-                                    <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #fd7e14;">
-                                                        Usuarios
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold" style="color: #fd7e14;">
-                                                        @foreach($areasusuarios as $areasusuario)
-                                                        {{ $areasusuario -> AreasUsuarios }}
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa-solid fa-people-roof fa-2x" style="color: #fd7e14;"></i>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Area</th>
+                                    <th>Usuario</th>
+                                    <th>Activo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($asig as $info)
+                                <tr>
+                                    <td>{{ $info->id_area}}</td>
+                                    <td>{{ $info->nombre}}</td>
+                                    <td>{{ $info->nombreU .' '. $info->app .' '. $info->apm}}</td>
+                                    <td>
+                                        @if($info -> activo > 0)
+                                        <p style="color: green;">Activo</p>
+                                        @else
+                                        <p style="color: red;">Inactivo</p>
+                                        @endif
+                                    </td>
+
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-Metas" role="tabpanel" aria-labelledby="nav-metas-tab" tabindex="0">
-                    <div class="container">
-                        <div class="row justify-content-md-center my-4">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
-                                    <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
-                                                        Metas
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-success">
-                                                        @foreach($areametas as $areameta)
-                                                        {{ $areameta -> areametas }}
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class='bx bx-layer fa-2x text-gray-300' style="color: #027333;"></i>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <!-- Campos en tabla metas -->
+                                <tr>
+                                    <th class="text-center">Clave</th>
+                                    <th>Nombre</th>
+                                    <th>Programa</th>
+                                    <th class="text-center">Activo</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Regitros en tabla metas -->
+                                @foreach($metas as $meta)
+                                @if($session_id != 3)
+                                <tr>
+                                    <td class="text-center">{{ $meta -> clave }}</td>
+                                    <td>{{ $meta -> nombreM }}</td>
+                                    <td>{{$meta->nombrePA}}</td>
+                                    <td class="text-center">
+                                        @if($meta -> activo > 0)
+                                        <p style="color: green;">Activo</p>
+                                        @else
+                                        <p style="color: red;">Inactivo</p>
+                                        @endif
+                                    </td>
+
+                                </tr>
+                                @elseif($meta->activo > 0)
+                                <tr>
+                                    <td class="text-center">{{ $meta -> clave }}</td>
+                                    <td>{{ $meta -> nombreM }}</td>
+                                    <td>{{ $meta -> descripcion }}</td>
+                                    <td class="text-center">
+                                        @if($meta -> activo > 0)
+                                        <p style="color: green;">Activo</p>
+                                        @else
+                                        <p style="color: red;">Inactivo</p>
+                                        @endif
+                                    </td>
+
+                                </tr>
+                                @else
+                                @endif
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

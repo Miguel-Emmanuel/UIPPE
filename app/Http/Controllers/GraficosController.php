@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use App\Models\Areas;
 use App\Models\AreasMetas;
+use App\Models\AreasUsuarios;
 use PDF;
 
 class GraficosController extends Controller
@@ -43,10 +44,22 @@ class GraficosController extends Controller
             $area2 = Areas::find($id);
         }
         $area = Areas::find($id);
-        $AreasUsuarios = \DB::select('SELECT COUNT(*) as AreasUsuarios FROM tb_areasusuarios WHERE area_id = '.$id);
+        $metas = \DB::select('SELECT meta.id_meta, meta.clave, meta.nombre as nombreM,
+        meta.descripcion, meta.unidadmedida, meta.programa_id, meta.activo,
+        meta.id_registro, programa.nombre as nombreP, programa.abreviatura as nombrePA FROM tb_metas as meta,
+        tb_programas as programa,tb_areasusuarios as AU WHERE meta.programa_id = programa.id_programa AND AU.area_id = '.$id);
+        $AreasUsuarios = \DB::select('SELECT * FROM tb_areasusuarios WHERE area_id = '.$id);
         $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = '.$id);
+        $asig = AreasUsuarios::select('tb_areas.id_area','tb_areas.clave','tb_areas.nombre','tb_areas.descripcion','tb_areas.activo', ('tb_usuarios.nombre AS nombreU'),'tb_usuarios.app','tb_usuarios.apm', 'tb_usuarios.gen', 'tb_usuarios.fn','tb_usuarios.email','tb_usuarios.foto' )
+        ->join('tb_areas', 'tb_areasusuarios.area_id',  'tb_areas.id_area')
+        ->join('tb_usuarios','tb_areasusuarios.usuario_id' , 'tb_usuarios.id_usuario')
+        ->where('tb_areasusuarios.area_id', '=' , $id)
+        ->get();
+
         return view('dashboard.registrosA')
             ->with(['areas' => $area])
+            ->with(['metas' => $metas])
+            ->with(['asig' => $asig])
             ->with(['areasusuarios' => $AreasUsuarios])
             ->with(['areametas' => $areametas]);
     }
@@ -61,7 +74,7 @@ class GraficosController extends Controller
         $usuarios_b=\DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
         $tipos=\DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
         $trimestral=\DB::select('SELECT SUM(activo) AS total
-        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01" 
+        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01"
         GROUP BY MONTH(created_at) ');
         $meses=\DB::select(' SELECT MONTH(created_at) AS mes
         FROM tb_metas
@@ -69,19 +82,19 @@ class GraficosController extends Controller
         GROUP BY MONTH(created_at)
         ');
         $eneroactivos=\DB::select('SELECT SUM(activo) AS total
-        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" 
+        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31"
         GROUP BY Day(created_at) ');
         $eneroDias=\DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" GROUP BY DAY(created_at)');
         $febreroactivos=\DB::select('SELECT SUM(activo) AS total
-        FROM tb_metas WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" 
+        FROM tb_metas WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31"
         GROUP BY Day(created_at) ');
         $febreroDias=\DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" GROUP BY DAY(created_at)');
         $marzoactivos=\DB::select('SELECT SUM(activo) AS total
-        FROM tb_metas WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" 
+        FROM tb_metas WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31"
         GROUP BY Day(created_at) ');
         $marzoDias=\DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
@@ -111,22 +124,22 @@ GROUP BY tb_areas.id_area, tb_areas.nombre;');
         ->with(['programas'=>$programas])
         ->with(['usuarios'=> $usuarios])
         ->with(['usuarios_a'=>$usuarios_a]);
-        
+
     }
     public function rpdf()
     {
-            
+
         $areas=\DB::select('SELECT  abreviatura FROM tb_programas');
         $areas=\DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
         $areas= Areas::all();
 
         $pdf = PDF::loadView('Documentos.rpdf',['areas'=>$areas]);
         //----------Visualizar el PDF ------------------
-       //return $pdf->stream(); 
+       //return $pdf->stream();
        // ------Descargar el PDF------
        return $pdf->download('graficos.pdf');
 
-    
+
     }
 
 }
