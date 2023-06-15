@@ -62,7 +62,7 @@ $session_area = session('session_area');
                         <td>{{ $meta -> nombrePA }}</td>
                         <td>{{ $meta -> nombreM }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
-                        <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta->cantidad_e }}</td>
+                        <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta->cantidad_c }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
                         </td>
@@ -73,7 +73,7 @@ $session_area = session('session_area');
                         <td>{{ $meta -> nombrePA }}</td>
                         <td>{{ $meta -> nombreM }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
-                        <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta -> cantidad_e }}</td>
+                        <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_areasmetas }}"><i class="fa-solid fa-calendar"></i></button>
                         </td>
@@ -84,15 +84,17 @@ $session_area = session('session_area');
             </table>
         </div>
 <script>
-    window.addEventListener('load', ()=>{
+    window.addEventListener('DOMContentLoaded', ()=>{
         @foreach($metasCompM as $meta)
+        var cantidad_e = {{$meta->cantidad_e}};
+        var cantidad_c = {{ $meta->cantidad_c }};
             document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = {{ $meta->cantidad_e }};
 
-            if({{ $meta->cantidad_e }} > {{ $meta->cantidad_c }}){
+            if(cantidad_e > cantidad_c){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#8b67cc");
-            }else if({{ $meta -> cantidad_c }} == {{ $meta->cantidad_e }}){
+            }else if(cantidad_c == cantidad_e){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#198754");
-            }else if({{ $meta->cantidad_c }} >= Math.floor({{ $meta -> cantidad_c }}/2)){
+            }else if(cantidad_c >= Math.floor(cantidad_c/2)){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#ffc107");
                 $("#tr{{$meta -> id_areasmetas}}").css("color","black");
             }else{
@@ -160,7 +162,7 @@ $session_area = session('session_area');
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="modalshowLabel">Entrega por Mes</h1>
-            <div id="sumaTotal{{ $meta->id_areasmetas }}">/ {{ $meta->cantidadProp_c }}</div>
+            <div id="sumaTotal{{ $meta->id_areasmetas }}">0 / {{ $meta->mesesProp_c }}</div>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -226,29 +228,29 @@ $session_area = session('session_area');
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center">{{ $meta->m_enero }}</td>
+                                <td class="text-center" id="mes1{{ $meta->id_areasmetas }}"></td>
                                 <td class="text-center table-success"><input type="number" style="background-color:transparent;" name="enero" onkeyup="suma{{ $meta->id_areasmetas }}(this.value || 0)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum0{{ $meta->id_areasmetas }} border-0" value=""></td>
-                                <td class="text-center">{{ $meta->m_febrero }}</td>
+                                <td class="text-center" id="mes2{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="febrero" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum1{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta->m_marzo }}</td>
+                                <td class="text-center" id="mes3{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="marzo" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum2{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta->m_abril }}</td>
+                                <td class="text-center" id="mes4{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="abril" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum3{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta->m_mayo }}</td>
+                                <td class="text-center" id="mes5{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="mayo" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum4{{ $meta->id_areasmetas }} border-0"</td>
-                                <td class="text-center">{{ $meta -> m_junio }}</td>
+                                <td class="text-center" id="mes6{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="junio" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum5{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta -> m_julio }}</td>
+                                <td class="text-center" id="mes7{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="julio" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum6{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta -> m_agosto }}</td>
+                                <td class="text-center" id="mes8{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="agosto" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum7{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta -> m_septiembre }}</td>
+                                <td class="text-center" id="mes9{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="septiembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum8{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta -> m_octubre }}</td>
+                                <td class="text-center" id="mes10{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="octubre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum9{{ $meta->id_areasmetas }} border-0"</td>
-                                <td class="text-center">{{ $meta -> m_noviembre }}</td>
+                                <td class="text-center" id="mes11{{ $meta->id_areasmetas }}"></td>
                                 <td class=""><input type="number" style="background-color:transparent;" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum10{{ $meta->id_areasmetas }} border-0"></td>
-                                <td class="text-center">{{ $meta -> m_diciembre }}</td>
+                                <td class="text-center" id="mes12{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="diciembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum11{{ $meta->id_areasmetas }} border-0"></td>
                             </tr>
                         </tbody>
@@ -382,29 +384,29 @@ $session_area = session('session_area');
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center">{{ $meta->m_enero }}</td>
+                                <td class="text-center" id="mes1{{ $meta->id_areasmetas }}"></td>
                                 <td class="text-center table-success"><input type="number" style="background-color:transparent;" name="enero" onkeyup="suma{{ $meta->id_areasmetas }}(this.value || 0)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum0{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_enero }}"></td>
-                                <td class="text-center">{{ $meta->m_febrero }}</td>
+                                <td class="text-center" id="mes2{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;"  name="febrero" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum1{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_febrero }}"></td>
-                                <td class="text-center">{{ $meta->m_marzo }}</td>
+                                <td class="text-center" id="mes3{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="marzo" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum2{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_marzo }}"></td>
-                                <td class="text-center">{{ $meta->m_abril }}</td>
+                                <td class="text-center" id="mes4{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="abril" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum3{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_abril }}"></td>
-                                <td class="text-center">{{ $meta->m_mayo }}</td>
+                                <td class="text-center" id="mes5{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="mayo" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum4{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_mayo }}"></td>
-                                <td class="text-center">{{ $meta -> m_junio }}</td>
+                                <td class="text-center" id="mes6{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="junio" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum5{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_junio }}"></td>
-                                <td class="text-center">{{ $meta -> m_julio }}</td>
+                                <td class="text-center" id="mes7{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="julio" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum6{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_julio }}"></td>
-                                <td class="text-center">{{ $meta -> m_agosto }}</td>
+                                <td class="text-center" id="mes8{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="agosto" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum7{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_agosto }}"></td>
-                                <td class="text-center">{{ $meta -> m_septiembre }}</td>
+                                <td class="text-center" id="mes9{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="septiembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum8{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_septiembre }}"></td>
-                                <td class="text-center">{{ $meta -> m_octubre }}</td>
+                                <td class="text-center" id="mes10{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="octubre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum9{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_octubre }}"></td>
-                                <td class="text-center">{{ $meta -> m_noviembre }}</td>
+                                <td class="text-center" id="mes11{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum10{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_noviembre }}"></td>
-                                <td class="text-center">{{ $meta -> m_diciembre }}</td>
+                                <td class="text-center" id="mes12{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="diciembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum11{{ $meta->id_areasmetas }} border-0" value="{{ $meta->m_diciembre }}"></td>
                             </tr>
                         </tbody>
@@ -520,6 +522,46 @@ $session_area = session('session_area');
                 "zeroRecords": "Sin resultados encontrados",
             }
         });
+    });
+</script>
+<script>
+    window.addEventListener('load', () => {
+        @foreach($cant_Propuestas as $cantP)
+
+        var cantMeses = new Array;
+        
+        for(var i=1; i<=12; i++){
+            var mesP = document.querySelector("#mes"+i+"{{ $cantP -> id_areasmetas }}");
+            if(i == 1){
+                mesP.innerHTML = {{ $cantP -> m_enero }};
+            }else if(i==2){
+                mesP.innerHTML = {{ $cantP -> m_febrero }};
+            }else if(i==3){
+                mesP.innerHTML = {{ $cantP -> m_marzo }};
+            }else if(i==4){
+                mesP.innerHTML = {{ $cantP -> m_abril }};
+            }else if(i==5){
+                mesP.innerHTML = {{ $cantP -> m_mayo }};
+            }else if(i==6){
+                mesP.innerHTML = {{ $cantP -> m_junio }};
+            }else if(i==7){
+                mesP.innerHTML = {{ $cantP -> m_julio }};
+            }else if(i==8){
+                mesP.innerHTML = {{ $cantP -> m_agosto }};
+            }else if(i==9){
+                mesP.innerHTML = {{ $cantP -> m_septiembre }};
+            }else if(i==10){
+                mesP.innerHTML = {{ $cantP -> m_octubre }};
+            }else if(i==11){
+                mesP.innerHTML = {{ $cantP -> m_noviembre }};
+            }else if(i==12){
+                mesP.innerHTML = {{ $cantP -> m_diciembre }};
+            }else{
+                mesP.innerHTML = 0;
+            }
+        }
+
+        @endforeach
     });
 </script>
 @endsection

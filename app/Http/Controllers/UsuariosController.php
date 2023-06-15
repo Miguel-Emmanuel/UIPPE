@@ -16,7 +16,9 @@ class UsuariosController extends Controller
     public function index()
     {
         // $Usuarios = Usuarios::all();
-        $Usuarios = \DB::select('SELECT usuario.id_usuario, usuario.clave, usuario.nombre as nombreU, usuario.app, usuario.apm, usuario.gen, usuario.fn, usuario.academico, usuario.foto, usuario.email,usuario.activo,usuario.id_tipo, tipo.nombre as nombreT FROM tb_usuarios as usuario, tb_tipos as tipo WHERE usuario.id_tipo = tipo.id');
+        $Usuarios = \DB::select('SELECT usuario.id_usuario, usuario.clave, usuario.nombre as nombreU, usuario.app, usuario.apm, usuario.gen, usuario.fn, usuario.academico, usuario.foto, usuario.email,usuario.activo,usuario.id_tipo, tipo.nombre as nombreT 
+        FROM tb_usuarios as usuario, tb_tipos as tipo 
+        WHERE usuario.id_tipo = tipo.id ORDER BY usuario.id_usuario');
         $Tipos = Tipos::all('id', 'nombre');
         return view('Usuarios.index', compact('Usuarios'), compact('Tipos'));
     }

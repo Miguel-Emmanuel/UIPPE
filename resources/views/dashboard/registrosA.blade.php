@@ -140,10 +140,12 @@ $session_area = session('session_area');
 <script>
     document.addEventListener("DOMContentLoaded", ()=>{
         var url =  window.location.href;
-        url = url.charAt(url.length -1);
+        url = url.split("A/");
         var id = "{{ $session_area }}";
 
-        if(url != id){
+        if(url[1] == id){
+            
+        }else{
             window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
         }
     });

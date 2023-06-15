@@ -29,13 +29,15 @@ class CalendarizarsController extends Controller
             JOIN tb_metas as metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas as program ON program.id_programa = areasM.id_programa
             JOIN tb_calendarizars as calend on calend.areameta_id = areasM.id_areasmetas
-            JOIN tb_meses as meses on meses.id_meses = calend.meses_id');
+            JOIN tb_meses as meses on meses.id_meses = calend.meses_id
+        ORDER BY areasM.id_areasmetas');
 
         $areassinMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre AS nombreM, program.abreviatura AS nombrePA
         FROM tb_areasmetas AS areasM
             JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
-        WHERE NOT EXISTS (SELECT 1 FROM tb_calendarizars AS calend WHERE calend.areameta_id = areasM.id_areasmetas)');
+        WHERE NOT EXISTS (SELECT 1 FROM tb_calendarizars AS calend WHERE calend.areameta_id = areasM.id_areasmetas)
+        ORDER BY areasM.id_areasmetas');
 
         return view('calendario.index', compact('areasmetas', 'areasconMeses', 'areassinMeses'));
     }
@@ -43,7 +45,7 @@ class CalendarizarsController extends Controller
     public function entregasView()
     {
         // Info que se muestra en TABLAS y que contiene los registros de las metas que ya tiene una CANTIDAD PROPUESTA en cantidad Anual y mensualmente PERO NO HAN CUMPLIDO CON LA ENTREGA
-        $metasTableS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, calend.cantidad AS cantidad_c
+        $metasTableS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, calend.cantidad AS cantidad_c, meses.m_cantidad as cantidad_m
         FROM tb_areasmetas AS areasM
             JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
@@ -96,7 +98,16 @@ class CalendarizarsController extends Controller
         WHERE meses.m_cantidad >= entrega.cantidad 
         ORDER BY areasM.id_areasmetas');
 
-        return view('calendario.entregas', compact('metasTableS', 'metasModalS', 'metasCompT', 'metasCompM'));
+        $cant_Propuestas = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.unidadmedida AS medida, calend.cantidad AS cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad AS cantidad_m
+        FROM tb_areasmetas AS areasM
+            JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
+            JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
+            JOIN tb_calendarizars AS calend ON calend.areameta_id = areasM.id_areasmetas
+            JOIN tb_meses AS meses ON meses.id_meses = calend.meses_id
+        WHERE meses.m_cantidad >= calend.cantidad 
+        ORDER BY areasM.id_areasmetas');
+
+        return view('calendario.entregas', compact('metasTableS', 'metasModalS', 'metasCompT', 'metasCompM', 'cant_Propuestas'));
     }
 
     public function entregaN(Request $request)
@@ -233,10 +244,14 @@ class CalendarizarsController extends Controller
         return redirect('calendario');
     }
 
-    public function update(Calendarizars $id, Request $request)
+    public function update(AreasMetas $id, Request $request)
     {
-        $query = Calendarizars::find($id->id_areasmetas);
-        $query2 = Meses::find($query->meses_id);
+        //dd($request->all());
+        $meses = Calendarizars::where('areameta_id', "=", $id->id_areasmetas)->get();
+        $mes = $meses[0]->meses_id;
+        $calend = $meses[0]->id_calendario;
+        $query = Calendarizars::find($calend);
+        $query2 = Meses::find($mes);
 
         $Enero = intval(trim($request->enero));
         $Febrero = intval(trim($request->febrero));

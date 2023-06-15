@@ -11,7 +11,6 @@ class Calendarizars extends Model
     protected $table = 'tb_calendarizars';
     protected $primaryKey = 'id_calendario';
     protected $fillable = [
-        'id_calendario',
         'areameta_id',
         'meses_id',
         'id_registro',
