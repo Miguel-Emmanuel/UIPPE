@@ -36,97 +36,130 @@ class GraficosController extends Controller
 
     public function registrosArea($id)
     {
-        $area_2 = \DB::SELECT('SELECT * FROM tb_areas WHERE id_area = '.$id);
-        if(count($area_2) <= 0){
+        $area_2 = \DB::SELECT('SELECT * FROM tb_areas WHERE id_area = ' . $id);
+        if (count($area_2) <= 0) {
             return redirect('registros');
-        }else{
+        } else {
             $area2 = Areas::find($id);
         }
         $area = Areas::find($id);
-        $AreasUsuarios = \DB::select('SELECT COUNT(*) as AreasUsuarios FROM tb_areasusuarios WHERE area_id = '.$id);
-        $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = '.$id);
+        $AreasUsuarios = \DB::select('SELECT COUNT(*) as AreasUsuarios FROM tb_areasusuarios WHERE area_id = ' . $id);
+        $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = ' . $id);
         return view('dashboard.registrosA')
             ->with(['areas' => $area])
             ->with(['areasusuarios' => $AreasUsuarios])
             ->with(['areametas' => $areametas]);
     }
 
+    public function editArea(Request $request, Areas $id)
+    {
+        $query = Areas::find($id->id_area);
+
+        if ($request->file('foto') != '') {
+            $file = $request->file('foto');
+
+            $foto1 = $file->getClientOriginalName();
+            $ldate = date('YmdHis');
+            $foto2 = $ldate . $foto1;
+
+            \Storage::disk('local')->put($foto2, \File::get($file));
+        } else {
+            $foto2 = $query->foto;
+        }
+
+        $activo = 1;
+
+        if ($request->input('activo') == '') {
+            $activo = 0;
+        } else if ($request->input('activo') == 'ON') {
+            $activo = 1;
+        }
+
+
+        $query->clave = trim($request->clave);
+        $query->nombre = trim($request->nombre);
+        $query->descripcion = trim($request->descripcion);
+        $query->foto = $foto2;
+        $query->activo = $activo;
+        $query->id_registro = trim($request->registro);
+        $query->save();
+
+       
+        return redirect('dashboard');
+    }
+
 
     public function graficos()
     {
         $usuarios = \DB::select('SELECT gen FROM tb_usuarios GROUP BY gen');
-        $usuarios_a = \DB::select('SELECT gen, COUNT(*) AS cantidad FROM tb_usuarios GROUP BY gen' );
-       $programas=\DB::select('SELECT  abreviatura FROM tb_programas');
-        $metas=\DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
-        $usuarios_b=\DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
-        $tipos=\DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
-        $trimestral=\DB::select('SELECT SUM(activo) AS total
+        $usuarios_a = \DB::select('SELECT gen, COUNT(*) AS cantidad FROM tb_usuarios GROUP BY gen');
+        $programas = \DB::select('SELECT  abreviatura FROM tb_programas');
+        $metas = \DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
+        $usuarios_b = \DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
+        $tipos = \DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
+        $trimestral = \DB::select('SELECT SUM(activo) AS total
         FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01" 
         GROUP BY MONTH(created_at) ');
-        $meses=\DB::select(' SELECT MONTH(created_at) AS mes
+        $meses = \DB::select(' SELECT MONTH(created_at) AS mes
         FROM tb_metas
         WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01"
         GROUP BY MONTH(created_at)
         ');
-        $eneroactivos=\DB::select('SELECT SUM(activo) AS total
+        $eneroactivos = \DB::select('SELECT SUM(activo) AS total
         FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" 
         GROUP BY Day(created_at) ');
-        $eneroDias=\DB::select('SELECT DAY(created_at) AS dia
+        $eneroDias = \DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-01-01" AND created_at < "2023-01-31" GROUP BY DAY(created_at)');
-        $febreroactivos=\DB::select('SELECT SUM(activo) AS total
+        $febreroactivos = \DB::select('SELECT SUM(activo) AS total
         FROM tb_metas WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" 
         GROUP BY Day(created_at) ');
-        $febreroDias=\DB::select('SELECT DAY(created_at) AS dia
+        $febreroDias = \DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-02-01" AND created_at < "2023-02-31" GROUP BY DAY(created_at)');
-        $marzoactivos=\DB::select('SELECT SUM(activo) AS total
+        $marzoactivos = \DB::select('SELECT SUM(activo) AS total
         FROM tb_metas WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" 
         GROUP BY Day(created_at) ');
-        $marzoDias=\DB::select('SELECT DAY(created_at) AS dia
+        $marzoDias = \DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" GROUP BY DAY(created_at)');
-         $puesto=\DB::select(' SELECT COUNT(tb_usuarios.id_tipo) as id_tipo, tb_tipos.nombre
+        $puesto = \DB::select(' SELECT COUNT(tb_usuarios.id_tipo) as id_tipo, tb_tipos.nombre
          FROM tb_usuarios
          JOIN tb_tipos ON tb_usuarios.id_tipo = tb_tipos.id
          GROUP BY tb_usuarios.id_tipo, tb_tipos.nombre');
-         $areasmetas=\DB::select('SELECT tb_areas.nombre, COUNT(tb_areasmetas.meta_id) AS meta
+        $areasmetas = \DB::select('SELECT tb_areas.nombre, COUNT(tb_areasmetas.meta_id) AS meta
 FROM tb_areasmetas
 JOIN tb_areas ON tb_areasmetas.area_id = tb_areas.id_area
 GROUP BY tb_areas.id_area, tb_areas.nombre;');
-        return view ("graficos.graficos")
-        ->with(['areasmetas'=>$areasmetas])
-        ->with(['meses'=>$meses])
-        ->with(['puesto'=>$puesto])
-        ->with(['eneroactivos'=>$eneroactivos])
-        ->with(['eneroDias'=>$eneroDias])
-        ->with(['febreroactivos'=>$febreroactivos])
-        ->with(['febreroDias'=>$febreroDias])
-        ->with(['marzoactivos'=>$marzoactivos])
-        ->with(['marzoDias'=>$marzoDias])
-        ->with(['tipos'=>$tipos])
-        ->with(['trimestral'=>$trimestral])
-        ->with(['metas'=>$metas])
-        ->with(['usuarios_b'=>$usuarios_b])
-        ->with(['programas'=>$programas])
-        ->with(['usuarios'=> $usuarios])
-        ->with(['usuarios_a'=>$usuarios_a]);
-        
+        return view("graficos.graficos")
+            ->with(['areasmetas' => $areasmetas])
+            ->with(['meses' => $meses])
+            ->with(['puesto' => $puesto])
+            ->with(['eneroactivos' => $eneroactivos])
+            ->with(['eneroDias' => $eneroDias])
+            ->with(['febreroactivos' => $febreroactivos])
+            ->with(['febreroDias' => $febreroDias])
+            ->with(['marzoactivos' => $marzoactivos])
+            ->with(['marzoDias' => $marzoDias])
+            ->with(['tipos' => $tipos])
+            ->with(['trimestral' => $trimestral])
+            ->with(['metas' => $metas])
+            ->with(['usuarios_b' => $usuarios_b])
+            ->with(['programas' => $programas])
+            ->with(['usuarios' => $usuarios])
+            ->with(['usuarios_a' => $usuarios_a]);
     }
     public function rpdf()
     {
-            
-        $areas=\DB::select('SELECT  abreviatura FROM tb_programas');
-        $areas=\DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
-        $areas= Areas::all();
 
-        $pdf = PDF::loadView('Documentos.rpdf',['areas'=>$areas]);
+        $areas = \DB::select('SELECT  abreviatura FROM tb_programas');
+        $areas = \DB::select('SELECT  COUNT(*) AS conteo FROM tb_metas GROUP BY programa_id');
+        $areas = Areas::all();
+
+        $pdf = PDF::loadView('Documentos.rpdf', ['areas' => $areas]);
         //----------Visualizar el PDF ------------------
-       //return $pdf->stream(); 
-       // ------Descargar el PDF------
-       return $pdf->download('graficos.pdf');
-
-    
+        //return $pdf->stream(); 
+        // ------Descargar el PDF------
+        return $pdf->download('graficos.pdf');
     }
-
 }

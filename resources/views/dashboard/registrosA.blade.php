@@ -5,11 +5,12 @@ $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
+
 ?>
 @if($session_tipo == 5)
-    <script>
-        window.location.replace("{{ route('dashboard')}}");
-    </script>
+<script>
+    window.location.replace("{{ route('dashboard')}}");
+</script>
 @endif
 @if($session_area != 0)
 <title>Registros</title>
@@ -52,6 +53,9 @@ $session_area = session('session_area');
                             <div class="col-xl-12 col-md-12 text-center align-items-center">
                                 <img src="{{ asset('/img/post/'.$areas->foto) }}" alt="{{ $areas->foto }}" class="img-fluid">
                             </div>
+                            <div class="col-xl-12 col-md-12 text-center align-items-center">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $session_area }}">Editar datos del área</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,21 +65,21 @@ $session_area = session('session_area');
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
                                     <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #fd7e14;">
-                                                        Usuarios
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold" style="color: #fd7e14;">
-                                                        @foreach($areasusuarios as $areasusuario)
-                                                        {{ $areasusuario -> AreasUsuarios }}
-                                                        @endforeach
-                                                    </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #fd7e14;">
+                                                    Usuarios
                                                 </div>
-                                                <div class="col-auto">
-                                                    <i class="fa-solid fa-people-roof fa-2x" style="color: #fd7e14;"></i>
+                                                <div class="h5 mb-0 font-weight-bold" style="color: #fd7e14;">
+                                                    @foreach($areasusuarios as $areasusuario)
+                                                    {{ $areasusuario -> AreasUsuarios }}
+                                                    @endforeach
                                                 </div>
                                             </div>
+                                            <div class="col-auto">
+                                                <i class="fa-solid fa-people-roof fa-2x" style="color: #fd7e14;"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -88,21 +92,21 @@ $session_area = session('session_area');
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card text-bg-light border-left-primary shadow h-100 py-2 rounded-4">
                                     <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
-                                                        Metas
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-success">
-                                                        @foreach($areametas as $areameta)
-                                                        {{ $areameta -> areametas }}
-                                                        @endforeach
-                                                    </div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
+                                                    Metas
                                                 </div>
-                                                <div class="col-auto">
-                                                    <i class='bx bx-layer fa-2x text-gray-300' style="color: #027333;"></i>
+                                                <div class="h5 mb-0 font-weight-bold text-success">
+                                                    @foreach($areametas as $areameta)
+                                                    {{ $areameta -> areametas }}
+                                                    @endforeach
                                                 </div>
                                             </div>
+                                            <div class="col-auto">
+                                                <i class='bx bx-layer fa-2x text-gray-300' style="color: #027333;"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -120,34 +124,104 @@ $session_area = session('session_area');
     </div>
     @else
     <script>
-    document.addEventListener("DOMContentLoaded", ()=>{
-        var url =  window.location.href;
-        url = url.charAt(url.length -1);
-        var id = "{{ $session_area }}";
+        document.addEventListener("DOMContentLoaded", () => {
+            var url = window.location.href;
+            url = url.charAt(url.length - 1);
+            var id = "{{ $session_area }}";
 
-        if(url != id){
-            window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
-        }else if(url == 0){
-            window.location.replace("{{ route('registros')}}");
-        }else{
-            window.location.replace("{{ route('dashboard')}}");
-        }
-    });
+            if (url != id) {
+                window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
+            } else if (url == 0) {
+                window.location.replace("{{ route('registros')}}");
+            } else {
+                window.location.replace("{{ route('dashboard')}}");
+            }
+        });
     </script>
     @endif
 </div>
 
+@foreach ($areas as $info)
+<div class="modal fade" id="exampleModal{{ $session_area }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Registro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('editregistrosA', ['id' => $session_area]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $areas -> clave }}">
+                        <label for="floatingInput">Clave:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="name@example.com" value="{{ $areas -> nombre }}">
+                        <label for="floatingInput">Nombre:</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $areas -> descripcion }}">
+                        <label for="floatingInput">Descripción:</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
+                        <input class="form-control" type="file" name="foto" id="formFile" value="{{ $areas -> foto }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            @if($areas -> activo > 0)
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo" checked>
+                            @else
+                            <input class="form-check-input" type="checkbox" role="switch" name="activo">
+                            @endif
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+                        </div>
+                    </div>
+
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Editar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- EDIT MODAL END -->
+
 <script>
-    document.addEventListener("DOMContentLoaded", ()=>{
-        var url =  window.location.href;
-        url = url.charAt(url.length -1);
+    document.addEventListener("DOMContentLoaded", () => {
+        var url = window.location.href;
+        url = url.charAt(url.length - 1);
         var id = "{{ $session_area }}";
 
-        if(url != id){
+        if (url != id) {
             window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
         }
     });
-    </script>
+</script>
+
+<script>
+    $(function() {
+        $('#modalmod').modal('show')
+    });
+</script>
+<script>
+    $(function() {
+        $('#modalshow').modal('show')
+    });
+    $(function() {
+        $('#modalver').modal('show')
+    });
+    $(function() {
+        $('#eliminarmodal').modal('show')
+    });
+</script>
 
 
 @endsection
