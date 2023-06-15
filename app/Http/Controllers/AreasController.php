@@ -87,7 +87,7 @@ class AreasController extends Controller
       $activo = 1;
     }
 
-    
+
     $query->clave = trim($request->clave);
     $query->nombre = trim($request->nombre);
     $query->descripcion = trim($request->descripcion);
@@ -107,24 +107,24 @@ class AreasController extends Controller
         $query -> save();
         return redirect('areas');
     }
-    
+
     public function pdf()
     {
-            
+
 
         $areas= Areas::all();
 
         $pdf = PDF::loadView('Documentos.pdf',['areas'=>$areas]);
         //----------Visualizar el PDF ------------------
-       return $pdf->stream(); 
+       return $pdf->stream();
        // ------Descargar el PDF------
        //return $pdf->download('___libros.pdf');
 
-    
+
     }
-    public function export() 
+    public function export()
     {
         return Excel::download(new AreasExport, 'areas.xlsx');
     }
-    
+
 }

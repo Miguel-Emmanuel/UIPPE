@@ -53,7 +53,7 @@ class AreasUsuariosController extends Controller
                 'area_id' => $area_id,
                 'usuario_id' => $id_usuarios[$i],
                 'activo' => $activo,
-                'id_registro' => $id_registro
+                'id_registro' => $activo
             ));
         }
 

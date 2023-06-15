@@ -15,7 +15,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item">Registros</li>
         </ol>
     </nav>
-    
+
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
             <h3 class="text-bold">Registros</h3>

@@ -16,7 +16,7 @@ use App\Models\Programas;
 class AreasMetasController extends Controller
 {
     public function index()
-    {
+{
 
         $areasmetas = DB::table('tb_areasmetas')
             ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')

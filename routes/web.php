@@ -113,6 +113,8 @@ Route::name('registrosA') -> get('registrosA/{id}', [GraficosController::class, 
 Route::name('registros') -> get('registros', [GraficosController::class, 'registros']);
 Route::name('dashboard') -> get('dashboard', [GraficosController::class, 'dashboard']);
 Route::name('graficos')->get('graficos',[GraficosController::class, 'graficos']);
+
+Route::name('editregistrosA')->put('editregistrosA/{id}', [GraficosController::class, 'editArea']);
 Route::name('rpdf')->get('rpdf',[GraficosController::class, 'rpdf']);
 
 
