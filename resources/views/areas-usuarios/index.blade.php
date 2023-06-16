@@ -24,7 +24,6 @@ $session_area = session('session_area');
         <div class="col p-4 d-flex justify-content-end">
             <a href="{{route('pdfau')}}"><button type="button" class="btn btn-danger mx-1 my-1"><i class="fa-solid fa-file-pdf"></i></button></a>
             <a class="btn btn-success float-end mx-1 my-1" href="{{ route('areasusuarios.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
-
             <button type="button" class="btn btn-success mx-1 my-1" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">
