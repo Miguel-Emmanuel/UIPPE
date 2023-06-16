@@ -79,7 +79,7 @@ $session_area = session('session_area');
                     @elseif($meta->activo > 0)
                     <tr>
                         <td class="text-center">{{ $meta -> clave }}</td>
-                        <td>{{ $meta -> nombre }}</td>
+                        <td>{{ $meta -> nombreM }}</td>
                         <td>{{ $meta -> descripcion }}</td>
                         <td class="text-center">
                             @if($meta -> activo > 0)
@@ -120,6 +120,7 @@ $session_area = session('session_area');
     @endif
 </div>
 
+@include('metas.modales')
 @else
 <div class="container p-4">
     <div class="row">

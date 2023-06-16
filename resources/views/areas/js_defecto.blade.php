@@ -1,7 +1,5 @@
-
-
-<div id="resultado">
-    <table id="lista">
+ <div id="resultado">
+    <table class="table" id="lista">
         <thead>
             <tr>
                 <th class="text-center">Foto</th>

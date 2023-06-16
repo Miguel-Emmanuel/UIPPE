@@ -113,6 +113,7 @@ $session_area = session('session_area');
     </script>
     @endif
 </div>
+@include('programas.modales')
 
 @else
 <div class="container p-4">

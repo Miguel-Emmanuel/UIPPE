@@ -92,7 +92,7 @@ $session_area = session('session_area');
 @endif
 
 <!-- ELIMINAR START MODAL -->
-@foreach ($asig as $info )
+@foreach ($areausuario as $info )
 <div class="modal fade" id="deleteModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,7 +103,7 @@ $session_area = session('session_area');
             <div class="modal-body text-center">
                 ¿Realmente desea eliminar el registro?
                 <strong>
-                    <p>{{$info -> nombre .' | '. $info->nombreU .' '. $info->app .' '. $info->apm}}</p>
+                    <p>{{$info -> clave .' | '. $info -> nombre}}</p>
                 </strong>
             </div>
             <div class="modal-footer">
@@ -119,7 +119,7 @@ $session_area = session('session_area');
 <!-- ELIMINAR END MODAL -->
 
 <!-- SHOW MODAL START -->
-@foreach ($asig as $info)
+@foreach ($areausuario as $info)
 <div class="modal fade" id="modalshow{{ $info->id_area }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -149,6 +149,8 @@ $session_area = session('session_area');
                 <div class="col-12">
                     <p><strong>Descripción: </strong><br>{{$info -> descripcion}}</p>
                 </div>
+                <p>Nombre: {{$info -> nombre }}</p>
+                <p>Descripción: {{$info -> descripcion}}</p>
             </div>
         </div>
     </div>
@@ -158,7 +160,7 @@ $session_area = session('session_area');
 
 
 <!-- EDIT MODAL START -->
-@foreach ($asig as $info)
+@foreach ($areausuario as $info)
 <div class="modal fade" id="exampleModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -222,7 +224,7 @@ $session_area = session('session_area');
                     {!! csrf_field() !!}
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true">
+                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
@@ -233,13 +235,10 @@ $session_area = session('session_area');
 
                     <div>
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true" name="usuario_id[]">
-                            @foreach ($usuarios as $info)
-                            @if($info -> id_tipo == 3)
+                        <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
+                        @foreach ($usuarios as $info)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
-                            @else
-                            @endif
-                            @endforeach
+                        @endforeach
                         </select>
                     </div>
 
@@ -262,7 +261,6 @@ $session_area = session('session_area');
     </div>
 </div>
 <!-- ADD MODAL END -->
-
 <script>
     $(function() {
         $('#modalmod').modal('show')
@@ -282,10 +280,10 @@ $session_area = session('session_area');
 
 <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-<script type="text/javascript">
-    VirtualSelect.init({
-        ele: 'select'
-    });
-</script>
+    <script type="text/javascript">
+        VirtualSelect.init({
+            ele: 'select'
+        });
+    </script>
 
 @endsection

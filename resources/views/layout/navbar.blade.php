@@ -12,7 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/virtual-select.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
-    @yield('dataTablesCss')
 </head>
 <?php
 $session_id = session('session_id');
@@ -82,7 +81,7 @@ $session_area = session('session_area');
     <script src="https://kit.fontawesome.com/3aafa2d207.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
     @yield('dataTablesJs')
-    <script src="{{ asset('js/menu.js') }}"></script>  
+    <script src="{{ asset('js/menu.js') }}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
     <script>
         (function($) {

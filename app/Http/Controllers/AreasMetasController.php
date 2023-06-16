@@ -100,7 +100,7 @@ class AreasMetasController extends Controller
     }
     public function pdfam()
     {
-            
+
 
         $areasmetas = DB::table('tb_areasmetas')
         ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
@@ -113,18 +113,18 @@ class AreasMetasController extends Controller
 
         $pdf = PDF::loadView('Documentos.pdfam',['areasmetas'=>$areasmetas]);
         //----------Visualizar el PDF ------------------
-       return $pdf->stream(); 
+       return $pdf->stream();
        // ------Descargar el PDF------
        //return $pdf->download('___libros.pdf');
 
-    
+
     }
 
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new AreasMetasExport, 'areasmetas.xlsx');
     }
-   
+
 
 }

@@ -141,6 +141,7 @@ $session_area = session('session_area');
     @endif
 </div>
 
+@include('Usuarios.modales')
 @else
 <div class="container p-4">
     <div class="row">

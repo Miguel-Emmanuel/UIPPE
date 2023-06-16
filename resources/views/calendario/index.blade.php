@@ -20,7 +20,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Calendario</li>
         </ol>
     </nav>
-    
+
     <div class="row">
         <div class="col-12 p-4">
             <h3>Calendario Metas</h3>
@@ -164,8 +164,8 @@ $session_area = session('session_area');
 @endif
 
 
-<!-- MODAL MESES CON REGISTROS START -->
-@foreach ($areasconMeses as $meta)
+<!-- MODAL MESES START -->
+@foreach ($areasmetas as $meta)
 <div class="modal fade" id="modalshow{{ $meta->id_areasmetas }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -174,37 +174,35 @@ $session_area = session('session_area');
                 <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}"></div>
             </div>
             <div class="modal-body">
-                <form action="{{ route('calendUpdate', ['id' => $meta->id_areasmetas]) }}" method="POST" enctype="multipart/form-data"> 
-                {{ csrf_field('PATCH') }}
-                {{ method_field('PUT') }}
+                <form action="" method="" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="enero" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum0{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Enero" value="{{ $meta -> m_enero }}">
+                            <input type="number" id="sum0{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Enero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Febrero:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="febrero" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum1{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Febrero" value="{{ $meta -> m_febrero }}">
+                            <input type="number" id="sum1{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Febrero">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Marzo:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="marzo" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum2{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Marzo" value="{{ $meta -> m_marzo }}">
+                            <input type="number" id="sum2{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Marzo">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Abril:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="abril" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum3{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Abril" value="{{ $meta -> m_abril }}">
+                            <input type="number" id="sum3{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Abril">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Mayo:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="mayo" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum4{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Mayo" value="{{ $meta -> m_mayo }}">
+                            <input type="number" id="sum4{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Mayo">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -216,37 +214,37 @@ $session_area = session('session_area');
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Julio:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="julio" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum6{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Julio" value="{{ $meta -> m_julio }}">
+                            <input type="number" id="sum6{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Julio">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Agosto:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="agosto" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum7{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Agosto" value="{{ $meta -> m_agosto }}">
+                            <input type="number" id="sum7{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Agosto">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Septiembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="septiembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum8{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Septiembre" value="{{ $meta -> m_septiembre }}">
+                            <input type="number" id="sum8{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Septiembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Octubre:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="octubre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum9{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Octubre" value="{{ $meta -> m_octubre }}">
+                            <input type="number" id="sum9{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Octubre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Noviembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum10{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Noviembre" value="{{ $meta -> m_noviembre }}">
+                            <input type="number" id="sum10{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Noviembre">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Diciembre:</label>
                         <div class="col-sm-9">
-                            <input type="number" name="diciembre" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum11{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Diciembre" value="{{ $meta -> m_diciembre }}">
+                            <input type="number" id="sum11{{ $meta->id_areasmetas }}" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control" placeholder="Asignar la cantidad de Diciembre">
                         </div>
                     </div>
             </div>
@@ -267,6 +265,11 @@ $session_area = session('session_area');
         document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = {{ $meta->meses_c }};
     });
 
+    mostrar{{ $meta->id_areasmetas }} = (valor) => {
+        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
+        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = valor;
+    };
+
     var sumaT = 0;
     suma{{ $meta->id_areasmetas }} = () => {
         sumaT = 0;
@@ -275,12 +278,12 @@ $session_area = session('session_area');
             input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
         }
-        if(parseInt(sumaT) < {{ $meta -> cantidad_c }}){
+        if(parseInt(sumaT) < document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
             document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary disabled";
-        }else if(sumaT >= {{ $meta -> cantidad_c }}){
+        }else if(sumaT >= document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
             document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary";
         }else{
-            
+
         }
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
         document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").innerHTML = sumaT;
@@ -302,7 +305,7 @@ $session_area = session('session_area');
                 <div style="margin-left: 180px;" id="sumaTotal{{ $meta->id_areasmetas }}">50</div>
             </div>
             <div class="modal-body">
-                <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data"> 
+                <form action="{{ route('calendarizars.store') }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                     <div class="row mb-3">
                         <label for="colFormLabel" class="col-sm-3 col-form-label">Enero:</label>
@@ -335,8 +338,8 @@ $session_area = session('session_area');
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label">Junio:</label>
-                        <div class="col-sm-9">
+                        <label for="colFormLabel" class="col-sm-6 col-md-3 col-form-label">Junio:</label>
+                        <div class="col-sm-6 col-md-9">
                             <input type="number" name="junio" onkeyup="suma{{ $meta->id_areasmetas }}()" class="form-control sum5{{ $meta->id_areasmetas }}" placeholder="Asignar la cantidad de Junio">
                         </div>
                     </div>
@@ -382,7 +385,7 @@ $session_area = session('session_area');
                 <input class="form-control" type="text" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
                 <input class="form-control cantidad{{ $meta->id_areasmetas }}" type="text" name="cantidad" value="0" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary" id="save{{ $meta->id_areasmetas }}">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
             </form>
         </div>
@@ -390,33 +393,56 @@ $session_area = session('session_area');
 </div>
 <script>
 
+    mostrar{{ $meta->id_areasmetas }} = (valor) => {
+        document.getElementById("res{{ $meta->id_areasmetas }}").innerHTML = "/ "+valor;
+        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = valor;
+    };
+
     var sumaT = 0;
     suma{{ $meta->id_areasmetas }} = () => {
         sumaT = 0;
         var input = new Array;
         for(var i=0; i<12; i++){
-            input.push(document.querySelector(".sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
+            input.push(document.getElementById("sum"+i+"{{ $meta->id_areasmetas }}").value || 0);
             sumaT = parseInt(sumaT)+parseInt(input[i]);
-        }
 
+        }
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = "";
         document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").innerHTML = sumaT;
         document.querySelector(".cantidad{{ $meta->id_areasmetas }}").setAttribute('value', sumaT);
         document.getElementById("sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT;
-
-        if(parseInt(sumaT) < document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
-            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary disabled";
-        }else if(sumaT >= document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").value){
-            document.getElementById("save{{ $meta->id_areasmetas }}").className = "btn btn-primary";
-        }else{
-            
-        }
-
     };
-
 </script>
 @endforeach
 <!-- MODAL SIN REFISTRO EN MESES END -->
+
+<!-- MODAL DELETE START -->
+@foreach ($areasmetas as $meta)
+<div class="modal fade" id="deleteModal{{ $meta->id_areasmetas }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar registro | {{ $meta->id_areasmetas }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                ¿Realmente desea eliminar el registro?
+                <p><strong>{{ $meta->nombreM }}</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form action="{{ route('deleteMeta', ['id' => $meta->id_areasmetas]) }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field('PATCH') }}
+                    {{ method_field('PUT') }}
+                    <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- MODAL DELETE END -->
 
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
@@ -478,6 +504,7 @@ $session_area = session('session_area');
             sumaI{{ $areas->id_areasmetas }} = parseInt(sumaI{{ $areas->id_areasmetas }})+parseInt(input{{ $areas->id_areasmetas }}[i]);
         }
 
+        document.querySelector("#cantAlcanzada{{ $areas->id_areasmetas }}").innerHTML = sumaI{{ $areas->id_areasmetas }};
         var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
 
         if({{ $areas->meses_c }} > {{ $areas->cantidad_c }}){

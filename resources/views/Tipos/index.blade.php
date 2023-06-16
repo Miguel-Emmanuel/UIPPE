@@ -107,6 +107,7 @@ $session_area = session('session_area');
     </script>
     @endif
 </div>
+@include('Tipos.modales')
 
 @else
 <div class="container p-4">

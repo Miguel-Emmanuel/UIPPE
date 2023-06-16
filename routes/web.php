@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Http\Controllers\AreasController;
 use App\Http\Controllers\AreasUsuariosController;
