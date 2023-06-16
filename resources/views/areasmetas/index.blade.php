@@ -1,5 +1,6 @@
 @extends('layout.navbar')
 @section('dataTablesCss')
+<link rel="stylesheet" href="{{ asset('css/virtual-select.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
 @endsection
 @section('content')

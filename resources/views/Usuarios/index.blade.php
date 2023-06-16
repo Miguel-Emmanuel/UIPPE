@@ -155,7 +155,6 @@ $session_area = session('session_area');
     </div>
 </div>
 @endif
-@include('Usuarios.modales')
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>

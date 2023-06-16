@@ -13,7 +13,7 @@ class CalendarizarsController extends Controller
 {
     public function index()
     {
-        $areasmetas = \DB::SELECT('SELECT tb_areasmetas.id_areasmetas, tb_areasmetas.area_id, tb_metas.nombre AS nombreM, tb_programas.abreviatura AS nombrePA
+        $areasmetas = \DB::SELECT('SELECT tb_areasmetas.id_areasmetas, tb_areasmetas.area_id, tb_metas.nombre AS nombreM, tb_metas.clave, tb_programas.abreviatura AS nombrePA
         FROM tb_areasmetas
         JOIN tb_metas ON tb_areasmetas.meta_id = tb_metas.id_meta
         JOIN tb_programas ON tb_areasmetas.id_programa = tb_programas.id_programa
@@ -24,7 +24,7 @@ class CalendarizarsController extends Controller
         WHERE meses.m_cantidad >= calend.cantidad)
         ORDER BY tb_areasmetas.id_areasmetas');
 
-        $areasconMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre as nombreM, program.abreviatura as nombrePA, calend.meses_id, calend.cantidad as cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad as meses_c
+        $areasconMeses = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, areasM.objetivo, metas.nombre as nombreM, metas.clave, program.abreviatura as nombrePA, calend.meses_id, calend.cantidad as cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad as meses_c
         FROM tb_areasmetas as areasM 
             JOIN tb_metas as metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas as program ON program.id_programa = areasM.id_programa
@@ -45,7 +45,7 @@ class CalendarizarsController extends Controller
     public function entregasView()
     {
         // Info que se muestra en TABLAS y que contiene los registros de las metas que ya tiene una CANTIDAD PROPUESTA en cantidad Anual y mensualmente PERO NO HAN CUMPLIDO CON LA ENTREGA
-        $metasTableS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, calend.cantidad AS cantidad_c, meses.m_cantidad as cantidad_m
+        $metasTableS = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.clave, calend.cantidad AS cantidad_c, meses.m_cantidad as cantidad_m
         FROM tb_areasmetas AS areasM
             JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
@@ -77,7 +77,7 @@ class CalendarizarsController extends Controller
         ORDER BY areasM.id_areasmetas');
 
         // Info que se muesta en TABLA SUPERIOR y que contiene los registros de las metas que ya tienen REGISTRO DE ENTREGAS EN MESES Anual y mensualmente
-        $metasCompT = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c
+        $metasCompT = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.clave, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c
         FROM tb_areasmetas AS areasM
             JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas AS program ON program.id_programa = areasM.id_programa

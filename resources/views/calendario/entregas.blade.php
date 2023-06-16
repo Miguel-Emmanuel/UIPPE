@@ -47,8 +47,8 @@ $session_area = session('session_area');
             <table class="table" id="entregasComp">
                 <thead>
                     <th class="text-center">Clave</th>
+                    <th>Nombre Meta</th>
                     <th>Programa</th>
-                    <th>Meta</th>
                     <th class="text-center">Cantidad Propuesta</th>
                     <th class="text-center">Cantidad Alcanzada</th>
                     <th class="text-center">Acciones</th>
@@ -58,9 +58,9 @@ $session_area = session('session_area');
                     @foreach($metasCompT as $meta)
                     @if($session_area == $meta->area_id)
                     <tr style="background-color: #dc3545; color: white;" id="tr{{ $meta->id_areasmetas }}">
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
+                        <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
+                        <td>{{ $meta -> nombrePA }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta->cantidad_c }}</td>
                         <td class="text-center">
@@ -69,9 +69,9 @@ $session_area = session('session_area');
                     </tr>
                     @elseif($session_area == 0)
                     <tr style="background-color: #dc3545; color: white;" id="tr{{ $meta->id_areasmetas }}">
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
+                        <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
+                        <td>{{ $meta -> nombrePA }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center">
@@ -134,8 +134,8 @@ $session_area = session('session_area');
                 <!-- Campos en tablas metas  -->
                 <thead>
                     <th class="text-center">Clave</th>
+                    <th>Nombre</th>
                     <th>Programa</th>
-                    <th>Meta</th>
                     <th class="text-center">Cantidad Propuesta</th>
                     <th class="text-center">Cantidad Alcanzada</th>
                     <th class="text-center">Acciones</th>
@@ -145,9 +145,9 @@ $session_area = session('session_area');
                     @foreach($metasTableS as $meta)
                     @if($session_area == $meta->area_id)
                     <tr style="background-color: #dc3545; color: white;" id="tr{{ $meta->id_areasmetas }}">
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
+                        <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
+                        <td>{{ $meta -> nombrePA }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">0</td>
                         <td class="text-center">
@@ -156,9 +156,9 @@ $session_area = session('session_area');
                     </tr>
                     @elseif($session_area == 0)
                     <tr style="background-color: #dc3545; color: white;" id="tr{{ $meta->id_areasmetas }}">
-                        <td class="text-center">{{ $meta -> id_areasmetas }}</td>
-                        <td>{{ $meta -> nombrePA }}</td>
+                        <td class="text-center">{{ $meta -> clave }}</td>
                         <td>{{ $meta -> nombreM }}</td>
+                        <td>{{ $meta -> nombrePA }}</td>
                         <td class="text-center">{{ $meta -> cantidad_c }}</td>
                         <td class="text-center" id="sumaT{{ $meta->id_areasmetas }}">0</td>
                         <td class="text-center">

@@ -19,10 +19,7 @@ $session_area = session('session_area');
         <div class="col p-4">
             <h3>Áreas</h3>
         </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" placeholder="Ejemplo: SIPRE" name="busca" id="busca" >
-            <label for="floatingInput">Buscar Registro</label>
-        </div>
+
         <div class="col p-4 d-flex justify-content-end">
             <a href="{{route('pdf')}}" class="mx-1 my-1"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
             <a class="btn btn-success float-end mx-1 my-1" href="{{ route('areas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
@@ -43,7 +40,7 @@ $session_area = session('session_area');
                 </thead>
                 <tbody>
                     @foreach($areas as $info)
-                    @if($session_id != 3)
+                    @if($session_area === 0)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->clave}}</td>
@@ -73,7 +70,7 @@ $session_area = session('session_area');
                             @endif
                         </td>
                     </tr>
-                    @elseif($info -> activo > 0)
+                    @elseif($session_area === $info->id_area)
                     <tr>
                         <td class="text-center"><img src="{{ asset('img/post/'.$info-> foto) }}" alt="{{ $info->foto }}" style="width: 50px; border-radius: 15px;"></td>
                         <td>{{ $info->clave}}</td>
@@ -103,7 +100,6 @@ $session_area = session('session_area');
                             @endif
                         </td>
                     </tr>
-                    @else
                     @endif
                     @endforeach
                 </tbody>
@@ -111,7 +107,6 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-
 @else
 <script>
     window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
@@ -251,7 +246,7 @@ $session_area = session('session_area');
                     @include('components.flash_alerts')
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com">
-                    <label for="floatingInput">Clave:</label>
+                        <label for="floatingInput">Clave:</label>
                         @error('clave')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
@@ -288,6 +283,7 @@ $session_area = session('session_area');
             </form>
         </div>
     </div>
+
 </div>
 <!-- ADD MODAL END -->
 <script>

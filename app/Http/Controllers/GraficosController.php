@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use App\Models\Tipos;
 use App\Models\Areas;
 use App\Models\AreasMetas;
 use App\Models\AreasUsuarios;
@@ -44,24 +45,38 @@ class GraficosController extends Controller
                         $area2 = Areas::find($id);
                 }
                 $area = Areas::find($id);
-                $metas = \DB::select('SELECT meta.id_meta, meta.clave, meta.nombre as nombreM,
-        meta.descripcion, meta.unidadmedida, meta.programa_id, meta.activo,
-        meta.id_registro, programa.nombre as nombreP, programa.abreviatura as nombrePA FROM tb_metas as meta,
-        tb_programas as programa,tb_areasusuarios as AU WHERE meta.programa_id = programa.id_programa AND AU.area_id = ' . $id);
+                $metas = \DB::select('SELECT meta.id_meta, meta.clave, meta.nombre AS nombreM, meta.descripcion, meta.unidadmedida, meta.activo, programa.nombre AS nombreP, programa.abreviatura AS nombrePA, areas.id_area
+                FROM tb_metas AS meta
+                        JOIN tb_areasmetas AS areasM ON areasM.meta_id = meta.id_meta
+                        JOIN tb_programas AS programa ON areasM.id_programa = programa.id_programa
+                        JOIN tb_areas AS areas ON areas.id_area = areasM.area_id
+                WHERE areasM.area_id = '.$id);
                 $AreasUsuarios = \DB::select('SELECT * FROM tb_areasusuarios WHERE area_id = ' . $id);
                 $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = ' . $id);
-                $asig = AreasUsuarios::select('tb_areas.id_area', 'tb_areas.clave', 'tb_areas.nombre', 'tb_areas.descripcion', 'tb_areas.activo', ('tb_usuarios.nombre AS nombreU'), 'tb_usuarios.app', 'tb_usuarios.apm', 'tb_usuarios.gen', 'tb_usuarios.fn', 'tb_usuarios.email', 'tb_usuarios.foto')
+                $asig = AreasUsuarios::select('tb_areas.id_area', 'tb_areas.clave', 'tb_areas.nombre', 'tb_areas.descripcion', 'tb_areas.activo', 'tb_usuarios.id_usuario', ('tb_usuarios.nombre AS nombreU'), 'tb_usuarios.app', 'tb_usuarios.apm', 'tb_usuarios.gen', 'tb_usuarios.fn', 'tb_usuarios.email', 'tb_usuarios.foto', ('tb_usuarios.activo AS activoUs'))
                         ->join('tb_areas', 'tb_areasusuarios.area_id',  'tb_areas.id_area')
                         ->join('tb_usuarios', 'tb_areasusuarios.usuario_id', 'tb_usuarios.id_usuario')
                         ->where('tb_areasusuarios.area_id', '=', $id)
                         ->get();
-
+                $Usuarios = AreasUsuarios::select('usuario.id_usuario', 'usuario.clave', ('usuario.nombre as nombreU'), 'usuario.app', 'usuario.apm', 'usuario.gen', 'usuario.fn', 'usuario.academico', 'usuario.foto', 'usuario.email', 'usuario.activo', 'usuario.id_tipo', ('tipo.nombre as nombreT'))
+                        ->join(('tb_usuarios AS usuario'), 'tb_areasusuarios.usuario_id', 'usuario.id_usuario')
+                        ->join(('tb_tipos as tipo'), 'usuario.id_tipo', 'tipo.id')
+                        ->join('tb_areas', 'tb_areasusuarios.area_id',  'tb_areas.id_area')
+                        ->where('tb_areasusuarios.area_id', '=', $id)
+                        ->get();
+                $Tipos = Tipos::all('id', 'nombre');
+                $usuarios = Usuarios::all('id_usuario', 'nombre', 'app', 'apm', 'id_tipo');
+                $areasMulti = Areas::all('id_area', 'nombre');
                 return view('dashboard.registrosA')
                         ->with(['areas' => $area])
                         ->with(['metas' => $metas])
                         ->with(['asig' => $asig])
                         ->with(['areasusuarios' => $AreasUsuarios])
-                        ->with(['areametas' => $areametas]);
+                        ->with(['areametas' => $areametas])
+                        ->with(['Usuarios' => $Usuarios])
+                        ->with(['Tipos' => $Tipos])
+                        ->with(['usuarios' => $usuarios])
+                        ->with(['areasMulti' => $areasMulti]);
         }
 
         public function editArea(Request $request, Areas $id)

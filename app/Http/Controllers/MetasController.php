@@ -6,8 +6,7 @@ use App\Models\Metas;
 use App\Models\Programas;
 use Illuminate\Http\Request;
 use PDF;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\MetasExport;
+use PhpOffice\PhpSpreadsheet\Writer\Ods\Meta;
 
 class MetasController extends Controller
 {
@@ -107,26 +106,4 @@ class MetasController extends Controller
         $query -> save();
         return redirect('metas');
     }
-
-
-    public function pdfm()
-    {
-
-
-        $metas = \DB::select('SELECT meta.id_meta, meta.clave, meta.nombre as nombreM, meta.descripcion, meta.unidadmedida, meta.programa_id, meta.activo, meta.id_registro, programa.nombre as nombreP, programa.abreviatura as nombrePA FROM tb_metas as meta, tb_programas as programa WHERE meta.programa_id = programa.id_programa');
-
-
-        $pdf = PDF::loadView('Documentos.pdfm',['metas'=>$metas]);
-        //----------Visualizar el PDF ------------------
-       return $pdf->stream();
-       // ------Descargar el PDF------
-       //return $pdf->download('___libros.pdf');
-
-
-    }
-    public function export()
-    {
-        return Excel::download(new MetasExport, 'metas.xlsx');
-    }
-
 }

@@ -1,4 +1,7 @@
 @extends('layout.navbar')
+@section('dataTablesCss')
+<link rel="stylesheet" href="{{ asset('css/virtual-select.min.css') }}">
+@endsection
 @section('content')
 <?php
 $session_id = session('session_id');
