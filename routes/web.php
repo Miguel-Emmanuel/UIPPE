@@ -188,4 +188,4 @@ Route::name('pdft')->get('pdft',[TiposController::class, 'pdft']);
 Route::name('pdfu')->get('pdfu',[UsuariosController::class, 'pdfu']);
 Route::name('pdfau')->get('pdfau',[AreasUsuariosController::class, 'pdfau']);
 Route::name('pdfp')->get('pdfp',[ProgramasController::class, 'pdfp']);
-Route::name('pdfm')->get('pdfm',[MetasController::class, 'pdfm']);
+Route::name('pdfmetas')->get('pdfmetas',[MetasController::class, 'pdfm']);

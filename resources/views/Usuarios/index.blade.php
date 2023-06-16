@@ -1,4 +1,7 @@
 @extends('layout.navbar')
+@section('dataTablesCss')
+<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+@endsection
 @section('content')
 <?php
 $session_id = session('session_id');
@@ -19,12 +22,12 @@ $session_area = session('session_area');
             <h3>Usuarios</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
-        <a href="{{route('pdfu')}}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
-        <a class="btn btn-success float-end" href="{{ route('usuarios.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
-            <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
+            <a href="{{route('pdfu')}}"><button type="button" class="btn btn-danger mx-1 my-1"><i class="fa-solid fa-file-pdf"></i></button></a>
+            <a class="btn btn-success float-end mx-1 my-1 " href="{{ route('usuarios.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
+            <button type="button" class="btn btn-success mx-1 my-1" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table display" id="userTable" style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-center">Foto</th>
@@ -35,7 +38,9 @@ $session_area = session('session_area');
                         <th>Académico</th>
                         <th>Email</th>
                         <th>Activo</th>
-                        <th class="text-center" colspan="3">Acciones</th>
+                        <th class="text-center">Acciones</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,15 +69,15 @@ $session_area = session('session_area');
                             <p style="color: red;">Inactivo</p>
                             @endif
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button show modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $usuario->id_usuario }}"><i class="fa-solid fa-eye"></i></button>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button edit modal -->
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <!-- Button delete modal -->
                             @if($usuario -> activo > 0)
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $usuario->id_usuario }}"><i class="fa-solid fa-trash"></i></button>
@@ -150,4 +155,28 @@ $session_area = session('session_area');
 </div>
 @endif
 @include('Usuarios.modales')
+@section('dataTablesJs')
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#userTable').DataTable({
+            "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
+            ordering: false,
+            info: false,
+            language:{
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "zeroRecords": "Sin resultados encontrados",
+            }
+        });
+    });
+</script>
+@endsection
 @endsection

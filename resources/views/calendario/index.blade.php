@@ -465,6 +465,7 @@ $session_area = session('session_area');
     
     window.addEventListener('DOMContentLoaded', () => {
     @foreach($areasconMeses as $areas)
+    @if($session_area == $areas->area_id)
         document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").setAttribute('value', '{{ $areas -> meses_c }}');
         document.getElementById("cantidad{{ $areas->id_areasmetas }}").value = {{ $areas -> meses_c }};
         document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").innerHTML = "{{ $areas -> meses_c }}";
@@ -492,6 +493,35 @@ $session_area = session('session_area');
 
         document.getElementById("sumaTotal{{ $areas->id_areasmetas }}").innerHTML = "";
         document.getElementById("sumaTotal{{ $areas->id_areasmetas }}").innerHTML = sumaI{{ $areas->id_areasmetas }};
+    @elseif($session_area == 0)
+    document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").setAttribute('value', '{{ $areas -> meses_c }}');
+        document.getElementById("cantidad{{ $areas->id_areasmetas }}").value = {{ $areas -> meses_c }};
+        document.querySelector("#cantEntrega{{ $areas->id_areasmetas }}").innerHTML = "{{ $areas -> meses_c }}";
+
+        var sumaI{{ $areas->id_areasmetas }} = 0;
+        var input{{ $areas->id_areasmetas }} = new Array;
+
+        for(var i=0; i<12; i++){
+            input{{ $areas->id_areasmetas }}.push(document.querySelector(".sum"+i+"{{ $areas->id_areasmetas }}").value || 0);
+            sumaI{{ $areas->id_areasmetas }} = parseInt(sumaI{{ $areas->id_areasmetas }})+parseInt(input{{ $areas->id_areasmetas }}[i]);
+        }
+
+        var tr = document.querySelector("#tr{{$areas -> id_areasmetas}}");
+
+        if({{ $areas->meses_c }} > {{ $areas->cantidad_c }}){
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#8b67cc");
+        }else if({{ $areas -> cantidad_c }} == sumaI{{ $areas->id_areasmetas }}){
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#198754");
+        }else if(sumaI{{ $areas->id_areasmetas }} >= Math.floor({{ $areas -> cantidad_c }}/2)){
+            $("#tr{{$areas -> id_areasmetas}}").css("background-color","#ffc107");
+            $("#tr{{$areas -> id_areasmetas}}").css("color","black");
+        }else{
+
+        }
+
+        document.getElementById("sumaTotal{{ $areas->id_areasmetas }}").innerHTML = "";
+        document.getElementById("sumaTotal{{ $areas->id_areasmetas }}").innerHTML = sumaI{{ $areas->id_areasmetas }};
+    @endif
     @endforeach
     });
 

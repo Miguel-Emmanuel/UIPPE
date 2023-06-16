@@ -53,7 +53,7 @@ $session_area = session('session_area');
                             <div class="col-xl-12 col-md-12 text-center align-items-center">
                                 <img src="{{ asset('/img/post/'.$areas->foto) }}" alt="{{ $areas->foto }}" class="img-fluid">
                             </div>
-                            <div class="col-xl-12 col-md-12 text-center align-items-center">
+                            <div class="col-xl-12 col-md-12 text-center align-items-center my-5">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $session_area }}">Editar datos del área</button>
                             </div>
                         </div>
@@ -122,19 +122,17 @@ $session_area = session('session_area');
         </div>
         @endif
     </div>
-    @else
+    @else  
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            var url = window.location.href;
-            url = url.charAt(url.length - 1);
+        document.addEventListener("DOMContentLoaded", ()=>{
+            var url =  window.location.href;
+            url = url.split("A/");
             var id = "{{ $session_area }}";
 
-            if (url != id) {
+            if(url[1] == id){
+                
+            }else{
                 window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
-            } else if (url == 0) {
-                window.location.replace("{{ route('registros')}}");
-            } else {
-                window.location.replace("{{ route('dashboard')}}");
             }
         });
     </script>
@@ -194,19 +192,6 @@ $session_area = session('session_area');
 @endforeach
 <!-- EDIT MODAL END -->
 
-<script>
-    document.addEventListener("DOMContentLoaded", ()=>{
-        var url =  window.location.href;
-        url = url.split("A/");
-        var id = "{{ $session_area }}";
-
-        if(url[1] == id){
-            
-        }else{
-            window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
-        }
-    });
-</script>
 
 <script>
     $(function() {

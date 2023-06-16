@@ -86,6 +86,7 @@ $session_area = session('session_area');
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
         @foreach($metasCompM as $meta)
+        @if($session_area == $meta->area_id)
         var cantidad_e = {{$meta->cantidad_e}};
         var cantidad_c = {{ $meta->cantidad_c }};
             document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = {{ $meta->cantidad_e }};
@@ -100,6 +101,22 @@ $session_area = session('session_area');
             }else{
 
         }
+        @elseif($session_area == 0)
+        var cantidad_e = {{$meta->cantidad_e}};
+        var cantidad_c = {{ $meta->cantidad_c }};
+            document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = {{ $meta->cantidad_e }};
+
+            if(cantidad_e > cantidad_c){
+                $("#tr{{$meta -> id_areasmetas}}").css("background-color","#8b67cc");
+            }else if(cantidad_c == cantidad_e){
+                $("#tr{{$meta -> id_areasmetas}}").css("background-color","#198754");
+            }else if(cantidad_c >= Math.floor(cantidad_c/2)){
+                $("#tr{{$meta -> id_areasmetas}}").css("background-color","#ffc107");
+                $("#tr{{$meta -> id_areasmetas}}").css("color","black");
+            }else{
+
+        }
+        @endif
         @endforeach
     });
 </script>

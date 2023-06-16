@@ -1,4 +1,7 @@
 @extends('layout.navbar')
+@section('dataTablesCss')
+<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+@endsection
 @section('content')
 <?php
 $session_id = session('session_id');
@@ -20,13 +23,13 @@ $session_area = session('session_area');
             <h3>Metas</h3>
         </div>
         <div class="col p-4 d-flex justify-content-end">
-        <a href="{{route('pdfm')}}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-file-pdf"></i></button>
-            <a class="btn btn-success float-end" href="{{ route('metas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
+            <a href="{{ route('pdfmetas') }}"><button type="button" class="btn btn-danger mx-1 my-1"><i class="fa-solid fa-file-pdf"></i></button></a>
+            <a class="btn btn-success float-end mx-1 my-1" href="{{ route('metas.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
            
-            <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
+            <button type="button" class="btn btn-success mx-1 my-1" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="metasTable">
                 <thead>
                     <!-- Campos en tabla metas -->
                     <tr>
@@ -35,7 +38,9 @@ $session_area = session('session_area');
                         <th>Programa</th>
                         <th class="text-center">Activo</th>
                         <th>Registro</th>
-                        <th class="text-center" colspan="3">Acciones</th>
+                        <th class="text-center">Acciones</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,6 +133,29 @@ $session_area = session('session_area');
     </div>
 </div>
 @endif
-
 @include('metas.modales')
+@section('dataTablesJs')
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#metasTable').DataTable({
+            "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todo"]],
+            ordering: false,
+            info: false,
+            language:{
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "zeroRecords": "Sin resultados encontrados",
+            }
+        });
+    });
+</script>
+@endsection
 @endsection
