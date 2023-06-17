@@ -45,7 +45,7 @@
                                             </div>
 
                                             <div class="my-3">
-                                                <span><a href="/recuperacion">Recuperar Contraseña</a></span>
+                                                <span><a href="{{('recuperacion')}}">Recuperar Contraseña</a></span>
                                             </div>
                                             <br>
                                             <div class="d-grid">
