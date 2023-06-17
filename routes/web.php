@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Http\Controllers\AreasController;
 use App\Http\Controllers\AreasUsuariosController;
@@ -39,10 +39,49 @@ use Laravel\SerializableClosure\Serializers\Signed;
 
 */
 
+Route::get('/storageLink', function() {
+    $e = Artisan::call('storage:link');
+
+    return $e;
+ });
+
+ Route::get('/pwd', function() {
+    $currentPath = getcwd(); // Obtiene la ruta actual
+     $basePath = base_path(); // Obtiene la ruta del directorio raíz de Laravel
+     $relativePath = str_replace($basePath, '', $currentPath); // Elimina la ruta del directorio raíz de Laravel para obtener la ruta relativa actual
+
+     echo $relativePath;
+ });
+
+ // Código para borrar el caché del sistema.
+ Route::get('/clear-cache', function() {
+     $exitCode = Artisan::call('cache:clear');
+     return 'Application cache cleared';
+ });
+
+  // Eliminación del caché en las rutas.
+  Route::get('/route-cache', function() {
+     $exitCode = Artisan::call('route:cache');
+     return 'Routes cache cleared';
+ });
+
+ // Eliminación del caché en la configuración.
+ Route::get('/config-cache', function() {
+     $exitCode = Artisan::call('config:cache');
+     return 'Config cache cleared';
+ });
+
+ // Eliminación del caché en la vista.
+ Route::get('/view-clear', function() {
+     $exitCode = Artisan::call('view:clear');
+     return 'View cache cleared';
+ });
+
+
+
 // Vistas sin controlador START
 Route::get('/', function () {
     return view('sesiones/login');
-   // return view('dashboard.dashboard');
 });
 
  Route::get('graficos', function () {
@@ -99,7 +138,6 @@ Route::name('deleteProgram')->put('deleteProgram/{id}',[ProgramasController::cla
 
 Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
 Route::name('deleteTip')->put('deleteTip/{id}',[TiposController::class, 'destroy']);
-Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);
 
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
 Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
