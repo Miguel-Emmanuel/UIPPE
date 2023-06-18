@@ -13,7 +13,6 @@ class AreasUsuarios extends Model
     protected $fillable = [
         'area_id',
         'usuario_id',
-        'activo',
         'id_registro'
     ];
 }

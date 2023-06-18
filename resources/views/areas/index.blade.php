@@ -278,6 +278,7 @@ $session_area = session('session_area');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input class="form-control" type="hidden" name="registro" value="<?php echo $session_id ?>">
                 <input type="submit" href="usuarios/store" class="btn btn-success" value="Enviar" />
             </div>
             </form>

@@ -6,6 +6,7 @@
 <?php
 $session_id = session('session_id');
 $session_area = session('session_area');
+$session_tipo = session('session_tipo');
 ?>
 @if($session_id)
 <title>Metas</title>
@@ -37,7 +38,9 @@ $session_area = session('session_area');
                         <th>Nombre</th>
                         <th>Programa</th>
                         <th class="text-center">Activo</th>
+                        @if($session_tipo == 1)
                         <th>Registro</th>
+                        @endif
                         <th class="text-center">Acciones</th>
                         <th></th>
                         <th></th>
@@ -58,7 +61,9 @@ $session_area = session('session_area');
                             <p style="color: red;">Inactivo</p>
                             @endif
                         </td>
+                        @if($session_tipo == 1)
                         <td>{{ $meta -> id_registro }}</td>
+                        @endif
                         <td class="text-center">
                             <!-- Button show modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $meta->id_meta }}"><i class="fa-solid fa-eye"></i></button>

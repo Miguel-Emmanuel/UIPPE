@@ -263,7 +263,9 @@
                         <select class="form-control form-select" aria-label="Default select example" name="id_tipo">
                             <option value="">Elige al tipo de usuario</option>
                             @foreach($Tipos as $info)
+                            @if($info->activo > 0)
                             <option value={{$info->id}}>{{$info->nombre}}</option>
+                            @endif
                             @endforeach
                         </select>
                         <hr>

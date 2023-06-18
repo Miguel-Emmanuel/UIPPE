@@ -24,7 +24,6 @@ $session_area = session('session_area');
         <div class="col p-4 d-flex justify-content-end">
             <a href="{{route('pdfau')}}"><button type="button" class="btn btn-danger mx-1 my-1"><i class="fa-solid fa-file-pdf"></i></button></a>
             <a class="btn btn-success float-end mx-1 my-1" href="{{ route('areasusuarios.export') }}"><i class="fa-sharp fa-solid fa-file-excel"></i></a>
-
             <button type="button" class="btn btn-success mx-1 my-1" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="table-responsive">
@@ -34,8 +33,7 @@ $session_area = session('session_area');
                         <th>#</th>
                         <th>Area</th>
                         <th>Usuario</th>
-                        <th>Activo</th>
-                        <th colspan="3" class="text-center">Registro</th>
+                        <th colspan="2" class="text-center">Registro</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,28 +42,13 @@ $session_area = session('session_area');
                         <td>{{ $info->id_area}}</td>
                         <td>{{ $info->nombre}}</td>
                         <td>{{ $info->nombreU .' '. $info->app .' '. $info->apm}}</td>
-                        <td>
-                            @if($info -> activo > 0)
-                            <p style="color: green;">Activo</p>
-                            @else
-                            <p style="color: red;">Inactivo</p>
-                            @endif
-                        </td>
                         <td class="text-center">
                             <!-- Button show modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_area }}"><i class="fa-solid fa-eye"></i></button>
-                        </td>
-                        <td class="text-center">
-                            <!-- Button modif modal -->
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $info->id_area }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalshow{{ $info->id_areasusuarios }}"><i class="fa-solid fa-eye"></i></button>
                         </td>
                         <td class="text-center">
                             <!-- Button delete modal -->
-                            @if($info -> activo > 0)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @else
-                            <button type="button" class="btn btn-dark" disabled data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_area }}"><i class="fa-solid fa-trash"></i></button>
-                            @endif
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $info->id_areasusuarios }}"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     @endforeach
@@ -95,24 +78,26 @@ $session_area = session('session_area');
 @endif
 
 <!-- ELIMINAR START MODAL -->
-@foreach ($areausuario as $info )
-<div class="modal fade" id="deleteModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+@foreach ($asig as $info )
+<div class="modal fade" id="deleteModal{{ $info->id_areasusuarios }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar Área</h1>
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Eliminar Área | {{ $info->id_areasusuarios }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
                 ¿Realmente desea eliminar el registro?
                 <strong>
-                    <p>{{$info -> clave .' | '. $info -> nombre}}</p>
+                    <p>{{$info -> nombre .' | '. $info->nombreU .' '. $info->app .' '. $info->apm}}</p>
                 </strong>
             </div>
             <div class="modal-footer">
-                <a href="#">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-                </a>
+            <form action="{{ route('deleteAreaUser', ['id' => $info->id_areasusuarios]) }}" method="POST" enctype="multipart/form-data">
+                {!! csrf_field() !!}
+                @method("delete")
+                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
+            </form>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -122,8 +107,8 @@ $session_area = session('session_area');
 <!-- ELIMINAR END MODAL -->
 
 <!-- SHOW MODAL START -->
-@foreach ($areausuario as $info)
-<div class="modal fade" id="modalshow{{ $info->id_area }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
+@foreach ($modalDetalle as $info)
+<div class="modal fade" id="modalshow{{ $info->id_areasusuarios }}" tabindex="-1" aria-labelledby="modalshowLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,7 +120,7 @@ $session_area = session('session_area');
                     <img src="{{ asset('img/post/'.$info->foto) }}" alt="{{ $info -> foto }}" style="width: 150px;">
                 </div>
                 <div class="col">
-                    <p><strong>Nombre: </strong><br>{{$info -> nombreU .' '. $info->app .' '. $info->apm}}</p>
+                    <p><strong>Nombre: </strong><br>{{$info -> nombre .' '. $info->app .' '. $info->apm}}</p>
                     <p><strong>Correo Electrónico: </strong><br>{{ $info -> email }}</p>
                     <p><strong>Fecha de nacimiento: </strong><br>{{$info -> fn}}</p>
                 </div>
@@ -147,72 +132,17 @@ $session_area = session('session_area');
                     <p><strong>Clave: </strong><br>{{$info -> clave}}</p>
                 </div>
                 <div class="col-6 text-center">
-                    <p><strong>Nombre: </strong><br>{{ $info -> nombre }}</p>
+                    <p><strong>Nombre: </strong><br>{{ $info -> nombreA }}</p>
                 </div>
                 <div class="col-12">
                     <p><strong>Descripción: </strong><br>{{$info -> descripcion}}</p>
                 </div>
-                <p>Nombre: {{$info -> nombre }}</p>
-                <p>Descripción: {{$info -> descripcion}}</p>
             </div>
         </div>
     </div>
 </div>
 @endforeach
 <!-- SHOW MODAL END -->
-
-
-<!-- EDIT MODAL START -->
-@foreach ($areausuario as $info)
-<div class="modal fade" id="exampleModal{{ $info->id_area }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Registro</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="POST" enctype="multipart/form-data">
-                    {{ csrf_field('PATCH') }}
-                    {{ method_field('PUT') }}
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="clave" placeholder="name@example.com" value="{{ $info -> clave }}">
-                        <label for="floatingInput">Clave:</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="name@example.com" value="{{ $info -> nombre }}">
-                        <label for="floatingInput">Nombre:</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="name@example.com" value="{{ $info -> descripcion }}">
-                        <label for="floatingInput">Descripción:</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Seleccione una foto de perfil:</label>
-                        <input class="form-control" type="file" name="foto" id="formFile" value="{{ $info->foto}}">
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check form-switch">
-                            @if($info -> activo > 0)
-                            <input class="form-check-input" type="checkbox" role="switch" name="activo" checked>
-                            @else
-                            <input class="form-check-input" type="checkbox" role="switch" name="activo">
-                            @endif
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Editar</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
-<!-- EDIT MODAL END -->
-
 
 <!-- ADD MODAL START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
@@ -227,7 +157,7 @@ $session_area = session('session_area');
                     {!! csrf_field() !!}
                     <div>
                         <label for="floatingInput">Selecciona un area:</label>
-                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true" >
+                        <select name="area_id" id="area_id" aria-label="floating label selext example" data-search="true" data-silent-initial-value-set="true">
                             @foreach ($areas as $info)
                             <option value="{{$info->id_area}}">{{$info->nombre}}</option>
                             @endforeach
@@ -238,10 +168,10 @@ $session_area = session('session_area');
 
                     <div>
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true"  name="usuario_id[]">
-                        @foreach ($usuarios as $info)
+                        <select multiple data-search="true" data-silent-initial-value-set="true" name="usuario_id[]">
+                            @foreach ($usuarios as $info)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
-                        @endforeach
+                            @endforeach
                         </select>
                     </div>
 
@@ -256,7 +186,7 @@ $session_area = session('session_area');
                     <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <input type="submit" href="usuarios/store" class="btn btn-success" value="Enviar" />
             </div>
             </form>
@@ -264,6 +194,7 @@ $session_area = session('session_area');
     </div>
 </div>
 <!-- ADD MODAL END -->
+
 <script>
     $(function() {
         $('#modalmod').modal('show')
@@ -283,10 +214,10 @@ $session_area = session('session_area');
 
 <script type="text/javascript" src="js/virtual-select.min.js"></script>
 
-    <script type="text/javascript">
-        VirtualSelect.init({
-            ele: 'select'
-        });
-    </script>
+<script type="text/javascript">
+    VirtualSelect.init({
+        ele: 'select'
+    });
+</script>
 
 @endsection

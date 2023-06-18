@@ -88,7 +88,7 @@ class CalendarizarsController extends Controller
         ORDER BY areasM.id_areasmetas');
 
         //Info que se muestra EN MODALES DE LA TABLA SUPERIOR y que contiene la cantidad mensual de las entregas según la meta
-        $metasCompM = \DB::SELECT('SELECT areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.nombre AS nombreM, metas.unidadmedida AS medida, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad AS cantidad_m
+        $metasCompM = \DB::SELECT('SELECT entrega.id_entregas, areasM.id_areasmetas, areasM.area_id, program.abreviatura AS nombrePA, metas.id_meta,metas.nombre AS nombreM, metas.unidadmedida AS medida, entrega.cantidad AS cantidad_e, calend.cantidad AS cantidad_c, meses.m_enero, meses.m_febrero, meses.m_marzo, meses.m_abril, meses.m_mayo, meses.m_junio, meses.m_julio, meses.m_agosto, meses.m_septiembre, meses.m_octubre, meses.m_noviembre, meses.m_diciembre, meses.m_cantidad AS cantidad_m
         FROM tb_areasmetas AS areasM
             JOIN tb_metas AS metas ON metas.id_meta = areasM.meta_id
             JOIN tb_programas AS program ON program.id_programa = areasM.id_programa
@@ -150,7 +150,7 @@ class CalendarizarsController extends Controller
             'areameta_id' => $request->input('area_meta'),
             'meses_id' => $meses[0]->ultimo,
             'id_registro' => $request->input('registro'),
-            'cantidad' => $request->input('cantidad'),
+            'cantidad' => $mCantidad,
             'activo' => 1
         ));
 
@@ -158,8 +158,10 @@ class CalendarizarsController extends Controller
     }
     public function updateEntrega(Entregas $id, Request $request)
     {
-        $query = Entregas::find($id->areameta_id);
-        $query2 = Meses::find($query->meses_id);
+        $meses = Entregas::where('id_entregas', '=', $id->id_entregas)->get();
+        $mes = $meses[0]->meses_id;
+        $query = Entregas::find($id->id_entregas);
+        $query2 = Meses::find($mes);
 
         $Enero = intval(trim($request->enero));
         $Febrero = intval(trim($request->febrero));
@@ -188,10 +190,11 @@ class CalendarizarsController extends Controller
         $query2->m_noviembre = $Nov;
         $query2->m_diciembre = $Dic;
         $query2->m_cantidad = $mCantidad;
+        $query2->m_fecha = date("Y-m-d");
         $query2->save();
 
         $query->id_registro = trim($request->registro);
-        $query->cantidad = intval(trim($request->cantidad));
+        $query->cantidad = $mCantidad;
         $query->save();
 
         return redirect('entregaMetas');
@@ -246,7 +249,6 @@ class CalendarizarsController extends Controller
 
     public function update(AreasMetas $id, Request $request)
     {
-        //dd($request->all());
         $meses = Calendarizars::where('areameta_id', "=", $id->id_areasmetas)->get();
         $mes = $meses[0]->meses_id;
         $calend = $meses[0]->id_calendario;

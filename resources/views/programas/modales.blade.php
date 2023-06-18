@@ -42,7 +42,7 @@
                     <div class="col-12 p-3 text-center">
                         <p><strong>Nombre: </strong>{{ $info->nombre }}</p>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6 text-center">
                         <p><strong>Descripción</strong><br>{{ $info->descripcion }}</p>
                     </div>
                     <div class="col-6 text-center">
@@ -53,9 +53,6 @@
                         <strong>Estado: </strong>
                         <p style="color: red;">Inactivo</p>
                         @endif
-                    </div>
-                    <div class="col-6 text-center">
-                        <p><strong>Registro: </strong><br>{{ $info->id_registro }}</p>
                     </div>
                 </div>
             </div>
@@ -75,7 +72,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">MODIFICAR PROGRAMA</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Programa</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -120,7 +117,6 @@
 
 <!-- MODAL ADD START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
-
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -161,10 +157,16 @@
                     <!-- id de registro -->
                     <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input type="submit" href="programas/store" class="btn btn-success" value="Enviar" />
+                </form>
+            </div>
+
         </div>
     </div>
-    <!-- MODAL ADD END -->
 </div>
+<!-- MODAL ADD END -->
 
 
 <!-- SCRIPT MODAL START -->
@@ -201,4 +203,3 @@
     });
 </script>
 <!-- SCRIPT MODAL END -->
-

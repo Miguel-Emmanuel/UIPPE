@@ -36,9 +36,9 @@ class AreasMetasController extends Controller
 
 
         // $areasmetasd = AreasMetas::all();
-        $metas = Metas::all();
-        $programas = Programas::all();
-        $areas = Areas::all();
+        $metas = Metas::all()->where('activo', '>', '0');
+        $programas = Programas::all()->where('activo', '>', '0');
+        $areas = Areas::all()->where('activo', '>', '0');
         $area = \DB::Select('SELECT areas.* FROM tb_areas AS areas WHERE id_area NOT IN (SELECT area_id FROM tb_areasmetas WHERE area_id )');
         return view('areasmetas.index')
             ->with(['areasmetas' => $areasmetas])
@@ -83,7 +83,7 @@ class AreasMetasController extends Controller
     {
         $id_programa = $request->get('id_programa');
         $id_programa = intval($id_programa);
-        $meta2 = \DB::select('SELECT * FROM tb_metas WHERE programa_id = ' . $id_programa);
+        $meta2 = \DB::select('SELECT * FROM tb_metas WHERE activo > 0 AND programa_id = ' . $id_programa);
         return view("areasmetas.js_metas")
             ->with(['meta' => $meta2]);
     }
@@ -94,7 +94,7 @@ class AreasMetasController extends Controller
         $id_meta = intval($id_meta);
         $areas = \DB::select('SELECT areas.* FROM tb_areas AS areas
         WHERE id_area NOT IN (SELECT area_id FROM tb_areasmetas WHERE area_id
-        AND meta_id = '.$id_meta.')');
+        AND meta_id = '.$id_meta.') AND areas.activo > 0');
         return view("areasmetas.js_areas")
             ->with(['areas' => $areas]);
     }

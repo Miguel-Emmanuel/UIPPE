@@ -8,14 +8,13 @@ $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
-
 ?>
 @if($session_tipo == 5)
 <script>
     window.location.replace("{{ route('dashboard')}}");
 </script>
 @endif
-@if($session_area != 0)
+
 <title>Registros</title>
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -192,11 +191,14 @@ $session_area = session('session_area');
         </div>
         @endif
     </div>
-    @else
-    <script>
+</div>
+
+@section('dataTablesJs')
+<script>
         document.addEventListener("DOMContentLoaded", () => {
             var url = window.location.href;
             url = url.split("A/");
+            console.log(url);
             var id = "{{ $session_area }}";
 
             if (url[1] == id) {
@@ -205,9 +207,8 @@ $session_area = session('session_area');
                 window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
             }
         });
-    </script>
-    @endif
-</div>
+</script>
+@endsection
 
 <!-- ADD MODAL START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
@@ -434,7 +435,7 @@ $session_area = session('session_area');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('editregistrosA', ['id' => $session_area]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('editArea', ['id' => $session_area]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field('PATCH') }}
                     {{ method_field('PUT') }}
                     <div class="form-floating mb-3">
@@ -495,14 +496,13 @@ $session_area = session('session_area');
         $('#eliminarmodal').modal('show')
     });
 </script>
-
+@section('dataTablesJs')
 <script type="text/javascript" src="{{ asset('js/virtual-select.min.js') }}"></script>
-
     <script type="text/javascript">
         VirtualSelect.init({
             ele: '#multiUsers'
         });
     </script>
-
+@endsection
 
 @endsection

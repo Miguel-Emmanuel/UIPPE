@@ -15,7 +15,7 @@ class MetasController extends Controller
         $metas = \DB::select('SELECT meta.id_meta, meta.clave, meta.nombre as nombreM, meta.descripcion, meta.unidadmedida, meta.programa_id, meta.activo, meta.id_registro, programa.nombre as nombreP, programa.abreviatura as nombrePA 
         FROM tb_metas as meta, tb_programas as programa
         WHERE meta.programa_id = programa.id_programa');
-        $Programas = Programas::all('id_programa', 'nombre','abreviatura');
+        $Programas = Programas::all()->where('activo', '>', '0');
         return view('metas.index', compact('metas'), compact('Programas'));
     }
 

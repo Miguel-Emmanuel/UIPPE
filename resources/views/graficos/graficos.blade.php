@@ -24,8 +24,6 @@ $session_tipo = session('session_tipo');
         </div>
         @if($session_id)
         <div class="col p-4 d-flex justify-content-end">
-
-
             <button type="button" class="btn btn-success" id="btn_alta" data-bs-toggle="modal" data-bs-target="#modalalta"><i class="fa-regular fa-file-excel"></i></button>
         </div>
         @else
@@ -37,10 +35,10 @@ $session_tipo = session('session_tipo');
         <h5>Graficas de Muestra </h5>
         <div class="container p-1">
             <div id="my-div">
-                <button onclick="mostrarContenido('contenido4')">Metas asignadas por areas</button>
-                <button onclick="mostrarContenido('contenido5')">Programas Metas</button>
-                <button onclick="mostrarContenido('contenido6')">Usuarios Puestos</button>
-                <button onclick="location.reload()">Cerrar</button>
+                <button class="btn btn-success" onclick="mostrarContenido('contenido4')">Metas asignadas por areas</button>
+                <button class="btn btn-success" onclick="mostrarContenido('contenido5')">Programas Metas</button>
+                <button class="btn btn-success" onclick="mostrarContenido('contenido6')">Usuarios Puestos</button>
+                <button class="btn btn-success" onclick="location.reload()">Cerrar</button>
             </div>
 
 
@@ -50,7 +48,7 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficoMetasAreas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                            <center><button onclick="generatePDF()">Generar PDF</button></center>
+                            <center><button class="btn btn-danger" onclick="generatePDF()">Generar PDF</button></center>
                         </div>
                     </div>
                 </div>
@@ -61,7 +59,7 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaProgamasMetas" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                        <center><button onclick="generatePMPDF()">Generar PDF</button></center>
+                        <center><button class="btn btn-danger" onclick="generatePMPDF()">Generar PDF</button></center>
                         </div>
                     </div>
                 </div>
@@ -72,7 +70,7 @@ $session_tipo = session('session_tipo');
                         <!-- Aquí va el contenido 1 -->
                         <canvas id="GraficaUsuarioPuesto" width="600" height="400"></canvas>
                         <div id="my-cerrar">
-                        <center><button onclick="generateUPPDF()">Generar PDF</button></center>
+                        <center><button class="btn btn-danger" onclick="generateUPPDF()">Generar PDF</button></center>
 
                         </div>
                     </div>
@@ -82,11 +80,11 @@ $session_tipo = session('session_tipo');
             <h5>Graficas de las metas por Meses y Trimestral </h5>
             <div class="container p-1">
                 <div id="my-div">
-                    <button onclick="mostrarContenido('contenido0')">Enero</button>
-                    <button onclick="mostrarContenido('contenido1')">Febrero</button>
-                    <button onclick="mostrarContenido('contenido2')">Marzo</button>
-                    <button onclick="mostrarContenido('contenido3')">Trimestral</button>
-                    <button onclick="location.reload()">Cerrar</button>
+                    <button class="btn btn-success" onclick="mostrarContenido('contenido0')">Enero</button>
+                    <button class="btn btn-success" onclick="mostrarContenido('contenido1')">Febrero</button>
+                    <button class="btn btn-success" onclick="mostrarContenido('contenido2')">Marzo</button>
+                    <button class="btn btn-success" onclick="mostrarContenido('contenido3')">Trimestral</button>
+                    <button class="btn btn-success" onclick="location.reload()">Cerrar</button>
 
                 </div>
 
@@ -96,7 +94,7 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="Enero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                            <center><button onclick="generateEPDF()">Generar PDF</button></center>
+                            <center><button class="btn btn-danger" onclick="generateEPDF()">Generar PDF</button></center>
 
                             </div>
                         </div>
@@ -108,7 +106,7 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="Febrero" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                            <center><button onclick="generateFPDF()">Generar PDF</button></center>
+                            <center><button class="btn btn-danger" onclick="generateFPDF()">Generar PDF</button></center>
 
                             </div>
                         </div>
@@ -120,7 +118,7 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="Marzo" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                            <center><button onclick="generateMPDF()">Generar PDF</button></center>
+                            <center><button class="btn btn-danger" onclick="generateMPDF()">Generar PDF</button></center>
 
                             </div>
                         </div>
@@ -132,7 +130,7 @@ $session_tipo = session('session_tipo');
                             <!-- Aquí va el contenido 1 -->
                             <canvas id="Trimestral" width="600" height="400"></canvas>
                             <div id="my-cerrar">
-                            <center><button onclick="generateTPDF()">Generar PDF</button></center>
+                            <center><button class="btn btn-danger" onclick="generateTPDF()">Generar PDF</button></center>
                             </div>
                         </div>
                     </div>

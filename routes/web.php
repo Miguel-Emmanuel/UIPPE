@@ -80,9 +80,10 @@ Route::resource('calendarizars', CalendarizarsController::class);
 
 Route::name('multi')->get('multi',  [AreasMetasController::class, 'index']);
 Route::name('calendario')->get('calendario', [CalendarizarsController::class, 'index']);
+Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController::class, 'update']);
 Route::name('entregaMetas')->get('entregaMetas', [CalendarizarsController::class, 'entregasView']);
 Route::name('entregasNew')->post('entregasNew', [CalendarizarsController::class, 'entregaN']);
-Route::name('entregasUp')->put('entregasUp/{id}', [CalendarizarsController::class, 'updateEntrega']);
+Route::name('entregasUpdate')->put('entregasUpdate/{id}', [CalendarizarsController::class, 'updateEntrega']);
 // Metodos Edit y Delete start
 Route::name('deleteMeta')->put('deleteMeta/{id}',[MetasController::class, 'destroy']);
 Route::name('editMeta')->put('editMeta/{id}', [MetasController::class, 'edit']);
@@ -99,13 +100,11 @@ Route::name('deleteProgram')->put('deleteProgram/{id}',[ProgramasController::cla
 
 Route::name('editTip')->put('editTip/{id}', [TiposController::class, 'edit']);
 Route::name('deleteTip')->put('deleteTip/{id}',[TiposController::class, 'destroy']);
-Route::name('deleteTip')->get('deleteTip/{id}',[TiposController::class, 'destroy']);
 
 Route::name('editAreaUser')->put('editAreaUser/{id}', [AreasUsuariosController::class, 'edit']);
-Route::name('deleteAreaUser')->get('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
+Route::name('deleteAreaUser')->delete('deleteAreaUser/{id}',[AreasUsuariosController::class, 'destroy']);
 Route::post('areauser/store',[AreasUsuariosController::class, 'store'])->name('areausuario.store');
 
-Route::name('calendUpdate') -> put('calendUpdate/{id}', [CalendarizarsController::class, 'update']);
 // Metodos Edit y Delete end
 
 //Graficos controller start

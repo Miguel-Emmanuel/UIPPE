@@ -64,8 +64,10 @@ class GraficosController extends Controller
                         ->join('tb_areas', 'tb_areasusuarios.area_id',  'tb_areas.id_area')
                         ->where('tb_areasusuarios.area_id', '=', $id)
                         ->get();
-                $Tipos = Tipos::all('id', 'nombre');
-                $usuarios = Usuarios::all('id_usuario', 'nombre', 'app', 'apm', 'id_tipo');
+                $Tipos = Tipos::all()->where('activo', '>', '0');
+                $usuarios = \DB::SELECT('SELECT *
+                FROM tb_usuarios AS users
+                WHERE users.id_usuario NOT IN (SELECT usuario_id FROM tb_areasusuarios) AND users.activo > 0 AND users.id_tipo >= 3');
                 $areasMulti = Areas::all('id_area', 'nombre');
                 return view('dashboard.registrosA')
                         ->with(['areas' => $area])

@@ -6,9 +6,12 @@ $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
-    <link rel="stylesheet" href="{{ asset('css/correos.css') }}">
-
-
+<link rel="stylesheet" href="{{ asset('css/correos.css') }}">
+@if($session_tipo >= 3)
+<script>
+    window.location.replace("{{ route('dashboard')}}");
+</script>
+@endif
 <title>Correo</title>
 @if($session_id)
 @if($session_area != "")
@@ -20,19 +23,13 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Correo</li>
         </ol>
     </nav>
-    
     <div class="row">
         <div class="col-12 p-4">
-            
             <h3>Correo</h3>
         </div>
-
-
-
         <div class="contenedor">
             <form action="{{route('pcorreo')}}" method="GET">
                 @csrf
-            
                 <div class="form-group">
                     <label for="">Correo:</label>
                     <select class="form-control" aria-label="Default select example" name="destinatario" required>
@@ -43,12 +40,12 @@ $session_area = session('session_area');
                     </select>
                 </div>
             
-                <div class="form-group">
+                <div class="form-group my-2">
                     <label for="">Asunto:</label>
                     <input class="form-control" type="text" placeholder="Asunto del Correo" name="asunto" required>
                 </div>
             
-                <div class="form-group">
+                <div class="form-group my-2">
                     <label for="floatingTextarea">Mensaje:</label>
                     <textarea class="form-control" name="mensaje" placeholder="Mensaje" id="floatingTextarea"></textarea>
                 </div>

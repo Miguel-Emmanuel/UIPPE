@@ -266,7 +266,7 @@ $session_area = session('session_area');
                                 <td class="text-center" id="mes10{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="octubre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum9{{ $meta->id_areasmetas }} border-0"</td>
                                 <td class="text-center" id="mes11{{ $meta->id_areasmetas }}"></td>
-                                <td class=""><input type="number" style="background-color:transparent;" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum10{{ $meta->id_areasmetas }} border-0"></td>
+                                <td class="table-success"><input type="number" style="background-color:transparent;" name="noviembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum10{{ $meta->id_areasmetas }} border-0"></td>
                                 <td class="text-center" id="mes12{{ $meta->id_areasmetas }}"></td>
                                 <td class="table-success"><input type="number" style="background-color:transparent;" name="diciembre" onkeyup="suma{{ $meta->id_areasmetas }}(this.value)" onfocus="input{{ $meta->id_areasmetas }}(this.value)" onblur="desfoc{{$meta->id_areasmetas}}()" class="form-control sum11{{ $meta->id_areasmetas }} border-0"></td>
                             </tr>
@@ -282,7 +282,6 @@ $session_area = session('session_area');
             <div class="modal-footer">
                 <input class="form-control" type="hidden" name="registro" value="<?php echo $session_id ?>" style="display: none;">
                 <input class="form-control" type="hidden" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
-                <input class="form-control" type="hidden" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary" id="save{{ $meta->id_areasmetas }}">Guardar</button>
             </div>
@@ -319,7 +318,6 @@ $session_area = session('session_area');
         document.querySelector("#sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT+" / "+{{ $meta -> cantidadProp_c }};
         document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = "";
         document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = sumaT;
-        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = sumaT;
         cantidad = parseInt(valor);
         input{{$meta->id_areasmetas}}(valor);
     };
@@ -339,7 +337,7 @@ $session_area = session('session_area');
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12 my-1 mx-2">
-                        <strong><p>Clave: </strong>{{ $meta->id_areasmetas }}</p>
+                        <strong><p>Clave: </strong>{{ $meta->id_meta }}</p>
                     </div>
                     <div class=" col-6 my-1 mx-2">
                         <strong><p>Nombre de la Meta: </strong>{{ $meta->nombreM }}</p>
@@ -348,7 +346,7 @@ $session_area = session('session_area');
                         <strong><p>Unidad de Medida: </strong>{{ $meta->medida }}</p>
                     </div>
                 </div>
-                <form action="{{ route('entregasUp', ['id' => $meta->id_areasmetas]) }}" method="POST" enctype="multipart/form-data"> 
+                <form action="{{ route('entregasUpdate', ['id' => $meta->id_entregas]) }}" method="POST" enctype="multipart/form-data"> 
                 {{ csrf_field('PATCH') }}
                 {{ method_field('PUT') }}
                 <div class="table-responsive table-responsive-sm my-4">
@@ -436,9 +434,8 @@ $session_area = session('session_area');
                 </div>
             </div>
             <div class="modal-footer">
-                <input class="form-control" type="hidden" name="registro" value="<?php echo $session_id ?>" style="display: none;">
-                <input class="form-control" type="hidden" name="area_meta" value="{{ $meta->id_areasmetas }}" style="display: none;">
-                <input class="form-control" type="hidden" name="cantidad" id="cantidad{{ $meta->id_areasmetas }}" value="" style="display: none;">
+                <input class="form-control" type="hidden" name="registro" value="<?php echo $session_id ?>">
+                <input class="form-control" type="hidden" name="area_meta" value="{{ $meta->id_areasmetas }}">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary" id="save{{ $meta->id_areasmetas }}">Guardar</button>
             </div>
@@ -475,7 +472,6 @@ $session_area = session('session_area');
         document.querySelector("#sumaTotal{{ $meta->id_areasmetas }}").innerHTML = sumaT+" / "+{{ $meta -> cantidad_c }};
         document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = "";
         document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = sumaT;
-        document.querySelector("#cantidad{{ $meta->id_areasmetas }}").value = sumaT;
         cantidad = parseInt(valor);
         input{{$meta->id_areasmetas}}(valor);
     };
@@ -496,7 +492,7 @@ $session_area = session('session_area');
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
             <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
-            <p>Para ver el contenido <a href="/login">Iniciar Sesión</a></p>
+            <p>Para ver el contenido <a href="{{ route('login') }}">Iniciar Sesión</a></p>
         </div>
     </div>
 </div>
@@ -544,6 +540,20 @@ $session_area = session('session_area');
 <script>
     window.addEventListener('load', () => {
         @foreach($cant_Propuestas as $cantP)
+
+        var fecha = new Date();
+        var mesNow = fecha.getMonth();
+
+        @if($session_tipo>=3)
+            for(var i=0; i<12; i++){
+                var inputTotal = document.querySelector(".sum"+i+"{{ $cantP->id_areasmetas }}");
+                if(i>=mesNow){
+                    
+                }else{
+                    inputTotal.setAttribute('readOnly', 'true');
+                }
+            }
+        @endif
 
         var cantMeses = new Array;
         
