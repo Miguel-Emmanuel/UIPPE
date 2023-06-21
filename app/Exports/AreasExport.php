@@ -43,7 +43,7 @@ class AreasExport implements FromCollection, WithHeadings, WithEvents
                         ->setARGB('007A37');
 
                         $event->sheet->getColumnDimension('A')->setWidth(8);
-                        $event->sheet->getColumnDimension('B')->setWidth(56);
+                        $event->sheet->getColumnDimension('B')->setWidth(68);
                         $event->sheet->getColumnDimension('C')->setWidth(82);  
   
             },

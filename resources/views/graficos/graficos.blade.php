@@ -34,7 +34,7 @@ $session_tipo = session('session_tipo');
     <div class="row">
         @if($session_id)
         <!-- -----------------------------------------Grafica Muestra----------------------------------- -->
-        <h5>Graficas de Muestra </h5>
+        <h5>Graficas Reportes </h5>
         <div class="container p-1">
             <div id="my-div">
                 <button onclick="mostrarContenido('contenido4')">Metas asignadas por areas</button>
@@ -79,7 +79,7 @@ $session_tipo = session('session_tipo');
                 </div>
             </div>
             <!-- -----------------------------------------Grafica de prueba por meses Enero-Marzo ----------------------------------- -->
-            <h5>Graficas de las metas por Meses y Trimestral </h5>
+            <h5>Graficas primer Trimestre </h5>
             <div class="container p-1">
                 <div id="my-div">
                     <button onclick="mostrarContenido('contenido0')">Enero</button>
@@ -138,34 +138,126 @@ $session_tipo = session('session_tipo');
                     </div>
                 </div>
 
+                <h5>Graficas segundo trimestre </h5>
+            <div class="container p-1">
+                <div id="my-div">
+                    <button onclick="mostrarContenido('contenido7')">Abril</button>
+                    <button onclick="mostrarContenido('contenido8')">Mayo</button>
+                    <button onclick="mostrarContenido('contenido9')">Junio</button>
+                    <button onclick="mostrarContenido('contenido10')">Trimestral</button>
+                    <button onclick="location.reload()">Cerrar</button>
 
+                </div>
 
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                    <div class="card border-light mb-3" style="max-width: 34rem;">
+                        <div id="contenido7" style="display:none;">
+                            <!-- Aquí va el contenido 1 -->
+                            <canvas id="Abril" width="600" height="400"></canvas>
+                            <div id="my-cerrar">
+                            <center><button onclick="generateAPDF()">Generar PDF</button></center>
 
-
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
-                    <h3>Titulo</h3>
-                    <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-danger" style="width: 25%">25%</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
-                    <h3>Titulo</h3>
-                    <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 50%; background-color: #FD7E14;">50%</div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                    <div class="card border-light mb-3" style="max-width: 34rem;">
+                        <div id="contenido8" style="display:none;">
+                            <!-- Aquí va el contenido 1 -->
+                            <canvas id="Mayo" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateMPDF()">Generar PDF</button></center>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                        <div class="card border-light mb-3" style="max-width: 34rem;">
+                            <div id="contenido9" style="display:none;">
+                                <!-- Aquí va el contenido 1 -->
+                                <canvas id="Junio" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateJPDF()">Generar PDF</button></center>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                        <div class="card border-light mb-3" style="max-width: 34rem;">
+                            <div id="contenido10" style="display:none;">
+                                <!-- Aquí va el contenido 1 -->
+                                <canvas id="Trimestraldos" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateTdPDF()">Generar PDF</button></center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                <h5>Graficas tercer trimestre </h5>
+            <div class="container p-1">
+                <div id="my-div">
+                    <button onclick="mostrarContenido('contenido11')">Julio</button>
+                    <button onclick="mostrarContenido('contenido12')">Agosto</button>
+                    <button onclick="mostrarContenido('contenido13')">Septiembre</button>
+                    <button onclick="mostrarContenido('contenido14')">Trimestral</button>
+                    <button onclick="location.reload()">Cerrar</button>
+
+                </div>
+
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                    <div class="card border-light mb-3" style="max-width: 34rem;">
+                        <div id="contenido11" style="display:none;">
+                            <!-- Aquí va el contenido 1 -->
+                            <canvas id="Julio" width="600" height="400"></canvas>
+                            <div id="my-cerrar">
+                            <center><button onclick="generateJLPDF()">Generar PDF</button></center>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
-                    <h3>Titulo</h3>
-                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-warning" style="width: 75%">75%</div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                    <div class="card border-light mb-3" style="max-width: 34rem;">
+                        <div id="contenido12" style="display:none;">
+                            <!-- Aquí va el contenido 1 -->
+                            <canvas id="Agosto" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateAgostoPDF()">Generar PDF</button></center>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
-                    <h3>Titulo</h3>
-                    <div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-success" style="width: 100%">100%</div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                        <div class="card border-light mb-3" style="max-width: 34rem;">
+                            <div id="contenido13" style="display:none;">
+                                <!-- Aquí va el contenido 1 -->
+                                <canvas id="Septiembre" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateSepPDF()">Generar PDF</button></center>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 py-3">
+                        <div class="card border-light mb-3" style="max-width: 34rem;">
+                            <div id="contenido14" style="display:none;">
+                                <!-- Aquí va el contenido 1 -->
+                                <canvas id="Trimestraltres" width="600" height="400"></canvas>
+                                <div id="my-cerrar">
+                                <center><button onclick="generateTPDF()">Generar PDF</button></center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 @else
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3 text-center">
                     <img src="{{ asset('img/login.png') }}" alt="Inicie Sesión para poder ver el contenido" class="img-fluid" style="width: 800px;">
@@ -190,6 +282,14 @@ $session_tipo = session('session_tipo');
                     document.getElementById('contenido4').style.display = 'none';
                     document.getElementById('contenido5').style.display = 'none';
                     document.getElementById('contenido6').style.display = 'none';
+                    document.getElementById('contenido7').style.display = 'none';
+                    document.getElementById('contenido8').style.display = 'none';
+                    document.getElementById('contenido9').style.display = 'none';
+                    document.getElementById('contenido10').style.display = 'none';
+                    document.getElementById('contenido11').style.display = 'none';
+                    document.getElementById('contenido12').style.display = 'none';
+                    document.getElementById('contenido13').style.display = 'none';
+                    document.getElementById('contenido14').style.display = 'none';
 
                     // Mostrar el contenido correspondiente al botón presionado
                     document.getElementById(id).style.display = 'block';
@@ -541,6 +641,7 @@ $session_tipo = session('session_tipo');
 
                             @endforeach
                         ],
+                     
                         datasets: [{
                             backgroundColor: [
                                 @foreach($areasmetas as $am)
@@ -556,16 +657,23 @@ $session_tipo = session('session_tipo');
                         }]
                     },
                     options: {
+ 
                         scales: {
                             yAxes: [{
                                 ticks: {
                                     beginAtZero: true
                                 }
                             }]
-                        }
+                        },
+                            legend: {
+                                display: true,
+                                position: 'right'
+                            },
                     },
-                    plugins: [bgColor],
-
+                    plugins: 
+                        [bgColor],
+                   
+                    
                 });
                 const GraficoMetasAreas = new Chart(
                     document.getElementById('GraficoMetasAreas'),
@@ -589,6 +697,19 @@ $session_tipo = session('session_tipo');
 
             <!-- -----------------------------------------------Script para modificar la grafica de programas|metas------------------------------------------------ -->
             <script>
+                    const bgpmColor = {
+                    id: 'bgpmColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
                 new Chart(document.getElementById("GraficaProgamasMetas"), {
                     type: 'bar',
                     data: {
@@ -631,6 +752,24 @@ $session_tipo = session('session_tipo');
                     }
 
                 });
+                const GraficoProgramasmetas = new Chart(
+                    document.getElementById('GraficaProgamasMetas'),
+                    config
+                );
+
+                function generatePMPDF() {
+                    const canvas = document.getElementById('GraficaProgamasMetas');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficaProgamasMetas.pdf")
+
+                }
             </script>
 
             <!-- -----------------------------------------------Script para modificar la grafica de Usuarios|Puestos----------------------------------------------- -->
@@ -709,6 +848,325 @@ $session_tipo = session('session_tipo');
             </script>
 
 
+<!-- ------------------------------------Script grafica de Abril------------------------------- -->
+
+<script>
+    const bgaColor = {
+                    id: 'bgaColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+new Chart(document.getElementById("Abril"), {
+                    type: 'bar',
+                    data: {
+                        labels: [   
+                            @foreach($abrildias as $dias)
+                            "{{ "Dia: " .$dias  -> dia  }}",
+                            @endforeach
+                        ],
+                        datasets: [{
+                           
+                            backgroundColor: [
+                                @foreach($eneroDias as $dias)
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                @endforeach
+                            ],
+                            data: [
+                                @foreach($abrilactivos as $activo)
+                                "{{ $activo -> total}}",
+                                @endforeach
+                            ]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Programas registrados en Abril (Por Dia)'
+                        }
+
+                    },  
+                    plugins: [bgsColor],
+
+                });
+                const GraficoAbril = new Chart(
+                    document.getElementById('Abril'),
+                    config
+                );
+
+                function generateAPDF() {
+                    const canvas = document.getElementById('Abril');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoAbril.pdf")
+
+                }
+
+</script>
+
+
+<!-- ------------------------------------Script grafica de Mayo------------------------------- -->
+
+<script>
+    const bgmColor = {
+                    id: 'bgmColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+new Chart(document.getElementById("Mayo"), {
+                    type: 'bar',
+                    data: {
+                        labels: [   
+                            @foreach($mayodias as $dias)
+                            "{{ "Dia: " .$dias  -> dia  }}",
+                            @endforeach
+                        ],
+                        datasets: [{
+                           
+                            backgroundColor: [
+                                @foreach($eneroDias as $dias)
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                @endforeach
+                            ],
+                            data: [
+                                @foreach($mayoactivos as $activo)
+                                "{{ $activo -> total}}",
+                                @endforeach
+                            ]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Programas registrados en Mayo (Por Dia)'
+                        }
+
+                    },  
+                    plugins: [bgsColor],
+
+                });
+                const GraficoMayo = new Chart(
+                    document.getElementById('Mayo'),
+                    config
+                );
+
+                function generateMPDF() {
+                    const canvas = document.getElementById('Mayo');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoMayo.pdf")
+
+                }
+
+</script>
+
+
+<!-- ------------------------------------Script grafica de Junio------------------------------- -->
+
+<script>
+    const bgjColor = {
+                    id: 'bgjColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+new Chart(document.getElementById("Junio"), {
+                    type: 'bar',
+                    data: {
+                        labels: [   
+                            @foreach($juniodias as $dias)
+                            "{{ "Dia: " .$dias  -> dia  }}",
+                            @endforeach
+                        ],
+                        datasets: [{
+                           
+                            backgroundColor: [
+                                @foreach($juniodias as $dias)
+                                '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                @endforeach
+                            ],
+                            data: [
+                                @foreach($junioactivos as $activo)
+                                "{{ $activo -> total}}",
+                                @endforeach
+                            ]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Programas registrados en Junio (Por Dia)'
+                        }
+
+                    },  
+                    plugins: [bgsColor],
+
+                });
+                const GraficoJunio = new Chart(
+                    document.getElementById('Junio'),
+                    config
+                );
+
+                function generateJPDF() {
+                    const canvas = document.getElementById('Junio');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoJunio.pdf")
+
+                }
+
+</script>
+
+
+<!-- ------------------------------------Script grafica de Trimestral dos------------------------------- -->
+
+<script> 
+            const bgTdColor = {
+                    id: 'bgTdColor',
+                    beforeDraw: (chart, options) => {
+                        const {
+                            ctx,
+                            width,
+                            height
+                        } = chart;
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, width, height)
+                        ctx.restore();
+                    }
+                }
+                
+                new Chart(document.getElementById("Trimestraldos"), {
+                    type: 'line',
+                    data: {
+                        labels: [
+                           "Abril" , 
+                           "Mayo", 
+                           "Junio"
+                        ],
+                        datasets: [{
+                         
+                            borderColor: [
+                                'rgb(0,99,0)',
+                            ],
+                            data: [
+                                @foreach($trimestraldos as $trimestral)
+                                "{{ $trimestral  -> total }}",
+                                @endforeach
+                            ],
+                            tension: 0.1,
+                            fill:false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Metas registradas por meses'
+                        }
+
+                    },
+                    plugins: [bgTColor],
+
+                });
+
+                const GraficoTrimestraldos = new Chart(
+                    document.getElementById('Trimestraldos'),
+                    config
+                );
+
+                function generateTdPDF() {
+                    const canvas = document.getElementById('Trimestraldos');
+
+                    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+
+                    let pdf = new jsPDF('landscape');
+
+                    pdf.setFontSize(20);
+                    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+
+                    pdf.save("GraficoTrimestralSegundo.pdf")
+
+                }
+            </script>
 
 
 

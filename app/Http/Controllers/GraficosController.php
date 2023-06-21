@@ -44,8 +44,11 @@ class GraficosController extends Controller
         $usuarios_b=\DB::select('SELECT nombre AS usuarios FROM tb_usuarios GROUP BY nombre ;');
         $tipos=\DB::select('SELECT id_tipo AS id FROM tb_usuarios ');
         $trimestral=\DB::select('SELECT SUM(activo) AS total
-        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01" 
+        FROM tb_metas WHERE created_at >= "2023-01-01" AND created_at < "2023-03-31" 
         GROUP BY MONTH(created_at) ');
+           $trimestraldos=\DB::select('SELECT SUM(activo) AS total
+           FROM tb_metas WHERE created_at >= "2023-04-01" AND created_at < "2023-06-31" 
+           GROUP BY MONTH(created_at) ');
         $meses=\DB::select(' SELECT MONTH(created_at) AS mes
         FROM tb_metas
         WHERE created_at >= "2023-01-01" AND created_at < "2023-04-01"
@@ -69,7 +72,22 @@ class GraficosController extends Controller
         $marzoDias=\DB::select('SELECT DAY(created_at) AS dia
         FROM tb_metas
         WHERE created_at >= "2023-03-01" AND created_at < "2023-03-31" GROUP BY DAY(created_at)');
-         $puesto=\DB::select(' SELECT COUNT(tb_usuarios.id_tipo) as id_tipo, tb_tipos.nombre
+        $abrildias=\DB::select('SELECT DAY(created_at) AS dia FROM tb_metas
+        WHERE created_at >= "2023-04-01" AND created_at < "2023-04-31" GROUP BY DAY(created_at)');
+       $abrilactivos=\DB::select('SELECT SUM(activo) AS total
+       FROM tb_metas WHERE created_at >= "2023-04-01" AND created_at < "2023-04-31" 
+       GROUP BY Day(created_at) ');
+       $mayodias=\DB::select('SELECT DAY(created_at) AS dia FROM tb_metas
+       WHERE created_at >= "2023-05-01" AND created_at < "2023-05-31" GROUP BY DAY(created_at)');
+      $mayoactivos=\DB::select('SELECT SUM(activo) AS total
+      FROM tb_metas WHERE created_at >= "2023-05-01" AND created_at < "2023-05-31" 
+      GROUP BY Day(created_at) ');
+      $juniodias=\DB::select('SELECT DAY(created_at) AS dia FROM tb_metas
+      WHERE created_at >= "2023-06-01" AND created_at < "2023-06-31" GROUP BY DAY(created_at)');
+     $junioactivos=\DB::select('SELECT SUM(activo) AS total
+     FROM tb_metas WHERE created_at >= "2023-06-01" AND created_at < "2023-06-31" 
+     GROUP BY Day(created_at) ');
+        $puesto=\DB::select(' SELECT COUNT(tb_usuarios.id_tipo) as id_tipo, tb_tipos.nombre
          FROM tb_usuarios
          JOIN tb_tipos ON tb_usuarios.id_tipo = tb_tipos.id
          GROUP BY tb_usuarios.id_tipo, tb_tipos.nombre');
@@ -87,8 +105,15 @@ GROUP BY tb_areas.id_area, tb_areas.nombre;');
         ->with(['febreroDias'=>$febreroDias])
         ->with(['marzoactivos'=>$marzoactivos])
         ->with(['marzoDias'=>$marzoDias])
+        ->with(['abrildias'=>$abrildias])
+        ->with(['abrilactivos'=>$abrilactivos])
+        ->with(['mayodias'=>$mayodias])
+        ->with(['mayoactivos'=>$mayoactivos])
+        ->with(['juniodias'=>$juniodias])
+        ->with(['junioactivos'=>$junioactivos])
         ->with(['tipos'=>$tipos])
         ->with(['trimestral'=>$trimestral])
+        ->with(['trimestraldos'=>$trimestraldos])
         ->with(['metas'=>$metas])
         ->with(['usuarios_b'=>$usuarios_b])
         ->with(['programas'=>$programas])
