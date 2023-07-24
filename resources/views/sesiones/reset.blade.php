@@ -16,7 +16,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Enlace a hojas de estilo CSS locales -->
-    <link rel="stylesheet" href="{{ asset('css/sesiones.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Sesiones.css') }}">
 
     <!-- Enlace a hojas de estilos CSS de Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
