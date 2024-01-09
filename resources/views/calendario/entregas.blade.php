@@ -1,4 +1,5 @@
 @extends('layout.navbar')
+<!-- Importación y configiración de estilos para las tablas dinamicas START -->
 @section('dataTablesCss')
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
 <style>
@@ -10,17 +11,21 @@
     input[type=number] { -moz-appearance:textfield; }
 </style>
 @endsection
+<!-- Importación y configiración de estilos para las tablas dinamicas END -->
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
+<!-- Variables de Sesiones del usuario END -->
 <title>Entrega Metas</title>
-@if($session_id)
-@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)
-
+@if($session_id)    <!-- Validacion de contenido LOGGEADO IF -->
+@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)   <!-- Validacion de contenido POR TIPO DE USUARIO IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -83,34 +88,37 @@ $session_area = session('session_area');
                 </tbody>
             </table>
         </div>
+<!-- SCRIPT para el coloreado de la tabla superior START -->
 <script>
     window.addEventListener('DOMContentLoaded', ()=>{
         @foreach($metasCompM as $meta)
+        // Condición para el rol y área del usuario
         @if($session_area == $meta->area_id)
-        var cantidad_e = {{$meta->cantidad_e}};
-        var cantidad_c = {{ $meta->cantidad_c }};
+        var cantidad_e = {{$meta->cantidad_e}};     //CANTIDAD ESPERADA/PROPUESTA
+        var cantidad_c = {{ $meta->cantidad_c }};   //CANTIDAD ALCANZADA/ENTREGADA
             document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = {{ $meta->cantidad_e }};
 
             if(cantidad_e > cantidad_c){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#8b67cc");
             }else if(cantidad_c == cantidad_e){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#198754");
-            }else if(cantidad_c >= Math.floor(cantidad_c/2)){
+            }else if(cantidad_c >= Math.floor(cantidad_e/2)){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#ffc107");
                 $("#tr{{$meta -> id_areasmetas}}").css("color","black");
             }else{
 
         }
+        // Condición para el rol y área del usuario
         @elseif($session_area == 0)
-        var cantidad_e = {{$meta->cantidad_e}};
-        var cantidad_c = {{ $meta->cantidad_c }};
+        var cantidad_e = {{$meta->cantidad_e}};     //CANTIDAD ESPERADA/PROPUESTA
+        var cantidad_c = {{ $meta->cantidad_c }};   //CANTIDAD ALCANZADA/ENTREGADA
             document.querySelector("#sumaT{{ $meta->id_areasmetas }}").innerHTML = {{ $meta->cantidad_e }};
 
             if(cantidad_e > cantidad_c){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#8b67cc");
             }else if(cantidad_c == cantidad_e){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#198754");
-            }else if(cantidad_c >= Math.floor(cantidad_c/2)){
+            }else if(cantidad_c >= Math.floor(cantidad_e/2)){
                 $("#tr{{$meta -> id_areasmetas}}").css("background-color","#ffc107");
                 $("#tr{{$meta -> id_areasmetas}}").css("color","black");
             }else{
@@ -120,6 +128,8 @@ $session_area = session('session_area');
         @endforeach
     });
 </script>
+<!-- SCRIPT para el coloreado de la tabla superior END -->
+
         <div class="col-xs-4 col-md-4 col-xl-4 d-flex">
             <i class='bx bxs-rectangle text-warning mx-3 my-1'></i>
             <p>Meta por completar</p>
@@ -289,6 +299,7 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
+<!-- SCRIPT del modal con la tabla START -->
 <script>
 
     var cantidad = 0;
@@ -322,6 +333,7 @@ $session_area = session('session_area');
         input{{$meta->id_areasmetas}}(valor);
     };
 </script>
+<!-- SCRIPT del modal con la tabla END -->
 @endforeach
 <!-- Modales SIN registros de entrega END -->
 
@@ -479,12 +491,12 @@ $session_area = session('session_area');
 @endforeach
 <!-- Modales CON registros de entrega END -->
 
-@else
+@else        <!-- Condición para el rol y área del usuario ELSE -->
 <script>
         window.location.replace("{{ route('dashboard')}}");
 </script>
 @endif
-@else
+@else   <!-- Validacion de contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -498,6 +510,7 @@ $session_area = session('session_area');
 </div>
 @endif
 
+<!-- Importación y configiración de estilos para las tablas dinamicas START -->
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
@@ -537,6 +550,8 @@ $session_area = session('session_area');
         });
     });
 </script>
+<!-- Importación y configiración de estilos para las tablas dinamicas END -->
+<!-- SCRIPT para los valores de las metas con registro START -->
 <script>
     window.addEventListener('load', () => {
         @foreach($cant_Propuestas as $cantP)
@@ -592,5 +607,6 @@ $session_area = session('session_area');
     });
 </script>
 @endsection
+<!-- SCRIPT para los valores de las metas con registro START -->
 
-@endsection
+@endsection     <!-- ENDSECTION DE CONTENIDO = @section('content') -->

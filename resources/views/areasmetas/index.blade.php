@@ -1,14 +1,20 @@
 @extends('layout.navbar')
+<!-- Importacion de estilos para el select START -->
 @section('dataTablesCss')
 <link rel="stylesheet" href="{{ asset('css/virtual-select.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
 @endsection
+<!-- Importacion de estilos para el select START -->
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
-
+<!-- Variables de Sesiones del usuario END -->
+<!-- SCRIPT de petición para el multi-select START -->
 <head>
     <script src="{{ asset('js\jquery-3.6.4.min.js') }}"></script>
     <script>
@@ -43,8 +49,10 @@ $session_area = session('session_area');
         });
     </script>
 </head>
-@if($session_id)
-@if($session_area == 0)
+<!-- SCRIPT de petición para el multi-select END -->
+
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
+@if($session_area == 0)     <!-- Condición de acceso al contenido AREA IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -93,12 +101,12 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-@else
+@else   <!-- Condición de acceso al contenido AREA ELSE -->
 <script>
     window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
 </script>
 @endif
-@else
+@else   <!-- Condición de acceso al contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -219,13 +227,16 @@ $session_area = session('session_area');
         $('#eliminarmodal').modal('show')
     });
 </script>
+<!-- SCRIPT PARA MULTISELECT START -->
 <script type="text/javascript" src="js/virtual-select.min.js"></script>
 <script type="text/javascript">
     VirtualSelect.init({
         ele: '#multimetas'
     });
 </script>
+<!-- SCRIPT PARA MULTISELECT END -->
 
+<!-- Importacion y configuracion para las tablas dinamicas START -->
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
@@ -250,5 +261,6 @@ $session_area = session('session_area');
     });
 </script>
 @endsection
-<!-- SCRIPT MODAL END -->
-@endsection
+<!-- Importacion y configuracion para las tablas dinamicas END -->
+
+@endsection     <!-- ENDSECTION DE CONTENIDO = @section('content') -->

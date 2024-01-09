@@ -28,6 +28,7 @@ class AreasController extends Controller
   }
   public function store(Request $request)
   {
+    //  Validación START
     $rules =[
             'clave'=>'required',
             'nombre'=>'required',
@@ -41,7 +42,9 @@ class AreasController extends Controller
     ];
 
     $this->validate($request, $rules, $message);
+    //  Validación END
 
+    //  Asignación de fotos START
     if ($request->file('foto')  !=  '') {
       $file = $request->file('foto');
       $foto1 = $file->getClientOriginalName();
@@ -51,6 +54,8 @@ class AreasController extends Controller
     } else {
       $foto2 = 'cuervo.png';
     }
+    //  Asignación de fotos END
+    
     Areas::create(array(
       'clave' => $request->input('clave'),
       'nombre' => $request->input('nombre'),
@@ -118,7 +123,7 @@ class AreasController extends Controller
         //----------Visualizar el PDF ------------------
        return $pdf->stream();
        // ------Descargar el PDF------
-       //return $pdf->download('___libros.pdf');
+       // return $pdf->download('___libros.pdf');
 
 
     }

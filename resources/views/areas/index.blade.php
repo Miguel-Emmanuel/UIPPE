@@ -1,12 +1,14 @@
 @extends('layout.navbar')
 @section('content')
 
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
-@if($session_id)
-@if($session_area == 0)
+<!-- Variables de Sesiones del usuario END -->
+@if($session_id)    <!-- Validacion de contenido LOGGEADO IF -->
+@if($session_area == 0)     <!-- Validacion de contenido POR AREA IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -107,12 +109,12 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-@else
+@else   <!-- Validacion de contenido POR AREA ELSE -->
 <script>
     window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
 </script>
 @endif
-@else
+@else   <!-- Validacion de contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -287,6 +289,7 @@ $session_area = session('session_area');
 
 </div>
 <!-- ADD MODAL END -->
+<!-- SCRIPT DE MODALES START -->
 <script>
     $(function() {
         $('#modalmod').modal('show')
@@ -303,4 +306,5 @@ $session_area = session('session_area');
         $('#eliminarmodal').modal('show')
     });
 </script>
+<!-- SCRIPT DE MODALES END -->
 @endsection

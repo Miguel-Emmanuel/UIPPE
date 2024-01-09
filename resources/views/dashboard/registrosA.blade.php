@@ -1,20 +1,33 @@
 @extends('layout.navbar')
+<!-- Importacion de estilos para el select START -->
 @section('dataTablesCss')
 <link rel="stylesheet" href="{{ asset('css/virtual-select.min.css') }}">
 @endsection
+<!-- Importacion de estilos para el select END -->
 @section('content')
+
 <?php
+/*
+    Variables de Sesiones del usuario START
+*/
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
+/*
+    Variables de Sesiones del usuario END
+*/
 ?>
+
+<!-- SCRIPT QUE FUNCIONA COMO MIDDLEWARE START -->
 @if($session_tipo == 5)
 <script>
     window.location.replace("{{ route('dashboard')}}");
 </script>
 @endif
+<!-- SCRIPT QUE FUNCIONA COMO MIDDLEWARE END -->
 
+<!-- Contenido de la página START -->
 <title>Registros</title>
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -192,7 +205,9 @@ $session_area = session('session_area');
         @endif
     </div>
 </div>
+<!-- Contenido de la página END -->
 
+<!-- SCRIPT CON FUNCION MIDDLEWARE START -->
 @section('dataTablesJs')
 <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -209,6 +224,7 @@ $session_area = session('session_area');
         });
 </script>
 @endsection
+<!-- SCRIPT CON FUNCION MIDDLEWARE END -->
 
 <!-- ADD MODAL START -->
 <div class="modal fade" id="modalalta" tabindex="-1" aria-labelledby="modalaltaLabel" aria-hidden="true">
@@ -236,7 +252,7 @@ $session_area = session('session_area');
 
                     <div>
                         <label for="floatingInput">Selecciona uno o varios usuarios:</label>
-                        <select multiple data-search="true" data-silent-initial-value-set="true" name="usuario_id[]" id="multiUsers">
+                        <select multiple data-search="true" data-silent-initial-value-set="true" name="usuario_id[]">
                         @foreach ($usuarios as $info)
                         @if($info -> id_tipo == 3 || $info -> id_tipo == 4 || $info -> id_tipo == 5)
                             <option value="{{ $info->id_usuario }}">{{ $info->nombre }} {{$info->app}} {{$info->apm}}</option>
@@ -496,13 +512,14 @@ $session_area = session('session_area');
         $('#eliminarmodal').modal('show')
     });
 </script>
-@section('dataTablesJs')
-<script type="text/javascript" src="{{ asset('js/virtual-select.min.js') }}"></script>
-    <script type="text/javascript">
-        VirtualSelect.init({
-            ele: '#multiUsers'
-        });
-    </script>
-@endsection
+<!-- SCRIPT PARA MULTISELECT START -->
+<script type="text/javascript" src="js/virtual-select.min.js"></script>
+<script type="text/javascript">
+    VirtualSelect.init({
+        ele: 'select'
+    });
+</script>
+<!-- SCRIPT PARA MULTISELECT END -->
+
 
 @endsection

@@ -50,7 +50,7 @@ class GraficosController extends Controller
                         JOIN tb_areasmetas AS areasM ON areasM.meta_id = meta.id_meta
                         JOIN tb_programas AS programa ON areasM.id_programa = programa.id_programa
                         JOIN tb_areas AS areas ON areas.id_area = areasM.area_id
-                WHERE areasM.area_id = '.$id);
+                WHERE areasM.area_id = ' . $id);
                 $AreasUsuarios = \DB::select('SELECT * FROM tb_areasusuarios WHERE area_id = ' . $id);
                 $areametas = \DB::select('SELECT COUNT(*) as areametas FROM tb_areasmetas WHERE area_id = ' . $id);
                 $asig = AreasUsuarios::select('tb_areas.id_area', 'tb_areas.clave', 'tb_areas.nombre', 'tb_areas.descripcion', 'tb_areas.activo', 'tb_usuarios.id_usuario', ('tb_usuarios.nombre AS nombreU'), 'tb_usuarios.app', 'tb_usuarios.apm', 'tb_usuarios.gen', 'tb_usuarios.fn', 'tb_usuarios.email', 'tb_usuarios.foto', ('tb_usuarios.activo AS activoUs'))
