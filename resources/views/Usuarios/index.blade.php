@@ -1,13 +1,20 @@
 @extends('layout.navbar')
+<!-- Importacion de estilos para el select START -->
 @section('dataTablesCss')
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
 @endsection
+<!-- Importacion de estilos para el select END -->
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
-@if($session_id)
+<!-- Variables de Sesiones del usuario END -->
+
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,7 +23,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Usuarios</li>
         </ol>
     </nav>
-    @if($session_area == 0)
+    @if($session_area == 0)     <!-- Condición de acceso al contenido para administrador -->
     <div class="row">
         <div class="col p-4">
             <h3>Usuarios</h3>
@@ -134,7 +141,7 @@ $session_area = session('session_area');
             </table>
         </div>
     </div>
-    @else
+    @else   <!-- Condición de acceso al contenido para administrador ELSE -->
     <script>
         window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
     </script>
@@ -142,7 +149,8 @@ $session_area = session('session_area');
 </div>
 
 @include('Usuarios.modales')
-@else
+
+@else       <!-- Condición de acceso al contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -155,6 +163,8 @@ $session_area = session('session_area');
     </div>
 </div>
 @endif
+
+<!-- Importacion y configuracion para las tablas dinamicas START -->
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
@@ -179,4 +189,6 @@ $session_area = session('session_area');
     });
 </script>
 @endsection
-@endsection
+<!-- Importacion y configuracion para las tablas dinamicas END -->
+
+@endsection     <!-- ENDSECTION DE CONTENIDO = @section('content') -->

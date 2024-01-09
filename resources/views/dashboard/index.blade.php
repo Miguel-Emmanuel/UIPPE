@@ -1,26 +1,29 @@
 @extends('layout.navbar')
 @section('content')
 
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
+<!-- Variables de Sesiones del usuario END -->
+
 <title>UIPPE</title>
-@if($session_id)
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
     <div class="row justify-content-md-center">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 py-3">
             <h1>Inicio</h1>
-            @if($session_id)
+            @if($session_id)    <!-- Condición de 'mensaje' LOGGEADO IF -->
             <?php
             echo '¡Bienvenido! <b>    ' . $session_name . '</b><br>';
             ?>
-            @else
+            @else   <!-- Condición de 'mensaje' LOGGEADO IF -->
             @endif
         </div>
-        @if($session_tipo != 5)
+        @if($session_tipo != 5)     <!-- Condición de campo por tipo del usuario -->
         <div class="col-xl-6 col-md-12 mb-4 py-2">
             <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                 <div class="card-body">
@@ -58,7 +61,7 @@ $session_area = session('session_area');
                 </div>
             </div>
         </div>
-        @if($session_tipo == 1 || $session_tipo == 2)
+        @if($session_tipo == 1 || $session_tipo == 2)   <!-- Condición de contenido por tipo de usuario -->
         <div class="col-xl-6 col-md-6 mb-4 py-2">
                 <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                     <div class="card-body">
@@ -78,7 +81,7 @@ $session_area = session('session_area');
                 </div>
             </div>
         @endif
-        @if($session_tipo != 5)
+        @if($session_tipo != 5)     <!-- Condición de contenido por tipo de usuario -->
             <div class="col-xl-6 col-md-6 mb-4 py-2">
                 <div class="card text-bg-light border-left-primary shadow h-100 rounded-4">
                     <div class="card-body">
@@ -118,7 +121,7 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-@else
+@else   <!-- Condición de acceso al contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">

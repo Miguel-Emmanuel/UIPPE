@@ -1,12 +1,16 @@
 @extends('layout.navbar')
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
-@if($session_area == 0)
+<!-- Variables de Sesiones del usuario END -->
+
+@if($session_area == 0) <!-- Condición de acceso al contenido por AREA IF -->
 <title>Registros</title>
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -328,7 +332,7 @@ $session_area = session('session_area');
         </div>
         @endif
     </div>
-    @else
+    @else   <!-- Condición de acceso al contenido AREA ELSE -->
     <script>
     document.addEventListener("DOMContentLoaded", ()=>{
         var url =  window.location.href;

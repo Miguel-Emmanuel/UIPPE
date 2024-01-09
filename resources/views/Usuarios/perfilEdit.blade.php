@@ -1,5 +1,8 @@
 @extends('layout.navbar')
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_nombre = session('session_nombre');
@@ -12,9 +15,10 @@ $session_email = session('email');
 $session_aca = session('academico');
 $session_fn = session('fn');
 $session_area = session('session_area');
-
 ?>
-@if($session_id)
+<!-- Variables de Sesiones del usuario END -->
+
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -159,7 +163,7 @@ $session_area = session('session_area');
         </form>
     </div>
 </div>
-@else
+@else       <!-- Condición de acceso al contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">

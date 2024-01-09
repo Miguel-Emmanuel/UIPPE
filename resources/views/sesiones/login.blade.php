@@ -24,7 +24,7 @@
 
     <div class="contenedor rounded shadow">
         <div class="row m-2 align-items-strech"><!-Fila Contenedora>
-                <!-Columnas>
+                <!--Columnas-->
                     <div class="col bg d-none d-lg-block col-md-6 col-lg-6 col-xl-6 rounded"><!-Imagen></div>
 
                     <div class="col"><!-Sesion>

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/virtual-select.min.css') }}">
 @endsection
 <!-- Importacion de estilos para el select END -->
+
 @section('content')
 
 <!-- Variables de Sesiones del usuario START -->

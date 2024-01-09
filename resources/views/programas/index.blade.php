@@ -1,10 +1,14 @@
 @extends('layout.navbar')
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_area = session('session_area');
 ?>
-@if($session_id)
+<!-- Variables de Sesiones del usuario END -->
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -13,7 +17,7 @@ $session_area = session('session_area');
             <li class="breadcrumb-item" aria-current="page">Programas</li>
         </ol>
     </nav>
-    @if($session_area == 0)
+    @if($session_area == 0)     <!-- Condición de acceso al contenido - por AREA IF -->
     <div class="row">
         <div class="col p-4">
             <h3>Programas</h3>
@@ -107,15 +111,16 @@ $session_area = session('session_area');
             </table>
         </div>
     </div>
-    @else
+    @else   <!-- Condición de acceso al contenido - por AREA ELSE -->
     <script>
         window.location.replace("{{ route('registrosA', ['id' => $session_area]) }}");
     </script>
     @endif
 </div>
+
 @include('programas.modales')
 
-@else
+@else       <!-- Condición de acceso al contenido LOGGEADO ELSE -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -128,5 +133,5 @@ $session_area = session('session_area');
     </div>
 </div>
 @endif
-@include('programas.modales')
-@endsection
+
+@endsection     <!-- ENDSECTION DE CONTENIDO = @section('content') -->

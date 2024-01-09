@@ -1,17 +1,25 @@
 @extends('layout.navbar')
+<!-- Importacion de estilos para el select START -->
 @section('dataTablesCss')
 <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
 @endsection
+<!-- Importacion de estilos para el select END -->
+
 @section('content')
+
+<!-- Variables de Sesiones del usuario START -->
 <?php
 $session_id = session('session_id');
 $session_name = session('session_name');
 $session_tipo = session('session_tipo');
 $session_area = session('session_area');
 ?>
+<!-- Variables de Sesiones del usuario END -->
+
 <title>Calendario</title>
-@if($session_id)
-@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)
+
+@if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
+@if($session_tipo == 1 || $session_tipo == 2 || $session_tipo == 3 || $session_tipo == 4)   <!-- Condición de acceso al contenido por tipo de usuario -->
 
 <div class="container p-4">
     <nav aria-label="breadcrumb">
@@ -144,12 +152,12 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
-@else
+@else   <!-- Condición de acceso al contenido por tipo de usuario -->
 <script>
         window.location.replace("{{ route('dashboard')}}");
 </script>
 @endif
-@else
+@else   <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
     <div class="row">
         <div class="col p-4">
@@ -261,6 +269,7 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
+<!-- SCRIPT para la suma dinamica de los modales START -->
 <script>
     window.addEventListener('load', () => {
         var canti = document.querySelector("#cantEntrega{{ $meta->id_areasmetas }}").innerHTML = "{{ $meta->meses_c }}";
@@ -289,6 +298,7 @@ $session_area = session('session_area');
     };
 
 </script>
+<!-- SCRIPT para la suma dinamica de los modales END -->
 @endforeach
 <!-- MODAL MESES CON REGISTRO EN MESES END -->
 
@@ -388,6 +398,8 @@ $session_area = session('session_area');
         </div>
     </div>
 </div>
+
+<!-- SCRIPT para la suma dinamica de los modales START -->
 <script>
 
     var sumaT = 0;
@@ -415,9 +427,11 @@ $session_area = session('session_area');
     };
 
 </script>
+<!-- SCRIPT para la suma dinamica de los modales END -->
 @endforeach
 <!-- MODAL SIN REFISTRO EN MESES END -->
 
+<!-- Importacion y configuracion para las tablas dinamicas START -->
 @section('dataTablesJs')
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
@@ -458,6 +472,7 @@ $session_area = session('session_area');
     });
 </script>
 @endsection
+<!-- Importacion y configuracion para las tablas dinamicas END -->
 <script>
     //======================================================
     //Para consulta de id_areasmetas con registros en meses
@@ -527,4 +542,4 @@ $session_area = session('session_area');
 
 </script>
 
-@endsection
+@endsection    <!-- // ENDSECTION DE CONTENIDO = @section('content') -->
