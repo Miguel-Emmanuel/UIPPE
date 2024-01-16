@@ -17,7 +17,7 @@ class AreasMetasController extends Controller
 {
     public function index()
 {
-
+        //Consulta para obtener todas las metas
         $areasmetas = DB::table('tb_areasmetas')
             ->join('tb_programas', 'tb_areasmetas.id_programa', 'tb_programas.id_programa')
             ->join('tb_metas', 'tb_areasmetas.meta_id', 'tb_metas.id_meta')
@@ -50,16 +50,18 @@ class AreasMetasController extends Controller
     }
     public function store(Request $request)
     {
-        $areas = $request->id_area[0];
+        $areas = $request->id_area[0]; //Se consultan todas la áreas y se guardan en un array
         $separador = ',';
-        $id_area = explode($separador, $areas);
+        $id_area = explode($separador, $areas);// Las áreas fueron separadas por el método explode
 
+        //Se realiza la inserción de datos
         $meta_id = intval($request->id_meta);
         $id_programa = intval($request->id_programa);
         $objetivo = $request->objetivo;
         $contador = count($id_area);
         $id_registro = intval($request->registro);
-
+        
+        //Se utiliza un for para poder asignar un meta a varias áreas
         for ($i = 0; $i < $contador; $i++) {
             AreasMetas::create(array(
                 'area_id' => $id_area[$i],
@@ -81,6 +83,7 @@ class AreasMetasController extends Controller
 
     public function js_metas(Request $request)
     {
+        //Esta función fue creada para buscar todas las metas relacionadas al programa que ha sido seleccionado antes
         $id_programa = $request->get('id_programa');
         $id_programa = intval($id_programa);
         $meta2 = \DB::select('SELECT * FROM tb_metas WHERE activo > 0 AND programa_id = ' . $id_programa);
@@ -90,6 +93,7 @@ class AreasMetasController extends Controller
 
     public function js_areas(Request $request)
     {
+        //Esta función muestra todas la áreas a las que no se le ha asignado la meta seleccionada
         $id_meta = $request->get('id_metas');
         $id_meta = intval($id_meta);
         $areas = \DB::select('SELECT areas.* FROM tb_areas AS areas

@@ -13,6 +13,8 @@ class CalendarizarsController extends Controller
 {
     public function index()
     {
+        // Obtiene información sobre áreas de metas con ciertos criterios y las pasa a la vista 'calendario.index'
+        // Utiliza consultas SQL directas con el facade DB
         $areasmetas = \DB::SELECT('SELECT tb_areasmetas.id_areasmetas, tb_areasmetas.area_id, tb_metas.nombre AS nombreM, tb_metas.clave, tb_programas.abreviatura AS nombrePA
         FROM tb_areasmetas
         JOIN tb_metas ON tb_areasmetas.meta_id = tb_metas.id_meta
@@ -112,6 +114,8 @@ class CalendarizarsController extends Controller
 
     public function entregaN(Request $request)
     {
+        // Registra una nueva entrega en la base de datos
+        // Utiliza Eloquent ORM para crear registros en las tablas 'Meses' y 'Entregas'
         $Enero = intval($request->input('enero'));
         $Febrero = intval($request->input('febrero'));
         $Marzo = intval($request->input('marzo'));
@@ -158,6 +162,8 @@ class CalendarizarsController extends Controller
     }
     public function updateEntrega(Entregas $id, Request $request)
     {
+        // Actualiza una entrega existente en la base de datos
+        // Utiliza Eloquent ORM para actualizar registros en las tablas 'Meses' y 'Entregas'
         $meses = Entregas::where('id_entregas', '=', $id->id_entregas)->get();
         $mes = $meses[0]->meses_id;
         $query = Entregas::find($id->id_entregas);

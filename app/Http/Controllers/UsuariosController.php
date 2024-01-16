@@ -15,6 +15,7 @@ class UsuariosController extends Controller
     
     public function index()
     {
+        // Obtiene los usuarios y tipos de la base de datos para mostrar en la vista
         // $Usuarios = Usuarios::all();
         $Usuarios = \DB::select('SELECT usuario.id_usuario, usuario.clave, usuario.nombre as nombreU, usuario.app, usuario.apm, usuario.gen, usuario.fn, usuario.academico, usuario.foto, usuario.email,usuario.activo,usuario.id_tipo, tipo.nombre as nombreT 
         FROM tb_usuarios as usuario, tb_tipos as tipo 
@@ -26,6 +27,7 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
 
+        //Reglas de validación
         $rules = [
             'clave' => 'required',
             'nombre' => 'required',
@@ -34,6 +36,7 @@ class UsuariosController extends Controller
             'email' => 'required'
         ];
 
+        //Mensaje perzonalizado para la validación
         $message = [
             'clave.required' => 'Las credenciales son invalidas',
             'nombre.required' => 'Las credenciales son invalidas',
@@ -44,6 +47,7 @@ class UsuariosController extends Controller
 
         $this->validate($request, $rules, $message);
         
+        // Procesa la carga de la foto y almacena en el sistema de archivos local
         if ($request->file('foto')  !=  '') {
             $file = $request->file('foto');
             $foto1 = $file->getClientOriginalName();
@@ -76,6 +80,7 @@ class UsuariosController extends Controller
 
     public function show($id)
     {
+        // Obtiene todos los Usuarios utilizando Eloquent y las pasa a la vista lista_empleados
         $Usuarios = Usuarios::all();
         return view("lista_empleados")
             ->with(['usuarios' => $Usuarios]);

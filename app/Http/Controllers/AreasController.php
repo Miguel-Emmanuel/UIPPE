@@ -55,7 +55,8 @@ class AreasController extends Controller
       $foto2 = 'cuervo.png';
     }
     //  Asignación de fotos END
-    
+
+    // ARRAY -> Se crea un array para asignar la foto al área correspondiente
     Areas::create(array(
       'clave' => $request->input('clave'),
       'nombre' => $request->input('nombre'),
@@ -65,7 +66,7 @@ class AreasController extends Controller
       'id_registro' => $request->input('registro'),
 
     ));
-
+    //ARRAY END
     return redirect('areas');
   }
 

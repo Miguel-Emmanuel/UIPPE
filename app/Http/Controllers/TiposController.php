@@ -11,6 +11,7 @@ class TiposController extends Controller
 {
     public function index()
     {
+        // Obtiene información sobre la tabla tipos a través de una consulta SQL y las manda a la vista Tipos.index
         $Tipos = Tipos::all();
         return view('Tipos.index', compact('Tipos'));
     
@@ -18,12 +19,14 @@ class TiposController extends Controller
 
     public function store(Request $request)
     {
+        //Reglas de validación
         $rules = [
             'clave' => 'required',
             'nombre' => 'required',
             'descripcion' => 'required'
         ];
 
+        //Mensaje perzonalizado para la validación
         $message = [
             'clave.required' => 'Las credenciales son invalidas',
             'nombre.required' => 'Las credenciales son invalidas',
@@ -45,6 +48,7 @@ class TiposController extends Controller
 
     public function show($id)
     {
+        // Obtiene todos los tipos de Usuarios utilizando Eloquent y las pasa a la vista lista_empleados
         $Tipos = Tipos::all();
         return view("lista_empleados")
             ->with(['tipos' => $Tipos]);
@@ -63,7 +67,7 @@ class TiposController extends Controller
             $activo = 1;
         }
 
-        
+        // Obtiene el tipo de usuario existente y actualiza sus campos con los datos del formulario
         $query->clave = trim($request->clave);
         $query->nombre = trim($request->nombre);
         $query->descripcion = trim($request->descripcion);
