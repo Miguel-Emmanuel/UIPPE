@@ -16,7 +16,7 @@ $session_aca = session('academico');
 $session_fn = session('fn');
 $session_area = session('session_area');
 ?>
-<!-- Variables de Sesiones del usuario END -->
+<!-- Variables de Sesiones del usuario END  -->
 
 @if($session_id)    <!-- Condición de acceso al contenido LOGGEADO IF -->
 <div class="container p-4">
