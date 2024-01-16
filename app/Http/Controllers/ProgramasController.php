@@ -13,12 +13,14 @@ class ProgramasController extends Controller
     //
     public function show()
     {
+        // Obtiene todas los programas utilizando Eloquent y las pasa a la vista 'programas.index'
         $programas = Programas::all();
         return view("programas.index")
             ->with(['programas' => $programas]);
     }
     public function index()
     {
+        // Obtiene información sobre los programas a través de una consulta SQL y las manda a la vista programas.index
         $programas = Programas::all();
 
         return view('programas.index')
@@ -26,12 +28,14 @@ class ProgramasController extends Controller
     }
     public function store(Request $request)
     {
+        //Reglas de Validación
         $rules = [
             'abreviatura' => 'required',
             'nombre' => 'required',
             'descripcion' => 'required'
         ];
 
+       //Mensaje perzonalizado para la validación
         $message = [
             'abreviatura.required' => 'Las credenciales son invalidas',
             'nombre.required' => 'Las credenciales son invalidas',
@@ -53,6 +57,7 @@ class ProgramasController extends Controller
 
     public function edit(Programas $id, Request $request)
     {
+        // Obtiene el programa existente basado en el identificador
         $query = Programas::find($id->id_programa);
         if ($request->input('activo') == '') {
             $activo = 0;
@@ -62,6 +67,7 @@ class ProgramasController extends Controller
             $activo = 1;
         }
 
+        // Actualiza los campos del programa con los datos del formulario
         $query -> abreviatura = trim($request->abreviatura);
         $query -> nombre = trim($request->nombre);
         $query -> descripcion = trim($request->descripcion);
