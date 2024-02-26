@@ -44,7 +44,6 @@ class ProgramasController extends Controller
 
         $this->validate($request, $rules, $message);
 
-
         Programas::create(array(
             'abreviatura' => $request->input('abreviatura'),
             'nombre' => $request->input('nombre'),
