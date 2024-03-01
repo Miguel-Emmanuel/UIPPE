@@ -28,7 +28,12 @@ class Usuarios extends Model
     ];
 
     public function tb_tipos() {
-        return $this->belongsTo(tb_tipos::class,'id_tipo');
+        return $this->belongsTo(Tipos::class,'id_tipo');
+    }
+
+    public function areasusuarios() {
+        return $this->hasMany(AreasUsuarios::class, 'id_usuario', 'usuario_id');
+
     }
 
     // public function Calendarizars() {

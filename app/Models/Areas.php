@@ -24,6 +24,10 @@ class Areas extends Model
 
      public function areameta() {
         return $this->hasOne(AreasMetas::class, 'id', 'programa_id');
+    }
+
+    public function areasusuarios() {
+        return $this->hasMany(AreasUsuarios::class, 'id_area', 'area_id');
 
     }
 

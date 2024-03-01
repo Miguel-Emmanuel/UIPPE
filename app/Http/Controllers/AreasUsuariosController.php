@@ -42,13 +42,13 @@ class AreasUsuariosController extends Controller
     public function store(Request $request){
 
         // dd($request->all()); Mue
-        if ($request->input('activo') == '') {
-            $activo = 0;
-        } else if ($request->input('activo') == 'on') {
-            $activo = 1;
-        }else{
-            $activo = 1;
-        }
+        // if ($request->input('activo') == '') {
+        //     $activo = 0;
+        // } else if ($request->input('activo') == 'on') {
+        //     $activo = 1;
+        // }else{
+        //     $activo = 1;
+        // }
 
         $area_id = $request -> area_id;
         $usuarios = $request -> usuario_id[0]; //Se guardan las usuarios que hay que asignar al área en un array
@@ -62,8 +62,7 @@ class AreasUsuariosController extends Controller
             AreasUsuarios::create(array(
                 'area_id' => $area_id,
                 'usuario_id' => $id_usuarios[$i],
-                'activo' => $activo,
-                'id_registro' => $activo
+                'id_registro' => $id_registro
             ));
         }
 
@@ -80,7 +79,8 @@ class AreasUsuariosController extends Controller
 
     public function pdfau()
     {
-        $areausuario = AreasUsuarios::select('tb_areasusuarios.id_areasusuarios','tb_areas.nombre as area_id', 'tb_usuarios.nombre as usuario_id', 'tb_areasusuarios.activo' )
+        
+        $areausuario = AreasUsuarios::select('tb_areasusuarios.id_areasusuarios','tb_areas.nombre as nombreA', 'tb_usuarios.nombre as nombreU','tb_usuarios.app','tb_usuarios.apm','tb_usuarios.email AS correo')
         ->join('tb_areas','tb_areas.id_area','tb_areasusuarios.area_id')
         ->join('tb_usuarios','tb_usuarios.id_usuario','tb_areasusuarios.usuario_id')
         ->get();

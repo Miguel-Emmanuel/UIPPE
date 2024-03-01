@@ -183,12 +183,12 @@ $session_area = session('session_area');
 
                     <hr class="sidebar-divider">
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="activo" role="switch" id="flexSwitchCheckChecked" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
                         </div>
-                    </div>
+                    </div> --}}
                     <input class="form-control" type="text" name="registro" value="<?php echo $session_id ?>" style="display: none;">
             </div>
             <div class="modal-footer">

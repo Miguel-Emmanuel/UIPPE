@@ -18,7 +18,10 @@ class AreasUsExport implements FromCollection, WithHeadings, WithEvents
     */
     public function collection()
     {
-        return AreasUsuarios::select("id_areasusuarios", "area_id", "usuario_id")->get();
+        return AreasUsuarios::select('tb_areasusuarios.id_areasusuarios','tb_areas.nombre as nombreA', 'tb_usuarios.nombre as nombreU','tb_usuarios.app','tb_usuarios.apm','tb_usuarios.email AS correo')
+        ->join('tb_areas','tb_areas.id_area','tb_areasusuarios.area_id')
+        ->join('tb_usuarios','tb_usuarios.id_usuario','tb_areasusuarios.usuario_id')
+        ->get();
     }
   
     /**
@@ -28,7 +31,7 @@ class AreasUsExport implements FromCollection, WithHeadings, WithEvents
      */
     public function headings(): array
     {
-        return ["ID", "Area", "Usuario"];
+        return ["ID", "Area", "Nombre","Apellido Paterno","Apellido Materno","Correo"];
     }
 
     public function registerEvents(): array
@@ -36,15 +39,18 @@ class AreasUsExport implements FromCollection, WithHeadings, WithEvents
         return [
             AfterSheet::class    => function(AfterSheet $event) {
   
-                $event->sheet->getDelegate()->getStyle('A1:C1')
+                $event->sheet->getDelegate()->getStyle('A1:F1')
                         ->getFill()
                         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                         ->getStartColor()
                         ->setARGB('007A37');
 
                         $event->sheet->getColumnDimension('A')->setWidth(5);
-                        $event->sheet->getColumnDimension('B')->setWidth(17);
+                        $event->sheet->getColumnDimension('B')->setWidth(45);
                         $event->sheet->getColumnDimension('C')->setWidth(17);  
+                        $event->sheet->getColumnDimension('D')->setWidth(25); 
+                        $event->sheet->getColumnDimension('E')->setWidth(25); 
+                        $event->sheet->getColumnDimension('F')->setWidth(25); 
   
             },
         ];

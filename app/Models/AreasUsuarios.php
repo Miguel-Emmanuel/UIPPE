@@ -15,4 +15,14 @@ class AreasUsuarios extends Model
         'usuario_id',
         'id_registro'
     ];
+
+    public function areas()
+    {
+        return  $this->hasMany('App\Models\Areas');
+    }
+
+    public function usuario()
+    {
+        return  $this->hasMany('App\Models\Usuarios');
+    }
 }
